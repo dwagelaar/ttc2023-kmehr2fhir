@@ -47,6 +47,11 @@ public class Transformation {
 				etl.getContext().getModelRepository().addModel(outputModel);
 				etl.parse(Transformation.class.getResource("/kmehr2fhir.etl"));
 				etl.execute();
+				
+				System.out.println(outputModel.getResource().getContents());
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				throw ex;
 			} finally {
 				etl.getContext().getModelRepository().dispose();
 				etl.getContext().dispose();

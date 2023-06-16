@@ -1,3 +1,9 @@
+pre {
+  var xmlTypeFactory = Native('org.eclipse.emf.ecore.xml.type.impl.XMLTypeFactoryImpl').init();
+}
+
+// RULES
+
 rule DocumentRoot
   transform s: KMEHR!kmehr::DocumentRoot
   to t: FHIR!DocumentRoot
@@ -12,7 +18,83 @@ rule Folder
   guard: s.patient.isDefined()
 
   bt.value = FHIR!BundleTypeEnum#document;
-
   t.type = bt;
 
+  var rawEntries = s.`transaction`.equivalent();
+  t.entry.addAll(rawEntries.collect(re|BundleEntry(re)));
+}
+
+rule SumEHRTransaction
+  transform s: KMEHR!TransactionType
+  to t: FHIR!Composition,
+     cid: FHIR!Id,
+     patRef: FHIR!Reference,
+     cStatus: FHIR!CompositionStatus,
+     dateTime: FHIR!fhir::DateTime
+{
+  guard: s.cd.exists(cd| cd.value = 'sumehr')
+
+  // FolderType which contains this transaction 
+  var f = s.eContainer;
+
+  t.id = cid;
+  t.identifier = Sequence { CompositionIdentifier(s.uuid()) };
+  t.type = CodeableConcept(CodingWithDisplay('http://loinc.org', '60591-5', 'Patient summary Document'));
+  t.subject = Sequence { patRef };
+  t.status = cStatus;
+  t.date = dateTime;
+  
+  // TODO fill sections
+  t.section = Sequence { };
+
+  cid.value = s.uuid();
+  patRef.reference = FhirString('Patient/' + f.patient.uuid());
+
+  cStatus.value = s.iscomplete ? (
+    s.isvalidated ? FHIR!CompositionStatusEnum#final : FHIR!CompositionStatusEnum#preliminary
+  ) : FHIR!CompositionStatusEnum#partial;
+
+  dateTime.value = xmlTypeFactory.createDateTime(s.date.toXMLFormat() + 'T' + s.time.toXMLFormat());
+}
+
+// OPERATIONS
+
+@cached
+operation Any uuid(): String {
+  var uuidClass = Native('java.util.UUID');
+  return uuidClass.randomUUID().asString();
+}
+
+operation BundleEntry(s) {
+  var be = new FHIR!BundleEntry;
+  be.fullUrl = new FHIR!Uri;
+  be.fullUrl.value = 'urn:uuid:' + s.uuid();
+  be.resource = new FHIR!ResourceContainer;
+  return be;
+}
+
+operation CodeableConcept(coding: FHIR!Coding) {
+  var type = new FHIR!CodeableConcept;
+  type.coding = Sequence { coding };
+  return type;
+}
+
+operation CodingWithDisplay(system: String, code: String, display: String) {
+  var coding = new FHIR!Coding;
+  coding.display = FhirString(display.trim());
+  return coding;
+}
+
+operation CompositionIdentifier(uuid: String) {
+  var ips = new FHIR!Identifier;
+  ips.system = new FHIR!Uri;
+  ips.value = FhirString(uuid);
+  ips.system.value = 'urn:oid:2.16.724.4.8.10.200.10';
+  return ips;
+}
+
+operation FhirString(uuid: String) {
+  var fhirS = new FHIR!`fhir::String`;
+  fhirS.value = uuid;
+  return fhirS;
 }
