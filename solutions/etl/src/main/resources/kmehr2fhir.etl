@@ -1,0 +1,18 @@
+rule DocumentRoot
+  transform s: KMEHR!kmehr::DocumentRoot
+  to t: FHIR!DocumentRoot
+{
+  t.bundle ::= s.kmehrmessage.folder.selectFirst(f | f.patient.isDefined());
+}
+
+rule Folder
+  transform s: KMEHR!FolderType
+  to t: FHIR!Bundle, bt: FHIR!BundleType
+{
+  guard: s.patient.isDefined()
+
+  bt.value = FHIR!BundleTypeEnum#document;
+
+  t.type = bt;
+
+}
