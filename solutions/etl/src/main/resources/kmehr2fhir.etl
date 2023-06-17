@@ -20,8 +20,10 @@ rule Folder
   bt.value = FHIR!BundleTypeEnum#document;
   t.type = bt;
 
-  var rawEntries = s.`transaction`.equivalent();
-  t.entry.addAll(rawEntries.collect(re|BundleEntry(re)));
+  var rawEntries = s.`transaction`.equivalent().select(tr|tr.isKindOf(FHIR!BundleEntry));
+
+
+  t.entry.addAll(rawEntries);
 }
 
 rule SumEHRTransaction
@@ -45,7 +47,9 @@ rule SumEHRTransaction
   t.date = dateTime;
   
   // TODO fill sections
-  t.section = Sequence { };
+  t.section = Sequence {
+    MedicationSection(s)
+  };
 
   cid.value = s.uuid();
   patRef.reference = FhirString('Patient/' + f.patient.uuid());
@@ -57,7 +61,7 @@ rule SumEHRTransaction
   dateTime.value = xmlTypeFactory.createDateTime(s.date.toXMLFormat() + 'T' + s.time.toXMLFormat());
 }
 
-// OPERATIONS
+// CONTEXT OPERATIONS
 
 @cached
 operation Any uuid(): String {
@@ -65,13 +69,78 @@ operation Any uuid(): String {
   return uuidClass.randomUUID().asString();
 }
 
-operation BundleEntry(s) {
-  var be = new FHIR!BundleEntry;
-  be.fullUrl = new FHIR!Uri;
-  be.fullUrl.value = 'urn:uuid:' + s.uuid();
-  be.resource = new FHIR!ResourceContainer;
-  return be;
+operation KMEHR!CDITEM isCDItemWithValue(expectedValue: String): Boolean {
+  return self.s = KMEHR!CDITEMschemes#CDITEM and self.value = expectedValue;
 }
+
+@cached
+operation KMEHR!ItemType isMedication(): Boolean {
+  return self.cd.exists(cd | cd.isCDItemWithValue('medication'));
+}
+
+@cached
+operation KMEHR!ItemType isAllergy(): Boolean {
+  return self.cd.exists(cd | cd.isCDItemWithValue('allergy'));
+}
+
+@cached
+operation KMEHR!ItemType isIntolerance(): Boolean {
+  return self.cd.exists(cd | cd.isCDItemWithValue('adr'));
+}
+
+@cached
+operation KMEHR!ItemType isActiveProblem(): Boolean {
+  return self.cd.exists(cd | cd.isCDItemWithValue('problem') and self.lifecycle.cd.value = KMEHR!CDLIFECYCLEvalues#active);
+}
+
+@cached
+operation KMEHR!ItemType isInactiveProblem(): Boolean {
+  return self.cd.exists(cd | cd.isCDItemWithValue('problem') and self.lifecycle.cd.value = KMEHR!CDLIFECYCLEvalues#inactive);
+}
+
+@cached
+operation KMEHR!ItemType isVaccine(): Boolean {
+  return self.cd.exists(cd | cd.isCDItemWithValue('vaccine'));
+}
+
+@cached
+operation KMEHR!ItemType refPrefix(): String {
+  if (self.isMedication()) {
+    return 'Medication/';
+  } else if (self.isAllergy() or self.isIntolerance()) {
+    return 'AllergyIntolerance/';
+  } else if (self.isActiveProblem() or self.isInactiveProblem()) {
+    return 'Condition/';
+  } else if (self.isVaccine()) {
+    return 'Immunization/';
+  } else {
+    return 'Unknown/';
+  }
+}
+
+// BundleEntry rule hierarchy
+
+@abstract
+@lazy
+rule BundleEntry
+  transform s: Any
+  to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
+{
+  be.fullUrl = fullUrl;
+  be.resource = rc;
+  fullUrl.value = 'urn:uuid:' + s.uuid();
+}
+
+rule CompositionBundleEntry
+  transform s: KMEHR!TransactionType
+  to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
+  extends BundleEntry
+{
+  guard: s.cd.exists(cd|cd.value = 'sumehr')
+  rc.composition ::= s;
+}
+
+// "LAZY RULE" OPERATIONS
 
 operation CodeableConcept(coding: FHIR!Coding) {
   var type = new FHIR!CodeableConcept;
@@ -93,8 +162,27 @@ operation CompositionIdentifier(uuid: String) {
   return ips;
 }
 
+operation CompositionSectionEntry(s: KMEHR!ItemType) {
+  var t = new FHIR!Reference;
+  t.reference = FhirString(s.refPrefix() + s.uuid());
+  return t;
+}
+
 operation FhirString(uuid: String) {
   var fhirS = new FHIR!`fhir::String`;
   fhirS.value = uuid;
   return fhirS;
+}
+
+operation MedicationSection(s: KMEHR!TransactionType) {
+  var t = new FHIR!CompositionSection;
+  t.title = FhirString('Medication');
+
+  var medItems = s.item.select(i | i.isMedication());
+  var entry = medItems.collect(i | CompositionSectionEntry(i));
+  t.entry = entry;
+
+  // Original rule has Coding and Code which are not referred from the section?
+
+  return t;
 }
