@@ -20,10 +20,7 @@ rule Folder
   bt.value = FHIR!BundleTypeEnum#document;
   t.type = bt;
 
-  var rawEntries = s.`transaction`.equivalent().select(tr|tr.isKindOf(FHIR!BundleEntry));
-
-
-  t.entry.addAll(rawEntries);
+  t.entry.addAll(s.`transaction`.equivalents().flatten().select(e|e.isKindOf(FHIR!BundleEntry)));
 }
 
 rule SumEHRTransaction
@@ -46,9 +43,12 @@ rule SumEHRTransaction
   t.status = cStatus;
   t.date = dateTime;
   
-  // TODO fill sections
   t.section = Sequence {
-    MedicationSection(s)
+    s.equivalent('MedicationSection'),
+    s.equivalent('AllergyIntoleranceSection'),
+    s.equivalent('ActiveProblemSection'),
+    s.equivalent('ImmunizationSection'),
+    s.equivalent('HistorySection')
   };
 
   cid.value = s.uuid();
@@ -59,7 +59,36 @@ rule SumEHRTransaction
   ) : FHIR!CompositionStatusEnum#partial;
 
   dateTime.value = xmlTypeFactory.createDateTime(s.date.toXMLFormat() + 'T' + s.time.toXMLFormat());
+
+  // SumEHRTransactionWithAuthor
+  if (s.txAuthor().isDefined()) {
+    var refPrefix = 'Other/';
+    if (s.txAuthor().isOrganization()) {
+      refPrefix = 'Organization/';
+    } else if (s.txAuthor().isPractitioner()) {
+      refPrefix = 'Practitioner/';
+    }
+
+    var authRef = new FHIR!Reference;
+    t.author = Sequence { authRef };
+    authRef.reference = FhirString(refPrefix + s.msgSender().uuid());
+  }
+
+  // SumEHRTransactionWithCustodian
+  if (s.custodianItem().isDefined()) {
+    var refPrefix = 'Other/';
+    if (i.hcpartyContent.isOrganization()) {
+      refPrefix = 'Organization/';
+    } else if (i.hcpartyContent.isPractitioner()) {
+      refPrefix = 'Practitioner/';
+    }
+
+    var gmdRef = new FHIR!Reference;
+    t.custodian = gmdRef;
+    gmdRef.reference = FhirString(refPrefix + i.hcpartyContent.uuid());
+  }
 }
+
 
 // CONTEXT OPERATIONS
 
@@ -69,8 +98,33 @@ operation Any uuid(): String {
   return uuidClass.randomUUID().asString();
 }
 
+operation Any msgSender() {
+  // Same as in ATL transformation - no clear explanation why
+  return null;
+}
+
+@cached
+operation KMEHR!CDHCPARTY isOrganization() : Boolean {
+  return self.value.isDefined() and self.value.startsWith('org');
+}
+
+@cached
+operation KMEHR!CDHCPARTY isPractitioner() : Boolean {
+  return self.value.isDefined() and self.value.startsWith('pers');
+}
+
 operation KMEHR!CDITEM isCDItemWithValue(expectedValue: String): Boolean {
   return self.s = KMEHR!CDITEMschemes#CDITEM and self.value = expectedValue;
+}
+
+@cached
+operation KMEHR!HcpartyType isOrganization() : Boolean {
+  return self.cd.exists(cd | cd.isOrganization());
+}
+
+@cached
+operation KMEHR!HcpartyType isPractitioner() : Boolean {
+  return self.cd.exists(cd | cd.isPractitioner());
 }
 
 @cached
@@ -118,10 +172,24 @@ operation KMEHR!ItemType refPrefix(): String {
   }
 }
 
+@cached
+operation KMEHR!TransactionType txAuthor() : KMEHR!HcpartyType {
+  return self.author.txAuthor();
+}
+
+@cached
+operation KMEHR!AuthorType txAuthor() : KMEHR!HcpartyType {
+  return self.hcparty.first;
+}
+
+@cached
+operation KMEHR!TransactionType custodianItem(): KMEHR!ItemType {
+  return s.item.selectFirst(i | i.cd.exists(cd | cd.value = 'gmdmanager'));
+}
+
 // BundleEntry rule hierarchy
 
 @abstract
-@lazy
 rule BundleEntry
   transform s: Any
   to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
@@ -138,6 +206,95 @@ rule CompositionBundleEntry
 {
   guard: s.cd.exists(cd|cd.value = 'sumehr')
   rc.composition ::= s;
+}
+
+// CompositionSection rule hierarchy
+
+@abstract
+rule CompositionSection
+  transform s: KMEHR!TransactionType
+  to t: FHIR!CompositionSection, cc: FHIR!CodeableConcept, coding: FHIR!Coding, loinc: FHIR!Uri, code: FHIR!Code
+{
+  t.code = cc;
+  cc.coding = Sequence { coding };
+  coding.system = loinc;
+  coding.code = code;
+  loinc.value = 'http://loinc.org';
+}
+
+@lazy
+rule MedicationSection
+  transform s: KMEHR!TransactionType
+  to t: FHIR!CompositionSection, cc: FHIR!CodeableConcept, coding: FHIR!Coding, loinc: FHIR!Uri, code: FHIR!Code
+  extends CompositionSection
+{
+  t.title = FhirString('Medication');
+
+  var medItems = s.item.select(i | i.isMedication());
+  t.entry = medItems.collect(i | CompositionSectionEntry(i));
+
+  coding.display = FhirString('History of Medication use Narrative');
+  code.value = '10160-0';   
+}
+
+@lazy
+rule AllergyIntoleranceSection
+  transform s: KMEHR!TransactionType
+  to t: FHIR!CompositionSection, cc: FHIR!CodeableConcept, coding: FHIR!Coding, loinc: FHIR!Uri, code: FHIR!Code
+  extends CompositionSection
+{
+  t.title = FhirString('Allergies and Intolerances');
+
+  var medItems = s.item.select(i | i.isAllergy() or i.isIntolerance());
+  t.entry = medItems.collect(i | CompositionSectionEntry(i));
+
+  coding.display = FhirString('Allergies and adverse reactions Document');
+  code.value = '48765-2';
+}
+
+@lazy
+rule ActiveProblemSection
+  transform s: KMEHR!TransactionType
+  to t: FHIR!CompositionSection, cc: FHIR!CodeableConcept, coding: FHIR!Coding, loinc: FHIR!Uri, code: FHIR!Code
+  extends CompositionSection
+{
+  t.title = FhirString('Active Problems');
+
+  var medItems = s.item.select(i | i.isActiveProblem());
+  t.entry = medItems.collect(i | CompositionSectionEntry(i));
+
+  coding.display = FhirString('Problem list Reported');
+  code.value = '11450-4';
+}
+
+@lazy
+rule ImmunizationSection
+  transform s: KMEHR!TransactionType
+  to t: FHIR!CompositionSection, cc: FHIR!CodeableConcept, coding: FHIR!Coding, loinc: FHIR!Uri, code: FHIR!Code
+  extends CompositionSection
+{
+  t.title = FhirString('Immunizations');
+
+  var medItems = s.item.select(i | i.isVaccine());
+  t.entry = medItems.collect(i | CompositionSectionEntry(i));
+
+  coding.display = FhirString('History of Immunization Narrative');
+  code.value = '11369-6';
+}
+
+@lazy
+rule HistorySection
+  transform s: KMEHR!TransactionType
+  to t: FHIR!CompositionSection, cc: FHIR!CodeableConcept, coding: FHIR!Coding, loinc: FHIR!Uri, code: FHIR!Code
+  extends CompositionSection
+{
+  t.title = FhirString('History of Past Illness');
+
+  var medItems = s.item.select(i | i.isInactiveProblem());
+  t.entry = medItems.collect(i | CompositionSectionEntry(i));
+
+  coding.display = FhirString('Hx of Past illness');
+  code.value = '11348-0';
 }
 
 // "LAZY RULE" OPERATIONS
@@ -172,17 +329,4 @@ operation FhirString(uuid: String) {
   var fhirS = new FHIR!`fhir::String`;
   fhirS.value = uuid;
   return fhirS;
-}
-
-operation MedicationSection(s: KMEHR!TransactionType) {
-  var t = new FHIR!CompositionSection;
-  t.title = FhirString('Medication');
-
-  var medItems = s.item.select(i | i.isMedication());
-  var entry = medItems.collect(i | CompositionSectionEntry(i));
-  t.entry = entry;
-
-  // Original rule has Coding and Code which are not referred from the section?
-
-  return t;
 }
