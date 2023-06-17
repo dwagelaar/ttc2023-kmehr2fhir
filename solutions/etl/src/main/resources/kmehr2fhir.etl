@@ -1,5 +1,20 @@
 pre {
   var xmlTypeFactory = Native('org.eclipse.emf.ecore.xml.type.impl.XMLTypeFactoryImpl').init();
+
+  var genderMap = Map {
+    KMEHR!CDSEXvalues#changed = FHIR!AdministrativeGenderEnum#other,
+    KMEHR!CDSEXvalues#female = FHIR!AdministrativeGenderEnum#female,
+    KMEHR!CDSEXvalues#male = FHIR!AdministrativeGenderEnum#male,
+    KMEHR!CDSEXvalues#unknown = FHIR!AdministrativeGenderEnum#unknown,
+    KMEHR!CDSEXvalues#undefined = FHIR!AdministrativeGenderEnum#other
+  };
+
+  var systemMap = Map {
+    "phone" = FHIR!ContactPointSystemEnum#phone,
+    "mobile" = FHIR!ContactPointSystemEnum#phone,
+    "fax" = FHIR!ContactPointSystemEnum#fax,
+    "email" = FHIR!ContactPointSystemEnum#email
+  };
 }
 
 // RULES
@@ -21,6 +36,7 @@ rule Folder
   t.type = bt;
 
   t.entry.addAll(s.`transaction`.equivalents().flatten().select(e|e.isKindOf(FHIR!BundleEntry)));
+  t.entry.addAll(s.patient.equivalents().flatten().select(e|e.isKindOf(FHIR!BundleEntry)));
 }
 
 rule SumEHRTransaction
@@ -85,12 +101,74 @@ rule SumEHRTransaction
 
     var gmdRef = new FHIR!Reference;
     t.custodian = gmdRef;
-    gmdRef.reference = FhirString(refPrefix + i.hcpartyContent.uuid());
+    gmdRef.reference = FhirString(refPrefix + i.hcpartyContent.uuid());  
   }
 }
 
+rule Patient
+  transform s: KMEHR!PersonType
+  to t: FHIR!Patient, pid: FHIR!Id, humanName: FHIR!HumanName
+{
+  guard: s.eContainingFeature.name == 'patient'
+
+  var f = s.eContainer;
+
+  t.id = pid;
+  t.active = FhirBoolean(true);
+  t.name = Sequence { humanName };
+  t.gender = s.sex.equivalent('AdministrativeGender');
+  t.birthDate = s.birthdate.equivalent('FhirDate');
+
+  t.address ::= s.address;
+  t.telecom = s.telecom.equivalent().select(e|e.isKindOf(FHIR!ContactPoint));
+
+  // TODO - implement PatientContact rule
+  var contactSources = f.`transaction`.collect(tx |
+      tx.item.select(i | i.isContactPerson())
+             .collect(i | i.content.collect(c | c.person))
+    ).flatten()
+     .collect(contact | contact.equivalent('PatientContact'))
+     .reject(e|e.isUndefined());
+
+  t.contact.addAll(contactSources);
+
+  pid.value = s.uuid();
+  humanName.family = FhirString(s.familyname);
+  humanName.given = s.firstname.collect(fn | FhirString(fn));
+}
+
+rule Address
+  transform s: KMEHR!AddressType
+  to t: FHIR!Address
+{
+  t.line = Sequence { FhirString(s.addressLine()) };
+  t.postalCode = FhirString(s.zip);
+  t.city = FhirString(s.city);
+  t.country = FhirString(s.countryString());
+}
+
+rule Telecom
+  transform s: KMEHR!TelecomType
+  to t: FHIR!ContactPoint, system: FHIR!ContactPointSystem, use: FHIR!ContactPointUse
+{
+  t.system = system;
+  t.value = FhirString(s.telecomnumber.trim());
+  t.use = use;
+
+  system.value = s.system();
+  use.value = s.contactPointUse();
+}
 
 // CONTEXT OPERATIONS
+
+operation Any countryString() : String {
+  return null;
+}
+
+operation Any msgSender() {
+  // Same as in ATL transformation - no clear explanation why
+  return null;
+}
 
 @cached
 operation Any uuid(): String {
@@ -98,9 +176,26 @@ operation Any uuid(): String {
   return uuidClass.randomUUID().asString();
 }
 
-operation Any msgSender() {
-  // Same as in ATL transformation - no clear explanation why
-  return null;
+operation KMEHR!AddressType addressLine() : String {
+  return Sequence {self.street, self.housenumber, self.postboxnumber}
+	.reject(s | s.isUndefined() or s = '')
+	.concat(' ');
+}
+
+operation KMEHR!AddressType countryString() : String {
+  return self.country.countryString();
+}
+
+operation KMEHR!CountryType countryString() : String {
+  return self.cd.countryString();
+}
+
+operation KMEHR!CDCOUNTRY countryString() : String {
+  return self.value.countryString();
+}
+
+operation String countryString() : String {
+  return self.toUpperCase();
 }
 
 @cached
@@ -125,6 +220,11 @@ operation KMEHR!HcpartyType isOrganization() : Boolean {
 @cached
 operation KMEHR!HcpartyType isPractitioner() : Boolean {
   return self.cd.exists(cd | cd.isPractitioner());
+}
+
+@cached
+operation KMEHR!ItemType isContactPerson() : Boolean {
+  return self.cd.exists(cd | cd.isCDItemWithValue('contactperson'));
 }
 
 @cached
@@ -183,8 +283,42 @@ operation KMEHR!AuthorType txAuthor() : KMEHR!HcpartyType {
 }
 
 @cached
+operation KMEHR!TelecomType system() {
+  var systemStr = self.cd.select(cd | cd.s = KMEHR!CDTELECOMschemes#CDTELECOM)
+    .collect(cd | cd.value).selectFirst(v | v.isDefined());
+
+  return systemMap.get(systemStr) ?: FHIR!ContactPointSystemEnum#other;
+}
+
+@cached
+operation KMEHR!TelecomType contactPointUse() {
+  if (self.cd.exists(cd | cd.s = KMEHR!CDTELECOMschemes#CDTELECOM and cd.value = 'phone')) {
+    if (self.eContainer.isKindOf(KMEHR!PersonType)) {
+      return FHIR!ContactPointUseEnum#home;
+    } else {
+      return FHIR!ContactPointUseEnum#work;
+    }
+  } else if (self.cd.exists(cd | cd.s = KMEHR!CDTELECOMschemes#CDTELECOM and cd.value = 'mobile')) {
+    return FHIR!ContactPointUseEnum#mobile; 
+  }
+
+  return null;
+}
+
+@cached
 operation KMEHR!TransactionType custodianItem(): KMEHR!ItemType {
   return s.item.selectFirst(i | i.cd.exists(cd | cd.value = 'gmdmanager'));
+}
+
+// Gender mapping
+
+@lazy
+rule AdministrativeGender
+  transform s: KMEHR!SexType
+  to t: FHIR!AdministrativeGender
+{
+  guard: s.cd.isDefined() and s.cd.value.isDefined()
+  t.value = genderMap.get(s.cd.value);
 }
 
 // BundleEntry rule hierarchy
@@ -206,6 +340,14 @@ rule CompositionBundleEntry
 {
   guard: s.cd.exists(cd|cd.value = 'sumehr')
   rc.composition ::= s;
+}
+
+rule PatientBundleEntry
+  transform s: KMEHR!PersonType
+  to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
+  extends BundleEntry
+{
+  rc.patient = s.equivalents('Patient').selectFirst(e|e.isKindOf(FHIR!Patient));
 }
 
 // CompositionSection rule hierarchy
@@ -323,6 +465,20 @@ operation CompositionSectionEntry(s: KMEHR!ItemType) {
   var t = new FHIR!Reference;
   t.reference = FhirString(s.refPrefix() + s.uuid());
   return t;
+}
+
+operation FhirBoolean(s: Boolean): FHIR!fhir::`Boolean` {
+  var fhirB = new FHIR!fhir::`Boolean`;
+  fhirB.value = s;
+  return fhirB;
+}
+
+rule FhirDate
+  transform s: KMEHR!DateType
+  to t: FHIR!fhir::Date
+{
+  guard: s.date.isDefined()
+  t.value = s.date;
 }
 
 operation FhirString(uuid: String) {
