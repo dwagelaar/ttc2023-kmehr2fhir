@@ -1,0 +1,8416 @@
+package kmehr { 
+  datatype Date = String;
+
+  datatype Time = String;
+
+  enumeration IDHCPARTYschemes {
+    literal IDHCPARTY;
+    literal INSS;
+    literal LOCAL;
+    literal IDENCRYPTIONAPPLICATION;
+    literal IDENCRYPTIONACTOR;
+    literal IDENCRYPTIONKEY;
+    literal IDINSURANCE;
+    literal IDCBE;
+    literal IDEHP;
+  }
+  datatype IDHCPARTYschemesObject = String;
+
+  enumeration IDINSURANCEschemes {
+    literal IDINSURANCE;
+    literal LOCAL;
+  }
+  datatype IDINSURANCEschemesObject = String;
+
+  enumeration IDKMEHRschemes {
+    literal IDKMEHR;
+    literal IDIBAN;
+    literal IDSERIALNO;
+    literal LOCAL;
+    literal IDCBE;
+  }
+  datatype IDKMEHRschemesObject = String;
+
+  enumeration IDPATIENTschemes {
+    literal IDPATIENT;
+    literal INSS;
+    literal EIDCARDNO;
+    literal SISCARDNO;
+    literal ISICARDNO;
+    literal LOCAL;
+  }
+  datatype IDPATIENTschemesObject = String;
+
+  enumeration IDPROFESSIONschemes {
+    literal IDMEDEX;
+    literal IDCBE;
+  }
+  datatype IDPROFESSIONschemesObject = String;
+
+  enumeration CDACCESSRIGHTschemes {
+    literal CDACCESSRIGHT;
+    literal LOCAL;
+  }
+  datatype CDACCESSRIGHTschemesObject = String;
+
+  enumeration CDACCESSRIGHTvalues {
+    literal allow;
+    literal disallow;
+  }
+  datatype CDACCESSRIGHTvaluesObject = String;
+
+  enumeration CDACKNOWLEDGMENTvalues {
+    literal always;
+    literal never;
+    literal onerror;
+    literal onsuccess;
+  }
+  datatype CDACKNOWLEDGMENTvaluesObject = String;
+
+  enumeration CDACTSNURSINGvalues {
+    literal NMF001;
+    literal NMF002;
+    literal NMF011;
+    literal NMF012;
+    literal NMF013;
+    literal NMF021;
+    literal NMF022;
+    literal NMF031;
+    literal NMF040;
+    literal NMF041;
+    literal NMF042;
+    literal NMF043;
+    literal NMF044;
+    literal NMF045;
+    literal NMF046;
+    literal NMF047;
+    literal NMF051;
+    literal NMF052;
+    literal NMF061;
+    literal NMF062;
+    literal NMF071;
+    literal NMF072;
+    literal NMF073;
+    literal NMF074;
+    literal NMF081;
+    literal NMF082;
+    literal NMF091;
+    literal NMF092;
+    literal NMF093;
+    literal NMF101;
+    literal NMF111;
+    literal NMF112;
+    literal NMF113;
+    literal NMF114;
+    literal NMF115;
+    literal NMF116;
+    literal NMF121;
+    literal NMF999;
+  }
+  datatype CDACTSNURSINGvaluesObject = String;
+
+  enumeration CDADDRESSschemes {
+    literal CDADDRESS;
+    literal LOCAL;
+  }
+  datatype CDADDRESSschemesObject = String;
+
+  enumeration CDADDRESSvalues {
+    literal home;
+    literal other;
+    literal vacation;
+    literal work;
+    literal careaddress;
+  }
+  datatype CDADDRESSvaluesObject = String;
+
+  enumeration CDADMINISTRATIONUNITvalues {
+    literal _00001;
+    literal _00002;
+    literal _00003;
+    literal _00004;
+    literal _00005;
+    literal _00006;
+    literal _00007;
+    literal _00008;
+    literal _00009;
+    literal _00010;
+    literal _00011;
+    literal _00012;
+    literal _00013;
+    literal _00014;
+    literal _00015;
+    literal _00016;
+    literal _00017;
+    literal _00018;
+    literal _00019;
+    literal _00020;
+    literal _00021;
+    literal _00022;
+    literal _00023;
+    literal _00024;
+    literal _00025;
+    literal _00026;
+    literal _00027;
+    literal _00028;
+    literal _00029;
+    literal _00030;
+    literal cm;
+    literal dropsperminute;
+    literal gm;
+    literal internationalunits;
+    literal mckH;
+    literal mckKgMinute;
+    literal measure;
+    literal mgH;
+    literal mlH;
+    literal tbl;
+    literal tsp;
+    literal untH;
+    literal mg;
+    literal mgMl;
+    literal meq;
+    literal miu;
+    literal iu;
+    literal mmol;
+    literal effervescentTablet;
+    literal micrograms;
+    literal bandage;
+    literal piece;
+    literal box;
+    literal liter;
+    literal syringe;
+    literal ampoule;
+    literal bottle;
+    literal syringeAmpoule;
+  }
+  datatype CDADMINISTRATIONUNITvaluesObject = String;
+
+  datatype CDATCvalues = String;
+
+  enumeration CDAUTONOMYvalues {
+    literal homebound;
+  }
+  datatype CDAUTONOMYvaluesObject = String;
+
+  enumeration CDBALLONDEVICEvalues {
+    literal ballon;
+    literal deb;
+  }
+  datatype CDBALLONDEVICEvaluesObject = String;
+
+  enumeration CDBCRDIFFERENTATIONDEGREEvalues {
+    literal welldifferentiated;
+    literal moderatelydifferentiated;
+    literal poorlydifferentiated;
+    literal undifferentiatedanaplastic;
+    literal tcell;
+    literal bcell;
+    literal nullcell;
+    literal nkcell;
+    literal unknown;
+  }
+  datatype CDBCRDIFFERENTATIONDEGREEvaluesObject = String;
+
+  enumeration CDBEARINGSURFACEvalues {
+    literal metalpoly;
+    literal cerampoly;
+    literal metalmetal;
+    literal ceramceram;
+    literal other;
+  }
+  datatype CDBEARINGSURFACEvaluesObject = String;
+
+  enumeration CDBVTAVAILABLEMATERIALSvalues {
+    literal cytology;
+    literal dna;
+    literal rna;
+    literal proteins;
+    literal correspondingnormaltissue;
+    literal tissue;
+    literal serum;
+    literal plasma;
+    literal blood;
+    literal urine;
+    literal other;
+  }
+  datatype CDBVTAVAILABLEMATERIALSvaluesObject = String;
+
+  enumeration CDBVTCONSERVATIONDELAYvalues {
+    literal lessthan30min;
+    literal morethan30min;
+    literal unknown;
+  }
+  datatype CDBVTCONSERVATIONDELAYvaluesObject = String;
+
+  enumeration CDBVTCONSERVATIONMODEvalues {
+    literal minus20degreesc;
+    literal minus80degreesc;
+    literal minus120degreesorcolder;
+    literal liquidnitrogen;
+    literal inclusioninparaffin;
+    literal other;
+  }
+  datatype CDBVTCONSERVATIONMODEvaluesObject = String;
+
+  enumeration CDBVTLATERALITYvalues {
+    literal left;
+    literal right;
+    literal odd;
+    literal unknown;
+  }
+  datatype CDBVTLATERALITYvaluesObject = String;
+
+  enumeration CDBVTPATIENTOPPOSITIONvalues {
+    literal nopatientopposition;
+  }
+  datatype CDBVTPATIENTOPPOSITIONvaluesObject = String;
+
+  enumeration CDBVTSAMPLETYPEvalues {
+    literal primarytumor;
+    literal metastasis;
+    literal normaltissue;
+    literal other;
+  }
+  datatype CDBVTSAMPLETYPEvaluesObject = String;
+
+  enumeration CDBVTSTATUSvalues {
+    literal saved;
+    literal submitted;
+    literal rejected;
+    literal inactive;
+    literal published;
+  }
+  datatype CDBVTSTATUSvaluesObject = String;
+
+  enumeration CDCARENETACCIDENTTYPEvalues {
+    literal _0;
+    literal _1;
+    literal _2;
+    literal _3;
+  }
+  datatype CDCARENETACCIDENTTYPEvaluesObject = String;
+
+  enumeration CDCARENETAGREEMENTTYPEvalues {
+    literal _0;
+    literal _1;
+  }
+  datatype CDCARENETAGREEMENTTYPEvaluesObject = String;
+
+  enumeration CDCARENETDOCUMENTvalues {
+    literal _0;
+    literal _723000;
+    literal _727100;
+    literal _727200;
+  }
+  datatype CDCARENETDOCUMENTvaluesObject = String;
+
+  enumeration CDCARENETINSURANCYSTATUSvalues {
+    literal _0;
+    literal _1;
+    literal _2;
+    literal _3;
+    literal _4;
+    literal _5;
+  }
+  datatype CDCARENETINSURANCYSTATUSvaluesObject = String;
+
+  enumeration CDCARENETMESSAGEvalues {
+    literal _721000;
+    literal _721100;
+    literal _721200;
+    literal _721900;
+    literal _721999;
+    literal _721008;
+    literal _721009;
+    literal _723000;
+    literal _723900;
+    literal _723999;
+    literal _723009;
+    literal _727100;
+    literal _727200;
+    literal _727008;
+    literal _727009;
+    literal _727208;
+    literal _727209;
+    literal _791000;
+    literal _725000;
+    literal _725008;
+    literal _725009;
+    literal _730000;
+    literal _800000;
+    literal _800900;
+    literal _777000;
+    literal _777900;
+    literal _700000;
+  }
+  datatype CDCARENETMESSAGEvaluesObject = String;
+
+  enumeration CDCARENETMUTATIONINDICATORvalues {
+    literal _0;
+    literal _1;
+    literal _2;
+    literal _3;
+  }
+  datatype CDCARENETMUTATIONINDICATORvaluesObject = String;
+
+  enumeration CDCARENETNATIONALINSURANCEvalues {
+    literal _100;
+    literal _200;
+    literal _300;
+    literal _400;
+    literal _500;
+    literal _600;
+    literal _900;
+  }
+  datatype CDCARENETNATIONALINSURANCEvaluesObject = String;
+
+  enumeration CDCARENETPERSONALPARTvalues {
+    literal code1;
+    literal code2;
+    literal future;
+  }
+  datatype CDCARENETPERSONALPARTvaluesObject = String;
+
+  enumeration CDCARENETREFUSALREASONvalues {
+    literal _100;
+    literal _200;
+    literal _201;
+    literal _300;
+    literal _410;
+    literal _420;
+    literal _500;
+  }
+  datatype CDCARENETREFUSALREASONvaluesObject = String;
+
+  enumeration CDCARENETSISCARDERRORvalues {
+    literal _20;
+    literal _21;
+    literal _22;
+    literal _23;
+    literal _24;
+    literal _26;
+    literal _27;
+    literal _28;
+    literal _29;
+  }
+  datatype CDCARENETSISCARDERRORvaluesObject = String;
+
+  enumeration CDCARENETTHIRDPAYERCONTRACTvalues {
+    literal _0;
+    literal _1;
+  }
+  datatype CDCARENETTHIRDPAYERCONTRACTvaluesObject = String;
+
+  enumeration CDCARENETTYPEvalues {
+    literal _11;
+    literal _12;
+    literal _21;
+    literal _22;
+    literal _91;
+    literal _92;
+    literal _93;
+    literal _94;
+  }
+  datatype CDCARENETTYPEvaluesObject = String;
+
+  enumeration CDCAREPATHvalues {
+    literal _001;
+    literal _002;
+    literal _003;
+    literal _101;
+    literal _102;
+    literal _103;
+    literal _010;
+  }
+  datatype CDCAREPATHvaluesObject = String;
+
+  enumeration CDCERTAINTYvalues {
+    literal excluded;
+    literal probable;
+    literal proven;
+    literal unprobable;
+    literal undefined;
+  }
+  datatype CDCERTAINTYvaluesObject = String;
+
+  datatype CDCHAPTER4CATEGORYvalues = String;
+
+  datatype CDCHAPTER4CRITERIAvalues = String;
+
+  datatype CDCHAPTER4DOCUMENTSEQAPPENDIXvalues = String;
+
+  datatype CDCHAPTER4FORMALINTERPRETATIONvalues = String;
+
+  datatype CDCHAPTER4PARAGRAPHvalues = String;
+
+  datatype CDCHAPTER4VERSESEQAPPENDIXvalues = String;
+
+  datatype CDCHAPTER4VERSEvalues = String;
+
+  datatype CDCIVILSTATEvalues = String;
+
+  enumeration CDCLINICALPLANvalues {
+    literal breastcancerprevention;
+    literal cervixutericancer;
+    literal colrectalcancerprevention;
+    literal primaryprevention;
+    literal prostatecancerprevention;
+    literal gmdplus;
+  }
+  datatype CDCLINICALPLANvaluesObject = String;
+
+  datatype CDCLINICALvalues = String;
+
+  enumeration CDCOMPRESSIONvalues {
+    literal DF;
+    literal GZ;
+    literal Z;
+    literal ZL;
+  }
+  datatype CDCOMPRESSIONvaluesObject = String;
+
+  enumeration CDCONSENTschemes {
+    literal CDCONSENTTYPE;
+    literal LOCAL;
+  }
+  datatype CDCONSENTschemesObject = String;
+
+  enumeration CDCONSENTvalues {
+    literal local;
+    literal prospective;
+    literal retrospective;
+  }
+  datatype CDCONSENTvaluesObject = String;
+
+  enumeration CDCONTACTPERSONvalues {
+    literal mother;
+    literal father;
+    literal child;
+    literal familymember;
+    literal spouse;
+    literal husband;
+    literal partner;
+    literal other;
+    literal brother;
+    literal sister;
+    literal brotherinlaw;
+    literal tutor;
+    literal notary;
+    literal lawyer;
+    literal employer;
+    literal grandparent;
+    literal son;
+    literal daughter;
+    literal grandchild;
+    literal neighbour;
+    literal stepson;
+    literal stepdaughter;
+    literal stepfather;
+    literal stepmother;
+    literal sisterinlaw;
+  }
+  datatype CDCONTACTPERSONvaluesObject = String;
+
+  enumeration CDCONTENTschemes {
+    literal CDLAB;
+    literal CDTECHNICAL;
+    literal CDHCPARTY;
+    literal CDDRUGCNK;
+    literal CDENCOUNTER;
+    literal CDMKGADMISSION;
+    literal CDMKGDISCHARGE;
+    literal CDMKGORIGIN;
+    literal CDMKGREFERRER;
+    literal CDMKGDESTINATION;
+    literal CDLEGALSERVICE;
+    literal CDCONTACTPERSON;
+    literal CDENCOUNTERTYPE;
+    literal CDCARENETACCIDENTTYPE;
+    literal CDCARENETAGREEMENTTYPE;
+    literal CDCARENETSISCARDERROR;
+    literal CDCARENETSOCIALCODE;
+    literal CDCARENETREFUSALREASON;
+    literal CDCARENETNATIONALINSURANCE;
+    literal CDCARENETMESSAGE;
+    literal CDCARENETMUTATIONINDICATOR;
+    literal CDCARENETDOCUMENT;
+    literal CDCARENETINSURANCYSTATUS;
+    literal CDCARENETTYPE;
+    literal CDMAATYPE;
+    literal CDMAAREQUESTTYPE;
+    literal CDMAARESPONSETYPE;
+    literal CDMAAREFUSALJUSTIFICATION;
+    literal CDMAACOVERAGETYPE;
+    literal CDSITE;
+    literal CDINCAPACITY;
+    literal CDENCOUNTERSAFETYISSUE;
+    literal CDEMERGENCYEVALUATION;
+    literal ICD;
+    literal ICPC;
+    literal CDCLINICAL;
+    literal LOCAL;
+    literal CDECAREHAQVALUE;
+    literal CDEBIRTHPREGNANCYORIGIN;
+    literal CDEBIRTHSPECIALVALUES;
+    literal CDEBIRTHCHILDPOSITION;
+    literal CDEBIRTHFOETALMONITORING;
+    literal CDEBIRTHDELIVERYWAY;
+    literal CDEBIRTHCAESEREANINDICATION;
+    literal CDEBIRTHARTIFICIALRESPIRATIONTYPE;
+    literal CDEBIRTHNEONATALDEPTTYPE;
+    literal CDEBIRTHCONGENITALMALFORMATION;
+    literal CDVACCINEINDICATION;
+    literal CDATC;
+    literal CDCAREPATH;
+    literal CDCLINICALPLAN;
+    literal CDPATIENTWILL;
+    literal CDCONSENT;
+    literal CDCHAPTER4PARAGRAPH;
+    literal CDCHAPTER4CATEGORY;
+    literal CDCHAPTER4CRITERIA;
+    literal CDCHAPTER4VERSESEQAPPENDIX;
+    literal CDCHAPTER4DOCUMENTSEQAPPENDIX;
+    literal CDCHAPTER4VERSE;
+    literal CDBVTCONSERVATIONMODE;
+    literal CDBVTCONSERVATIONDELAY;
+    literal CDBVTAVAILABLEMATERIALS;
+    literal CDBCRDIFFERENTATIONDEGREE;
+    literal CDBVTSAMPLETYPE;
+    literal CDBVTLATERALITY;
+    literal CDBVTPATIENTOPPOSITION;
+    literal CDBVTSTATUS;
+    literal CDITEMREG;
+    literal CDSTENTDOMINANCE;
+    literal CDSTENTBRIDGETYPE;
+    literal CDSTENTLESIONTYPE;
+    literal CDSTENTSEGMENT;
+    literal CDSTENTDEVICE;
+    literal CDTUCOPATHOLOGYTYPE;
+    literal CDTUCOSTEMITYPE;
+    literal CDBALLONDEVICE;
+    literal CDDISCHARGETYPE;
+    literal CDREIMBURSEMENTNOMENCLATURE;
+    literal IDSTENTDEVICE;
+    literal CDORTHOTYPE;
+    literal CDORTHODIAGNOSIS;
+    literal CDORTHOAPPROACH;
+    literal CDORTHONAVCOM;
+    literal CDIMPLANTATIONDEVICE;
+    literal CDBEARINGSURFACE;
+    literal CDORTHOGRAFT;
+    literal CDORTHOINTERFACE;
+    literal CDORTHOTECHREVISION;
+    literal CDIMPLANTATIONTYPE;
+    literal CDORTHOKNEEINSERT;
+    literal CDREVCOMPONENT;
+    literal CDITEMMS;
+    literal CDEAN;
+    literal CDMSORIGIN;
+    literal CDMSADAPTATION;
+    literal CDMSMEDICATIONTYPE;
+    literal CDNIHDI;
+    literal CDSNOMED;
+    literal CDDEFIBTYPE;
+    literal CDDEFIBARRHYTHMIA;
+    literal CDDEFIBSYMPTOM;
+    literal CDDEFIBAETIOLOGY;
+    literal CDDEFIBANTECEDENT;
+    literal CDDEFIBPARAM;
+    literal CDDEFIBMEDICALCARE;
+    literal CDDEFIBAFFECTIONTYPE;
+    literal CDDEFIBRISK;
+    literal CDDEFIBINFARCTMOMENT;
+    literal CDDEFIBREVASCULARISATION;
+    literal CDDEFIBDRUGCARE;
+    literal CDDEFIBSYNCOPE;
+    literal CDDEFIBCOMPLICATION;
+    literal CDDEFIBDIAGNOSIS;
+    literal CDDEFIBCONFIG;
+    literal CDDEFIBINDICATION;
+    literal CDDEFIBSURGERY;
+    literal CDDEFIBREASON;
+    literal CDDEFIBFIRM;
+    literal CDDEFIBELECREASON;
+    literal CDDEFIBMODEL;
+    literal CDDEFIBELECTYPE;
+    literal CDDEFIBRESULT;
+    literal CDASASCORE;
+    literal CDQERMIDOPERATIONTYPE;
+    literal CDQERMIDALIGNMENT;
+    literal CDQERMIDCUSTOMINSTRUMENT;
+    literal CDQERMIDORTHOPART;
+    literal CDQERMIDSUBSTITUTE;
+    literal CDQERMIDMODNECKFRONTALVIEW;
+    literal CDQERMIDMODNECKLATERALVIEW;
+    literal CDQERMIDMODNECKOFFSET;
+    literal CDQERMIDMATCATEGORY;
+    literal CDQERMIDMATTYPE;
+    literal CDQERMIDCEMENT;
+    literal CDQERMIDINTERVENTIONSUBTYPE;
+    literal CDMYCARENETJUSTIFICATION;
+    literal CDPMSYMPTOM;
+    literal CDPMECG;
+    literal CDPMAETIOLOGY;
+    literal CDPMINFOPRIMO;
+    literal CDPMSTIMULATION;
+    literal CDPMREASON;
+    literal CDPMABROADINDICATOR;
+    literal CDPMELECTYPE;
+    literal CDPMELECREASON;
+    literal CDPMCARDIOMYOPATHY;
+    literal CDPMDISTURBANCE;
+    literal CDACTSNURSING;
+    literal CDPMINDICATION;
+    literal CDTARDISREGISTRATIONTYPE;
+    literal CDTARDISDIAGNOSIS;
+    literal CDTARDISDRUG;
+    literal CDTARDISDRUGENDREASON;
+    literal CDTARDISDRUGROUTE;
+    literal CDEBIRTHCAESAREANINDICATION;
+    literal CDNIHDIRELATEDSERVICE;
+    literal CDMYCARENETREFUSAL;
+    literal CDISO3950;
+    literal CDTARDISPRODUCTTYPE;
+    literal CDAUTONOMY;
+    literal CDCHAPTER4FORMALINTERPRETATION;
+    literal CDPATIENTWILLRES;
+    literal CDPATIENTWILLHOS;
+    literal CDLEGALREFERENCE;
+    literal CDLEGALTEXT;
+    literal CDFORMALINTERPRETATION;
+    literal CDREIMBURSEMENTTERMPARAMETER;
+    literal CDREIMBURSEMENTCONTEXTENVIRONMENT;
+  }
+  datatype CDCONTENTschemesObject = String;
+
+  enumeration CDCOUNTRYschemes {
+    literal _CDCOUNTRY;
+    literal CDFEDCOUNTRY;
+  }
+  datatype CDCOUNTRYschemesObject = String;
+
+  enumeration CDCOUNTRYvalues {
+    literal ad;
+    literal ae;
+    literal af;
+    literal ag;
+    literal ai;
+    literal al;
+    literal am;
+    literal an;
+    literal ao;
+    literal aq;
+    literal ar;
+    literal arpa;
+    literal as;
+    literal at;
+    literal au;
+    literal aw;
+    literal az;
+    literal ba;
+    literal bb;
+    literal bd;
+    literal be;
+    literal bf;
+    literal bg;
+    literal bh;
+    literal bi;
+    literal bj;
+    literal bm;
+    literal bn;
+    literal bo;
+    literal br;
+    literal bs;
+    literal bt;
+    literal bv;
+    literal bw;
+    literal by;
+    literal bz;
+    literal ca;
+    literal cc;
+    literal cf;
+    literal _cd;
+    literal cg;
+    literal ch;
+    literal ci;
+    literal ck;
+    literal cl;
+    literal cm;
+    literal cn;
+    literal co;
+    literal com;
+    literal cr;
+    literal cs;
+    literal cu;
+    literal cv;
+    literal cx;
+    literal cy;
+    literal cz;
+    literal de;
+    literal dj;
+    literal dk;
+    literal dm;
+    literal _do;
+    literal dz;
+    literal ec;
+    literal edu;
+    literal ee;
+    literal eg;
+    literal eh;
+    literal er;
+    literal es;
+    literal et;
+    literal fi;
+    literal fj;
+    literal fk;
+    literal fm;
+    literal fo;
+    literal fr;
+    literal fx;
+    literal ga;
+    literal gb;
+    literal gd;
+    literal ge;
+    literal gf;
+    literal gh;
+    literal gi;
+    literal gl;
+    literal gm;
+    literal gn;
+    literal gov;
+    literal gp;
+    literal gr;
+    literal gs;
+    literal gt;
+    literal gu;
+    literal gw;
+    literal gy;
+    literal hk;
+    literal hm;
+    literal hn;
+    literal hr;
+    literal ht;
+    literal hu;
+    literal id;
+    literal ie;
+    literal il;
+    literal in;
+    literal _int;
+    literal io;
+    literal iq;
+    literal ir;
+    literal is;
+    literal it;
+    literal jm;
+    literal jo;
+    literal jp;
+    literal ke;
+    literal kg;
+    literal kh;
+    literal ki;
+    literal km;
+    literal kn;
+    literal kp;
+    literal kr;
+    literal kw;
+    literal ky;
+    literal kz;
+    literal la;
+    literal lb;
+    literal lc;
+    literal li;
+    literal lk;
+    literal ls;
+    literal lt;
+    literal lu;
+    literal lv;
+    literal ly;
+    literal ma;
+    literal mc;
+    literal md;
+    literal mg;
+    literal mh;
+    literal mil;
+    literal mk;
+    literal ml;
+    literal mm;
+    literal mn;
+    literal mo;
+    literal mp;
+    literal mq;
+    literal mr;
+    literal ms;
+    literal mt;
+    literal mu;
+    literal mv;
+    literal mw;
+    literal mx;
+    literal my;
+    literal mz;
+    literal na;
+    literal nato;
+    literal nc;
+    literal ne;
+    literal net;
+    literal nf;
+    literal ng;
+    literal ni;
+    literal nl;
+    literal no;
+    literal np;
+    literal nr;
+    literal nt;
+    literal nu;
+    literal nz;
+    literal om;
+    literal org;
+    literal pa;
+    literal pe;
+    literal pf;
+    literal pg;
+    literal ph;
+    literal pk;
+    literal pl;
+    literal pm;
+    literal pn;
+    literal pr;
+    literal pt;
+    literal pw;
+    literal py;
+    literal qa;
+    literal re;
+    literal ro;
+    literal ru;
+    literal rw;
+    literal sa;
+    literal sb;
+    literal sc;
+    literal sd;
+    literal se;
+    literal sg;
+    literal sh;
+    literal si;
+    literal sj;
+    literal sk;
+    literal sl;
+    literal sm;
+    literal sn;
+    literal so;
+    literal sr;
+    literal st;
+    literal su;
+    literal sv;
+    literal sy;
+    literal sz;
+    literal tc;
+    literal td;
+    literal tf;
+    literal tg;
+    literal th;
+    literal tj;
+    literal tk;
+    literal tm;
+    literal tn;
+    literal to;
+    literal tp;
+    literal tr;
+    literal tt;
+    literal tv;
+    literal tw;
+    literal tz;
+    literal ua;
+    literal ug;
+    literal uk;
+    literal um;
+    literal us;
+    literal uy;
+    literal uz;
+    literal va;
+    literal vc;
+    literal ve;
+    literal vg;
+    literal vi;
+    literal vn;
+    literal vu;
+    literal wf;
+    literal ws;
+    literal ye;
+    literal yt;
+    literal yu;
+    literal za;
+    literal zm;
+    literal zr;
+    literal zw;
+  }
+  datatype CDCOUNTRYvaluesObject = String;
+
+  enumeration CDCURRENCYvalues {
+    literal eur;
+  }
+  datatype CDCURRENCYvaluesObject = String;
+
+  enumeration CDDAYPERIODvalues {
+    literal afterbreakfast;
+    literal afterdinner;
+    literal afterlunch;
+    literal aftermeal;
+    literal afternoon;
+    literal beforebreakfast;
+    literal beforedinner;
+    literal beforelunch;
+    literal betweenbreakfastandlunch;
+    literal betweendinnerandsleep;
+    literal betweenlunchanddinner;
+    literal betweenmeals;
+    literal evening;
+    literal morning;
+    literal night;
+    literal thehourofsleep;
+    literal duringbreakfast;
+    literal duringlunch;
+    literal duringdinner;
+  }
+  datatype CDDAYPERIODvaluesObject = String;
+
+  enumeration CDDISCHARGETYPEvalues {
+    literal alive;
+    literal dead;
+  }
+  datatype CDDISCHARGETYPEvaluesObject = String;
+
+  enumeration CDDRUGCNKschemes {
+    literal CDDRUGCNK;
+    literal CDCNKCLUSTER;
+    literal CDAMP;
+  }
+  datatype CDDRUGCNKschemesObject = String;
+
+  datatype CDDRUGCNKvalues = String;
+
+  datatype CDDRUGPRESENTATIONvalues = String;
+
+  datatype CDDRUGROUTEvalues = String;
+
+  enumeration CDEBIRTHARTIFICIALRESPIRATIONTYPEvalues {
+    literal intubation;
+    literal balloonMask;
+  }
+  datatype CDEBIRTHARTIFICIALRESPIRATIONTYPEvaluesObject = String;
+
+  enumeration CDEBIRTHCAESAREANINDICATIONvalues {
+    literal previouscaesareansection;
+    literal breechpresentation;
+    literal transversepresentation;
+    literal foetaldistress;
+    literal dystocienotinlabour;
+    literal dystocieinlabourinsufficientdilatation;
+    literal dystocieinlabourinsufficientexpulsion;
+    literal maternalindication;
+    literal abruptioplacentae;
+    literal requestedbypatient;
+    literal multiplepregnancy;
+    literal other;
+  }
+  datatype CDEBIRTHCAESAREANINDICATIONvaluesObject = String;
+
+  enumeration CDEBIRTHCHILDPOSITIONvalues {
+    literal headDown;
+    literal otherHead;
+    literal breech;
+    literal transverse;
+  }
+  datatype CDEBIRTHCHILDPOSITIONvaluesObject = String;
+
+  enumeration CDEBIRTHCONGENITALMALFORMATIONvalues {
+    literal anencephalia;
+    literal spinabifida;
+    literal hydrocephalia;
+    literal splitlippalate;
+    literal analatresia;
+    literal membersreduction;
+    literal diaphragmatichernia;
+    literal omphalocele;
+    literal gastroschisis;
+    literal transpositiegrotevaten;
+    literal afwijkinglong;
+    literal atresiedundarm;
+    literal nieragenese;
+    literal craniosynostosis;
+    literal turnersyndrom;
+    literal obstructievedefecten;
+    literal tetralogiefallot;
+    literal oesofagaleatresie;
+    literal atresieanus;
+    literal twintotwintransfusionsyndrome;
+    literal skeletdysplasie;
+    literal hydropsfoetalis;
+    literal polymultikystischenierdysplasie;
+    literal VSD;
+    literal atresiegalwegen;
+    literal hypospadias;
+    literal cystischhygroma;
+    literal trisomie21;
+    literal trisomie18;
+    literal trisomie13;
+    literal other;
+  }
+  datatype CDEBIRTHCONGENITALMALFORMATIONvaluesObject = String;
+
+  enumeration CDEBIRTHDELIVERYWAYvalues {
+    literal spontaneous;
+    literal vacuumExtraction;
+    literal forceps;
+    literal primaryCaesarean;
+    literal secondaryCaesarean;
+    literal vaginalBreech;
+  }
+  datatype CDEBIRTHDELIVERYWAYvaluesObject = String;
+
+  enumeration CDEBIRTHFOETALMONITORINGvalues {
+    literal CTG;
+    literal STAN;
+    literal MBE;
+    literal intermittentAuscultation;
+  }
+  datatype CDEBIRTHFOETALMONITORINGvaluesObject = String;
+
+  enumeration CDEBIRTHNEONATALDEPTTYPEvalues {
+    literal nstar;
+    literal nic;
+  }
+  datatype CDEBIRTHNEONATALDEPTTYPEvaluesObject = String;
+
+  enumeration CDEBIRTHPLACEvalues {
+    literal home;
+    literal hospital;
+    literal other;
+  }
+  datatype CDEBIRTHPLACEvaluesObject = String;
+
+  enumeration CDEBIRTHPREGNANCYORIGINvalues {
+    literal spontaneous;
+    literal hormonal;
+    literal IVF;
+    literal ICSI;
+  }
+  datatype CDEBIRTHPREGNANCYORIGINvaluesObject = String;
+
+  enumeration CDEBIRTHSPECIALVALUESvalues {
+    literal noanswer;
+    literal unknown;
+    literal nottested;
+  }
+  datatype CDEBIRTHSPECIALVALUESvaluesObject = String;
+
+  enumeration CDECGvalues {
+    literal VR;
+    literal AR;
+    literal PR;
+    literal QRS;
+    literal QT;
+    literal QTc;
+    literal P;
+    literal R;
+    literal T;
+  }
+  datatype CDECGvaluesObject = String;
+
+  enumeration CDEMERGENCYEVALUATIONvalues {
+    literal couldwaitafterwe;
+    literal noturgent;
+    literal urgent;
+    literal lifethreathning;
+  }
+  datatype CDEMERGENCYEVALUATIONvaluesObject = String;
+
+  enumeration CDEMPLOYMENTSITUATIONvalues {
+    literal selfemployed;
+    literal employed;
+    literal civilservant;
+  }
+  datatype CDEMPLOYMENTSITUATIONvaluesObject = String;
+
+  enumeration CDENCODINGvalues {
+    literal B64;
+    literal TXT;
+  }
+  datatype CDENCODINGvaluesObject = String;
+
+  enumeration CDENCOUNTERSAFETYISSUEvalues {
+    literal verbal;
+    literal fysical;
+    literal material;
+    literal notificationtopolice;
+  }
+  datatype CDENCOUNTERSAFETYISSUEvaluesObject = String;
+
+  enumeration CDENCOUNTERvalues {
+    literal homevisit;
+    literal consultation;
+    literal telephonicconsultation;
+    literal emergency;
+    literal hospital;
+    literal oneday;
+    literal technical;
+    literal resthomevisit;
+    literal consult;
+    literal multidisciplinaryconsult;
+  }
+  datatype CDENCOUNTERvaluesObject = String;
+
+  enumeration CDENCRYPTIONACTORvalues {
+    literal NIHII;
+    literal NIHIIHOSPITAL;
+    literal NIHIIPHARMACY;
+    literal CBE;
+    literal INSS;
+    literal EHP;
+    literal SSIN;
+  }
+  datatype CDENCRYPTIONACTORvaluesObject = String;
+
+  enumeration CDENCRYPTIONMETHODschemes {
+    literal CDENCRYPTIONMETHOD;
+  }
+  datatype CDENCRYPTIONMETHODschemesObject = String;
+
+  enumeration CDENCRYPTIONMETHODvalues {
+    literal CMS;
+  }
+  datatype CDENCRYPTIONMETHODvaluesObject = String;
+
+  enumeration CDERRORMYCARENETschemes {
+    literal CDERROR;
+    literal CDREFUSALMYCARENET;
+  }
+  datatype CDERRORMYCARENETschemesObject = String;
+
+  enumeration CDERRORschemes {
+    literal CDERROR;
+    literal LOCAL;
+  }
+  datatype CDERRORschemesObject = String;
+
+  datatype CDERRORvalues = String;
+
+  enumeration CDEXTERNALSOURCEschemes {
+    literal CDEXTERNALSOURCE;
+    literal LOCAL;
+  }
+  datatype CDEXTERNALSOURCEschemesObject = String;
+
+  datatype CDEXTERNALSOURCEvalues = String;
+
+  enumeration CDFEDCOUNTRYvalues {
+    literal al;
+    literal ad;
+    literal de;
+    literal at;
+    literal bg;
+    literal cy;
+    literal dk;
+    literal es;
+    literal fi;
+    literal fr;
+    literal yt;
+    literal re;
+    literal pm;
+    literal gp;
+    literal mq;
+    literal gf;
+    literal nc;
+    literal pf;
+    literal wf;
+    literal gb;
+    literal bm;
+    literal vg;
+    literal tc;
+    literal ai;
+    literal ky;
+    literal ms;
+    literal fk;
+    literal pn;
+    literal lu;
+    literal gr;
+    literal hu;
+    literal ie;
+    literal is;
+    literal li;
+    literal mt;
+    literal mc;
+    literal no;
+    literal pt;
+    literal ro;
+    literal sm;
+    literal se;
+    literal ch;
+    literal it;
+    literal nl;
+    literal an;
+    literal cs;
+    literal va;
+    literal lv;
+    literal ee;
+    literal lt;
+    literal pl;
+    literal cz;
+    literal sk;
+    literal by;
+    literal ua;
+    literal md;
+    literal ru;
+    literal hr;
+    literal si;
+    literal mk;
+    literal ba;
+    literal be;
+    literal me;
+    literal rs;
+    literal xk;
+    literal xi;
+    literal xs;
+    literal lk;
+    literal tw;
+    literal sg;
+    literal kr;
+    literal in;
+    literal id;
+    literal jp;
+    literal la;
+    literal kh;
+    literal my;
+    literal np;
+    literal ph;
+    literal cn;
+    literal kp;
+    literal vn;
+    literal mn;
+    literal mv;
+    literal bt;
+    literal bn;
+    literal kz;
+    literal kg;
+    literal uz;
+    literal tj;
+    literal tm;
+    literal th;
+    literal mm;
+    literal bd;
+    literal am;
+    literal az;
+    literal af;
+    literal sa;
+    literal ge;
+    literal iq;
+    literal ir;
+    literal il;
+    literal jo;
+    literal lb;
+    literal pk;
+    literal ae;
+    literal sy;
+    literal tr;
+    literal kw;
+    literal om;
+    literal qa;
+    literal bh;
+    literal ye;
+    literal tl;
+    literal ps;
+    literal ls;
+    literal bw;
+    literal bi;
+    literal cm;
+    literal cf;
+    literal _cd;
+    literal cg;
+    literal bf;
+    literal ci;
+    literal bj;
+    literal et;
+    literal ga;
+    literal gm;
+    literal gh;
+    literal gn;
+    literal mu;
+    literal lr;
+    literal ml;
+    literal sn;
+    literal ne;
+    literal ng;
+    literal ug;
+    literal mg;
+    literal za;
+    literal rw;
+    literal sl;
+    literal so;
+    literal sz;
+    literal tz;
+    literal td;
+    literal tg;
+    literal zm;
+    literal ke;
+    literal gq;
+    literal gw;
+    literal cv;
+    literal mz;
+    literal ao;
+    literal sc;
+    literal km;
+    literal zw;
+    literal dj;
+    literal st;
+    literal er;
+    literal dz;
+    literal eg;
+    literal ly;
+    literal ma;
+    literal mr;
+    literal sd;
+    literal tn;
+    literal mw;
+    literal na;
+    literal eh;
+    literal sh;
+    literal ca;
+    literal us;
+    literal vi;
+    literal pr;
+    literal gu;
+    literal as;
+    literal cr;
+    literal cu;
+    literal gt;
+    literal hn;
+    literal jm;
+    literal mx;
+    literal ni;
+    literal pa;
+    literal ht;
+    literal _do;
+    literal sv;
+    literal tt;
+    literal bb;
+    literal bs;
+    literal gd;
+    literal dm;
+    literal lc;
+    literal vc;
+    literal bz;
+    literal kn;
+    literal ag;
+    literal ar;
+    literal bo;
+    literal br;
+    literal cl;
+    literal co;
+    literal ec;
+    literal py;
+    literal pe;
+    literal uy;
+    literal ve;
+    literal gy;
+    literal sr;
+    literal mh;
+    literal au;
+    literal hm;
+    literal nz;
+    literal nu;
+    literal tk;
+    literal ck;
+    literal ws;
+    literal nr;
+    literal to;
+    literal fj;
+    literal pg;
+    literal tv;
+    literal ki;
+    literal sb;
+    literal vu;
+    literal pw;
+    literal fm;
+    literal mp;
+    literal xr;
+    literal xa;
+    literal xe;
+    literal gg;
+    literal im;
+    literal je;
+    literal aq;
+    literal aw;
+    literal ax;
+    literal bq;
+  }
+  datatype CDFEDCOUNTRYvaluesObject = String;
+
+  enumeration CDFORMULARYschemes {
+    literal CDFORMULARY;
+    literal CDFORMULARYREFERENCE;
+  }
+  datatype CDFORMULARYschemesObject = String;
+
+  enumeration CDGALENICFORMschemes {
+    literal CDDRUGPRESENTATION;
+    literal CDMAGISTRALFORM;
+  }
+  datatype CDGALENICFORMschemesObject = String;
+
+  enumeration CDHCPARTYschemes {
+    literal CDHCPARTY;
+    literal CDAPPLICATION;
+    literal CDENCRYPTIONACTOR;
+    literal CDROLE;
+    literal LOCAL;
+  }
+  datatype CDHCPARTYschemesObject = String;
+
+  enumeration CDHCPARTYvalues {
+    literal deptanatomopathology;
+    literal deptanesthesiology;
+    literal deptbacteriology;
+    literal deptcardiology;
+    literal deptdermatology;
+    literal deptdietetics;
+    literal deptemergency;
+    literal deptgastroenterology;
+    literal deptgeneralpractice;
+    literal deptgenetics;
+    literal deptgeriatry;
+    literal deptgynecology;
+    literal depthematology;
+    literal deptintensivecare;
+    literal deptkinesitherapy;
+    literal deptlaboratory;
+    literal deptmedicine;
+    literal deptmolecularbiology;
+    literal deptneonatalogy;
+    literal deptnephrology;
+    literal deptneurology;
+    literal deptnte;
+    literal deptnuclear;
+    literal deptoncology;
+    literal deptophtalmology;
+    literal deptpediatry;
+    literal deptpharmacy;
+    literal deptphysiotherapy;
+    literal deptpneumology;
+    literal deptpsychiatry;
+    literal deptradiology;
+    literal deptradiotherapy;
+    literal deptrhumatology;
+    literal deptrheumatology;
+    literal deptstomatology;
+    literal deptsurgery;
+    literal depturology;
+    literal orghospital;
+    literal orginsurance;
+    literal orglaboratory;
+    literal orgpractice;
+    literal orgpublichealth;
+    literal orgpharmacy;
+    literal persbiologist;
+    literal persdentist;
+    literal persnurse;
+    literal persparamedical;
+    literal perspharmacist;
+    literal persphysician;
+    literal perssocialworker;
+    literal perstechnician;
+    literal persadministrative;
+    literal persmidwife;
+    literal ecaresafe;
+    literal application;
+    literal hub;
+    literal deptorthopedy;
+    literal deptalgology;
+    literal deptcardiacsurgery;
+    literal depthandsurgery;
+    literal deptmaxillofacialsurgery;
+    literal deptpediatricsurgery;
+    literal deptplasticandreparatorysurgery;
+    literal deptthoracicsurgery;
+    literal deptvascularsurgery;
+    literal deptvisceraldigestiveabdominalsurgery;
+    literal deptdentistry;
+    literal deptdiabetology;
+    literal deptendocrinology;
+    literal deptoccupationaltherapy;
+    literal deptmajorburns;
+    literal deptinfectiousdisease;
+    literal deptspeechtherapy;
+    literal deptsportsmedecine;
+    literal deptphysicalmedecine;
+    literal depttropicalmedecine;
+    literal deptneurosurgery;
+    literal deptnutritiondietetics;
+    literal deptobstetrics;
+    literal deptchildandadolescentpsychiatry;
+    literal deptpodiatry;
+    literal deptpsychology;
+    literal deptrevalidation;
+    literal deptsenology;
+    literal deptsocialservice;
+    literal deptpediatricintensivecare;
+    literal deptpalliativecare;
+    literal depttoxicology;
+    literal persambulancefirstaid;
+    literal persaudician;
+    literal persaudiologist;
+    literal perscaregiver;
+    literal persdietician;
+    literal perseducator;
+    literal perslogopedist;
+    literal persoccupationaltherapist;
+    literal persorthopedist;
+    literal persorthoptist;
+    literal persoptician;
+    literal perspharmacyassistant;
+    literal persphysiotherapist;
+    literal perspodologist;
+    literal perspracticalnurse;
+    literal perspsychologist;
+    literal orgprimaryhealthcarecenter;
+    literal guardpost;
+    literal groupofphysicianssameaddress;
+    literal groupofphysiciansdifferentaddress;
+    literal groupofnurses;
+    literal certificateholder;
+    literal perstrussmaker;
+    literal patient;
+    literal orgprevention;
+    literal persorthotist;
+    literal perspatientdriver;
+    literal perspharmacistclinicalbiologist;
+    literal deptnursing;
+    literal persoraldentalhygienist;
+    literal persclinicalpsychologist;
+    literal persclinicalorthopedagogist;
+    literal orgretirementhome;
+    literal orgrevalidationcenter;
+    literal orgshelteredliving;
+    literal orgpsychiatriccarehome;
+    literal orgpolyclinic;
+    literal persappliedpsychbachelor;
+    literal persfamilysciencebachelor;
+    literal persgerontologymaster;
+    literal persorthopedagogistmaster;
+    literal perspsychomotortherapymaster;
+    literal persreadaptationbachelor;
+    literal perspedagogybachelor;
+    literal deptpsychogeriatry;
+    literal deptabdpelvrehabandperinatalphysiotherapy;
+    literal deptacutemedicine;
+    literal deptadultpsychiatry;
+    literal deptaestheticsurgery;
+    literal deptanesthesiaandresuscitation;
+    literal deptaudiology;
+    literal deptcardiovascularphysiotherapy;
+    literal deptclinicalbiology;
+    literal deptclinicalgenetics;
+    literal deptclinicalhematology;
+    literal deptclinicalinfectiology;
+    literal deptclinicalorthopedagogy;
+    literal deptclinicalpsychology;
+    literal deptdermatovenereology;
+    literal deptdiabeticeducation;
+    literal deptendocrinodiabetology;
+    literal deptforensicpsychiatry;
+    literal deptfunctionaldisabledrehabilitation;
+    literal deptgynecologyobstetrics;
+    literal depthealthdatamanagement;
+    literal depthearingaidfitting;
+    literal depthospitalpharmacy;
+    literal deptinsurancemedicine;
+    literal deptintensiveemergencycare;
+    literal deptinternalmedicine;
+    literal deptinvitronuclear;
+    literal deptlegalmedecine;
+    literal deptlogopedy;
+    literal deptmanualtherapy;
+    literal deptmedicalmicrobiology;
+    literal deptneurologicalphysiotherapy;
+    literal deptneuropsychiatry;
+    literal deptnonsurgicalaestheticmedicine;
+    literal deptoccupationalmedicine;
+    literal deptorthodontics;
+    literal deptorthopticsoptometry;
+    literal deptpediatrichematologyoncology;
+    literal deptpediatricneurology;
+    literal deptpediatricphysiotherapy;
+    literal deptperiodontology;
+    literal deptperioperativecare;
+    literal deptpodology;
+    literal deptradiotherapyoncology;
+    literal deptrespiratoryphysiotherapy;
+    literal persabdpelvrehabandperinatalphysiotherapist;
+    literal persadultpsychiatrist;
+    literal persaestheticsurger;
+    literal persambulancedriver;
+    literal persanathomopathologist;
+    literal persanesthesistandresuscitation;
+    literal perscardiologist;
+    literal perscardiovascularphysiotherapist;
+    literal perschildandadolescentpsychiatrist;
+    literal persclinialhematologist;
+    literal persclinicalbiologist;
+    literal persclinicalinfectiologist;
+    literal persdentalhygienist;
+    literal persdermatovenereologist;
+    literal persdiabeticeducator;
+    literal persdiabetologist;
+    literal persemergencyphycisian;
+    literal persendocrinodiabetologist;
+    literal persforensicpsychiatrust;
+    literal persgastroenterologist;
+    literal persgeneralphysician;
+    literal persgeriatrist;
+    literal pershealthdatamanagemer;
+    literal pershospitalpharmacist;
+    literal persinsurancephysician;
+    literal persinternalphysician;
+    literal perslabtechnologist;
+    literal perslegalphysician;
+    literal persmanualtherapist;
+    literal persmedicalimaging;
+    literal persmedicalmicrobiologist;
+    literal persneonatologist;
+    literal persnephrologist;
+    literal persneurologicalphysiotherapist;
+    literal persneurologist;
+    literal persneuropsychiatrist;
+    literal persneurosurger;
+    literal persnonsurgicalaestheticphysician;
+    literal persoccupationalphysician;
+    literal personcologist;
+    literal persophthalmologist;
+    literal persoralmaxillofacialsurger;
+    literal persorthodontist;
+    literal persotolaryngologist;
+    literal perspediatrichematologistoncologist;
+    literal perspediatrician;
+    literal perspediatricneurologist;
+    literal perspediatricphysiotherapist;
+    literal persperiodontologist;
+    literal persphysicalphysician;
+    literal perspneumologist;
+    literal persprothesist;
+    literal perspsychatrist;
+    literal persrespiratoryphysiotherapist;
+    literal persrheumatologist;
+    literal persstomatologist;
+    literal perssurger;
+    literal persurologist;
+    literal persoptometrist;
+    literal persmobilityimprover;
+    literal persbandagistorthosiologist;
+    literal persprosthesiologist;
+    literal persshoetechnologist;
+    literal orgpharmacyinvoicingoffice;
+  }
+  datatype CDHCPARTYvaluesObject = String;
+
+  datatype CDHEADINGLABvalues = String;
+
+  enumeration CDHEADINGREGvalues {
+    literal coronaryanatomy;
+    literal chapter4;
+    literal nonBiologic;
+    literal bmi;
+    literal primarykneeprocedure;
+    literal approachtechnic;
+    literal instrumentation;
+    literal orthopedicanatomy;
+    literal _interface;
+    literal revisionplan;
+    literal material;
+    literal notifiedMaterial;
+    literal notNotifiedMaterial;
+    literal notNotifiedOrthoDevice;
+    literal criteria;
+    literal comorbidities;
+    literal comorbiditiesinformation;
+    literal results;
+    literal resynchronisationinfo;
+    literal crtp;
+    literal infiltration;
+    literal das28;
+    literal haq;
+    literal posology;
+  }
+  datatype CDHEADINGREGvaluesObject = String;
+
+  enumeration CDHEADINGschemes {
+    literal CDHEADING;
+    literal CDHEADINGLAB;
+    literal CDSITE;
+    literal LOCAL;
+    literal CDHEADINGREG;
+  }
+  datatype CDHEADINGschemesObject = String;
+
+  enumeration CDHEADINGvalues {
+    literal assessment;
+    literal clinical;
+    literal clinicalplan;
+    literal subjective;
+    literal technical;
+    literal technicalplan;
+    literal treatment;
+    literal userdefined;
+    literal history;
+    literal familyhistory;
+    literal prescription;
+    literal medication;
+    literal anamnesis;
+    literal examination;
+    literal plan;
+    literal outcomeevaluation;
+  }
+  datatype CDHEADINGvaluesObject = String;
+
+  enumeration CDIMPLANTATIONDEVICEvalues {
+    literal spacer;
+    literal hipprosthesis;
+    literal kneeprosthesis;
+  }
+  datatype CDIMPLANTATIONDEVICEvaluesObject = String;
+
+  enumeration CDIMPLANTATIONTYPEvalues {
+    literal unimedial;
+    literal unilateral;
+    literal bicompartimental;
+    literal femoropatellar;
+    literal totalcr;
+    literal totalps;
+    literal totalcck;
+    literal hinge;
+    literal totaluc;
+    literal other;
+    literal totalprosthesis;
+    literal totalprosthesisdualmobility;
+    literal hemiprosthesismonoblock;
+    literal hemiprosthesisbipolar;
+    literal bicruciateretaining;
+    literal hemiprosthesismodular;
+    literal resurfacingfemhemi;
+    literal resurfacingfemcup;
+    literal resurfacingpartial;
+    literal resurfacingpartialfemcondyle;
+  }
+  datatype CDIMPLANTATIONTYPEvaluesObject = String;
+
+  enumeration CDINCAPACITYREASONvalues {
+    literal sickness;
+    literal accident;
+    literal family;
+    literal other;
+    literal careencounter;
+    literal illness;
+    literal hospitalisation;
+    literal pregnancy;
+    literal workaccident;
+    literal occupationaldisease;
+    literal traveltofromworkaccident;
+  }
+  datatype CDINCAPACITYREASONvaluesObject = String;
+
+  enumeration CDINCAPACITYvalues {
+    literal work;
+    literal swim;
+    literal sport;
+    literal school;
+    literal schoolsports;
+    literal travel;
+    literal vote;
+    literal heavyphysicalactivity;
+  }
+  datatype CDINCAPACITYvaluesObject = String;
+
+  enumeration CDINNCLUSTERschemes {
+    literal CDINNCLUSTER;
+    literal CDVMPGROUP;
+  }
+  datatype CDINNCLUSTERschemesObject = String;
+
+  datatype CDINNCLUSTERvalues = String;
+
+  enumeration CDITEMBVTvalues {
+    literal referenceid;
+    literal patientopposition;
+    literal sample;
+    literal biopsynumber;
+    literal technicalremarks;
+    literal lab;
+    literal error;
+    literal status;
+  }
+  datatype CDITEMBVTvaluesObject = String;
+
+  enumeration CDITEMCARENETvalues {
+    literal accidenttype;
+    literal advisingphysician;
+    literal agreement;
+    literal authorisedextensionenddatetime;
+    literal begindatetime;
+    literal billingdestinationnumber;
+    literal insurancydetails;
+    literal insurancystatus;
+    literal messagenumber;
+    literal messagetype;
+    literal missingdocument;
+    literal mutationbegindatetime;
+    literal mutationdestination;
+    literal nationalinsurance;
+    literal otheradmission;
+    literal protectionmeasure;
+    literal refusalreason;
+    literal requestedextensiondatetime;
+    literal requestedextensionenddatetime;
+    literal siscardadjustment;
+    literal siscarderror;
+    literal socialcategory;
+  }
+  datatype CDITEMCARENETvaluesObject = String;
+
+  enumeration CDITEMEBIRTHvalues {
+    literal multiparity;
+    literal samesex;
+    literal stillborn;
+    literal birthplace;
+    literal birthrank;
+    literal partusnumber;
+    literal beforepregnancyweight;
+    literal atdeliveryweight;
+    literal height;
+    literal previouschildbirth;
+    literal previousbornalive;
+    literal lastbabybirthdate;
+    literal intermediatestillborndelivery;
+    literal previouscaesarean;
+    literal parity;
+    literal pregnancyorigin;
+    literal hypertensiondiagnose;
+    literal diabetesdiagnose;
+    literal HIVdiagnose;
+    literal pregnancyduration;
+    literal childposition;
+    literal inductiondelivery;
+    literal epiduralanalgesia;
+    literal rachianalagesia;
+    literal foetalmonitoring;
+    literal streptococcusbcolonization;
+    literal intrapartalsbgprophylaxis;
+    literal deliveryway;
+    literal episiotomy;
+    literal caesareanindication;
+    literal breastfeeding;
+    literal atbirthweight;
+    literal apgarscore1;
+    literal apgarscore5;
+    literal artificialrespiration;
+    literal neonataldept;
+    literal congenitalmalformation;
+    literal othermedicalrisk;
+  }
+  datatype CDITEMEBIRTHvaluesObject = String;
+
+  enumeration CDITEMMAAvalues {
+    literal agreementtype;
+    literal requesttype;
+    literal responsetype;
+    literal agreementstartdate;
+    literal agreementenddate;
+    literal consultationstartdate;
+    literal consultationenddate;
+    literal careproviderreference;
+    literal iorequestreference;
+    literal decisionreference;
+    literal refusaljustification;
+    literal chapter4reference;
+    literal chapter4annexreference;
+    literal unitnumber;
+    literal strength;
+    literal restunitnumber;
+    literal reststrength;
+    literal orphandrugdeliveryplace;
+    literal orphandrugdeliveryid;
+    literal coveragetype;
+  }
+  datatype CDITEMMAAvaluesObject = String;
+
+  enumeration CDITEMMSvalues {
+    literal origin;
+    literal adaptationflag;
+    literal medicationuse;
+    literal medicationtype;
+    literal begincondition;
+    literal endcondition;
+  }
+  datatype CDITEMMSvaluesObject = String;
+
+  enumeration CDITEMMYCARENETvalues {
+    literal fee;
+    literal financialcontract;
+    literal patientfee;
+    literal payment;
+    literal reimbursement;
+    literal refusal;
+    literal patientpaid;
+    literal supplement;
+    literal paymentreceivingparty;
+    literal internship;
+    literal documentidentity;
+    literal invoicingnumber;
+    literal reimbursementFpssi;
+    literal reimbursementPswc;
+    literal umc;
+    literal mediprimanumber;
+    literal pswc;
+    literal treatmentreason;
+    literal agreementenddate;
+    literal agreementstartdate;
+    literal agreementtype;
+    literal consultationenddate;
+    literal consultationstartdate;
+    literal authorisationtype;
+    literal decisionreference;
+    literal orphandrugdeliveryplace;
+    literal refusaljustification;
+    literal reststrength;
+    literal restunitnumber;
+    literal legalbasis;
+    literal legalunitnumber;
+    literal legalstrength;
+    literal istrialperiod;
+    literal closurejustification;
+  }
+  datatype CDITEMMYCARENETvaluesObject = String;
+
+  enumeration CDITEMREGvalues {
+    literal isinitialintervention;
+    literal dominance;
+    literal existingbridge;
+    literal observedlesion;
+    literal segment;
+    literal totaltreatedlength;
+    literal bloodvesseldiameter;
+    literal procedureDevice;
+    literal contrastproductused;
+    literal reimbursementnomenclaturetype;
+    literal interventionType;
+    literal interventionSite;
+    literal approach;
+    literal navigationcomputer;
+    literal interventionDevice;
+    literal bearingsurface;
+    literal graftused;
+    literal acetabularinterface;
+    literal femoralinterface;
+    literal stem;
+    literal cup;
+    literal head;
+    literal neck;
+    literal insert;
+    literal prosthesisOther;
+    literal brand;
+    literal producer;
+    literal size;
+    literal revisiontechnic;
+    literal kneeimplanttype;
+    literal kneeinsert;
+    literal tibialinterface;
+    literal patellarinterface;
+    literal patella;
+    literal femur;
+    literal tibia;
+    literal tickness;
+    literal kneeprosthesis;
+    literal revisioncomponent;
+    literal doctorsremark;
+    literal resynchronisation;
+    literal pacingindication;
+    literal issecondoperator;
+    literal postpcitimi;
+    literal poststenosis;
+    literal infiltration;
+    literal operationType;
+    literal alignment;
+    literal custominstrumentation;
+    literal substitute;
+    literal modularneck;
+    literal materialsremark;
+    literal orthoDevice;
+    literal devicename;
+    literal distributor;
+    literal manufacturer;
+    literal femoralreplacement;
+    literal acetabularreplacement;
+    literal revisedcomponent;
+    literal cardioversion;
+    literal motivation;
+    literal criteriacomments;
+    literal comorbiditiescomments;
+    literal informationprimo;
+    literal lvef;
+    literal qrs;
+    literal diameter;
+    literal cardiacasynchrony;
+    literal indication;
+    literal registrationType;
+    literal declarationdas28;
+    literal declarationhaq;
+    literal declarationinfiltration;
+    literal declarationmedication;
+    literal substance;
+    literal medicationstopinfo;
+    literal chapter4;
+    literal dosis;
+    literal frequency;
+    literal route;
+  }
+  datatype CDITEMREGvaluesObject = String;
+
+  enumeration CDITEMschemes {
+    literal CDITEM;
+    literal CDITEMMAA;
+    literal CDITEMCARENET;
+    literal CDLAB;
+    literal CDTECHNICAL;
+    literal CDCONTACTPERSON;
+    literal ICD;
+    literal ICPC;
+    literal LOCAL;
+    literal CDVACCINE;
+    literal CDECG;
+    literal CDECARECLINICAL;
+    literal CDECARELAB;
+    literal CDECAREHAQ;
+    literal CDITEMEBIRTH;
+    literal CDPARAMETER;
+    literal CDITEMBVT;
+    literal CDBVTAVAILABLEMATERIALS;
+    literal CDBVTCONSERVATIONDELAY;
+    literal CDBVTCONSERVATIONMODE;
+    literal CDBVTSAMPLETYPE;
+    literal CDBCRDIFFERENTATIONDEGREE;
+    literal CDBVTLATERALITY;
+    literal CDBVTPATIENTOPPOSITION;
+    literal CDBVTSTATUS;
+    literal CDITEMREG;
+    literal CDITEMMYCARENET;
+    literal CDDEFIBDIAGNOSIS;
+    literal CDACTSNURSING;
+    literal CDQERMIDINTERVENTIONTYPE;
+  }
+  datatype CDITEMschemesObject = String;
+
+  enumeration CDITEMvalues {
+    literal admissiontype;
+    literal adr;
+    literal allergy;
+    literal autonomy;
+    literal bloodtransfusionrefusal;
+    literal clinical;
+    literal complaint;
+    literal complementaryproduct;
+    literal conclusion;
+    literal contactperson;
+    literal dischargedatetime;
+    literal dischargedestination;
+    literal dischargetype;
+    literal emergencyevaluation;
+    literal encounterdatetime;
+    literal encounterlegalservice;
+    literal encounterlocation;
+    literal encounterresponsible;
+    literal encountersafetyissue;
+    literal encountertype;
+    literal evolution;
+    literal expirationdatetime;
+    literal gmdmanager;
+    literal habit;
+    literal hcpartyavailability;
+    literal healthcareelement;
+    literal healthissue;
+    literal incapacity;
+    literal lab;
+    literal medication;
+    literal ntbr;
+    literal referrer;
+    literal referringtype;
+    literal reimbursementcertificate;
+    literal requestdatetime;
+    literal requesteddecisionsharing;
+    literal requesteddischargedestination;
+    literal requestedencountertype;
+    literal requestedrecipient;
+    literal requestnumber;
+    literal requestor;
+    literal risk;
+    literal socialrisk;
+    literal specimendatetime;
+    literal technical;
+    literal transactionreason;
+    literal transcriptionist;
+    literal transferdatetime;
+    literal treatment;
+    literal vaccine;
+    literal actionplan;
+    literal acts;
+    literal careplansubscription;
+    literal contacthcparty;
+    literal diagnosis;
+    literal familyrisk;
+    literal healthcareapproach;
+    literal insurancystatus;
+    literal memberinsurancystatus;
+    literal parameter;
+    literal patientwill;
+    literal professionalrisk;
+    literal encounternumber;
+    literal claim;
+    literal outcome;
+    literal agreementwithpatient;
+    literal patientcooperation;
+    literal reimbursementclass;
+    literal financialcontract;
+    literal justification;
+    literal _result;
+    literal agreedtreatment;
+    literal membership;
+    literal problem;
+  }
+  datatype CDITEMvaluesObject = String;
+
+  datatype CDLABvalues = String;
+
+  enumeration CDLEGALSERVICEvalues {
+    literal _190;
+    literal _200;
+    literal _210;
+    literal _220;
+    literal _230;
+    literal _240;
+    literal _250;
+    literal _260;
+    literal _270;
+    literal _280;
+    literal _290;
+    literal _300;
+    literal _320;
+    literal _340;
+    literal _350;
+    literal _360;
+    literal _370;
+    literal _380;
+    literal _390;
+    literal _400;
+    literal _410;
+    literal _420;
+    literal _430;
+    literal _440;
+    literal _450;
+    literal _460;
+    literal _470;
+    literal _480;
+    literal _490;
+  }
+  datatype CDLEGALSERVICEvaluesObject = String;
+
+  enumeration CDLIFECYCLEvalues {
+    literal aborted;
+    literal active;
+    literal added;
+    literal administrated;
+    literal cancelled;
+    literal completed;
+    literal corrected;
+    literal delivered;
+    literal substituted;
+    literal inactive;
+    literal planned;
+    literal prescribed;
+    literal reported;
+    literal refused;
+    literal switched;
+    literal suspended;
+    literal stopped;
+    literal excluded;
+    literal notpresent;
+    literal ordered;
+    literal scheduled;
+    literal todo;
+    literal postponed;
+    literal pending;
+    literal expected;
+    literal obtained;
+    literal proposed;
+    literal retracted;
+  }
+  datatype CDLIFECYCLEvaluesObject = String;
+
+  enumeration CDLNKvalues {
+    literal isachildof;
+    literal isaconsequenceof;
+    literal isanewversionof;
+    literal isareplyto;
+    literal multimedia;
+    literal thumbnail;
+    literal isanappendixof;
+    literal isaservicefor;
+    literal isrealisationof;
+    literal isapproachfor;
+    literal isplannedfor;
+    literal isattestationof;
+  }
+  datatype CDLNKvaluesObject = String;
+
+  enumeration CDMAACOVERAGETYPEvalues {
+    literal chapter4limited;
+    literal chapter4unlimited;
+  }
+  datatype CDMAACOVERAGETYPEvaluesObject = String;
+
+  enumeration CDMAAREFUSALJUSTIFICATIONvalues {
+    literal _200;
+    literal _401;
+    literal _404;
+    literal _406;
+    literal _409;
+    literal _413;
+    literal _414;
+    literal _415;
+    literal _416;
+    literal _502;
+  }
+  datatype CDMAAREFUSALJUSTIFICATIONvaluesObject = String;
+
+  enumeration CDMAAREQUESTTYPEvalues {
+    literal newrequest;
+    literal extension;
+    literal noncontinuousextension;
+    literal complimentaryannex;
+    literal cancellation;
+    literal closure;
+  }
+  datatype CDMAAREQUESTTYPEvaluesObject = String;
+
+  enumeration CDMAARESPONSETYPEvalues {
+    literal agreement;
+    literal refusal;
+    literal intreatment;
+  }
+  datatype CDMAARESPONSETYPEvaluesObject = String;
+
+  enumeration CDMAATYPEvalues {
+    literal chapter4;
+  }
+  datatype CDMAATYPEvaluesObject = String;
+
+  enumeration CDMEDIATYPEvalues {
+    literal applicationMsword;
+    literal applicationPdf;
+    literal audioBasic;
+    literal audioK32adpcm;
+    literal audioMp3;
+    literal imageG3fax;
+    literal imageGif;
+    literal imageJpeg;
+    literal imagePng;
+    literal imageTiff;
+    literal modelVrml;
+    literal multipartXHl7CdaLevel1;
+    literal textHtml;
+    literal textPlain;
+    literal textRtf;
+    literal textSgml;
+    literal textXHl7Ft;
+    literal textXml;
+    literal videoMpeg;
+    literal videoXAvi;
+    literal kmbTransaction;
+    literal imageDicom;
+    literal applicationHl7SdaXml;
+    literal applicationRtf;
+  }
+  datatype CDMEDIATYPEvaluesObject = String;
+
+  enumeration CDMEDICATIONschemes {
+    literal CDDRUGCNK;
+    literal CDVACCINE;
+    literal LOCAL;
+  }
+  datatype CDMEDICATIONschemesObject = String;
+
+  enumeration CDMESSAGEvalues {
+    literal gpsoftwaremigration;
+    literal gppatientmigration;
+    literal ptsoftwaremigration;
+    literal ptpatientmigration;
+    literal nursingsoftwaremigration;
+    literal nursingpatientmigration;
+  }
+  datatype CDMESSAGEvaluesObject = String;
+
+  enumeration CDMICROORGANISMvalues {
+    literal legionella;
+    literal salmonella;
+  }
+  datatype CDMICROORGANISMvaluesObject = String;
+
+  enumeration CDMKGADMISSIONvalues {
+    literal _0;
+    literal _1;
+    literal _2;
+    literal _3;
+    literal _4;
+    literal _5;
+    literal _6;
+    literal _8;
+  }
+  datatype CDMKGADMISSIONvaluesObject = String;
+
+  enumeration CDMKGDESTINATIONvalues {
+    literal _0;
+    literal _1;
+    literal _2;
+    literal _3;
+    literal _4;
+    literal _5;
+    literal _6;
+    literal _7;
+    literal _8;
+    literal _9;
+  }
+  datatype CDMKGDESTINATIONvaluesObject = String;
+
+  enumeration CDMKGDISCHARGEvalues {
+    literal _0;
+    literal _1;
+    literal _2;
+    literal _3;
+    literal _4;
+    literal _5;
+    literal _6;
+    literal D;
+  }
+  datatype CDMKGDISCHARGEvaluesObject = String;
+
+  enumeration CDMKGORIGINvalues {
+    literal _0;
+    literal _1;
+    literal _2;
+    literal _3;
+    literal _4;
+    literal _5;
+    literal _6;
+    literal _7;
+    literal _8;
+    literal _9;
+  }
+  datatype CDMKGORIGINvaluesObject = String;
+
+  enumeration CDMKGREFERRERvalues {
+    literal _0;
+    literal _1;
+    literal _2;
+    literal _3;
+    literal _4;
+    literal _5;
+    literal _6;
+    literal _8;
+  }
+  datatype CDMKGREFERRERvaluesObject = String;
+
+  enumeration CDMSADAPTATIONvalues {
+    literal nochanges;
+    literal medication;
+    literal posology;
+    literal treatmentsuspension;
+  }
+  datatype CDMSADAPTATIONvaluesObject = String;
+
+  enumeration CDMSMEDICATIONTYPEvalues {
+    literal onprescription;
+    literal otc;
+    literal other;
+  }
+  datatype CDMSMEDICATIONTYPEvaluesObject = String;
+
+  enumeration CDMSORIGINvalues {
+    literal regularprocess;
+    literal recorded;
+  }
+  datatype CDMSORIGINvaluesObject = String;
+
+  datatype CDMYCARENETJUSTIFICATIONvalues = String;
+
+  enumeration CDORTHOAPPROACHvalues {
+    literal lateral;
+    literal posterior;
+    literal anterior;
+    literal bytrochanterotomy;
+    literal withfemoralosteotomy;
+    literal other;
+    literal subvastus;
+    literal midvastus;
+    literal parapatellarlateral;
+    literal parapatellarmedial;
+    literal tuberositasosteotomie;
+    literal antelateral;
+    literal postlateral;
+  }
+  datatype CDORTHOAPPROACHvaluesObject = String;
+
+  enumeration CDORTHODIAGNOSISvalues {
+    literal primaryarthrosis;
+    literal necrosisavascular;
+    literal fracture;
+    literal inflamatory;
+    literal posttraumaticarthrosis;
+    literal arthrosisafterinfection;
+    literal secondaryarthrosis;
+    literal rheumatoidarthritis;
+    literal tumor;
+    literal hipdysplasia;
+    literal other;
+    literal asepticloosening;
+    literal infection;
+    literal instability;
+    literal periprostheticfracture;
+    literal pain;
+    literal wearpolyethylene;
+    literal wrongalignment;
+    literal fractureofimplant;
+    literal progressionarthrosis;
+    literal rigidity;
+    literal wear;
+    literal inflammatory;
+  }
+  datatype CDORTHODIAGNOSISvaluesObject = String;
+
+  enumeration CDORTHOGRAFTvalues {
+    literal allograft;
+    literal homograft;
+    literal autograft;
+    literal alloandautograft;
+    literal none;
+  }
+  datatype CDORTHOGRAFTvaluesObject = String;
+
+  enumeration CDORTHOINTERFACEvalues {
+    literal hacoated;
+    literal porous;
+    literal smouth;
+    literal cementwithab;
+    literal cementwithoutab;
+    literal allpoly;
+    literal none;
+    literal other;
+    literal metalbacked;
+  }
+  datatype CDORTHOINTERFACEvaluesObject = String;
+
+  enumeration CDORTHOKNEEINSERTvalues {
+    literal fixed;
+    literal mobile;
+    literal none;
+  }
+  datatype CDORTHOKNEEINSERTvaluesObject = String;
+
+  enumeration CDORTHONAVCOMvalues {
+    literal navigationcomputerglobal;
+    literal navigationcomputerstem;
+    literal navigationcomputercup;
+    literal none;
+  }
+  datatype CDORTHONAVCOMvaluesObject = String;
+
+  enumeration CDORTHOTECHREVISIONvalues {
+    literal femoralheadneck;
+    literal femoralcomplete;
+    literal acetabularinsert;
+    literal acetabularcomplete;
+  }
+  datatype CDORTHOTECHREVISIONvaluesObject = String;
+
+  enumeration CDORTHOTYPEvalues {
+    literal primaryprocedure;
+    literal revisionwithprosthesis;
+    literal osteosynthesis;
+    literal resection;
+    literal arthrodesis;
+    literal amputation;
+  }
+  datatype CDORTHOTYPEvaluesObject = String;
+
+  enumeration CDPARAMETERvalues {
+    literal weight;
+    literal height;
+    literal bmi;
+    literal sbp;
+    literal dbp;
+    literal pulsecharacter;
+    literal heartrate;
+    literal peakflow;
+    literal gpa;
+    literal headcircumference;
+    literal hipcircumference;
+    literal apgar;
+    literal katz;
+    literal belrai;
+    literal bloodsugar;
+  }
+  datatype CDPARAMETERvaluesObject = String;
+
+  enumeration CDPATIENTWILLHOSPvalues {
+    literal hos1;
+    literal hos2;
+  }
+  datatype CDPATIENTWILLHOSPvaluesObject = String;
+
+  enumeration CDPATIENTWILLRESvalues {
+    literal dnr0;
+    literal dnr1;
+    literal dnr2;
+    literal dnr3;
+  }
+  datatype CDPATIENTWILLRESvaluesObject = String;
+
+  enumeration CDPATIENTWILLvalues {
+    literal ntbr;
+    literal bloodtransfusionrefusal;
+    literal intubationrefusal;
+    literal euthanasiarequest;
+    literal vaccinationrefusal;
+    literal organdonationconsent;
+    literal datareuseforclinicalresearchconsent;
+    literal datareuseforclinicaltrialsconsent;
+    literal clinicaltrialparticipationconsent;
+    literal omissionofmedicaldata;
+  }
+  datatype CDPATIENTWILLvaluesObject = String;
+
+  datatype CDPERIODICITYvalues = String;
+
+  enumeration CDPROOFschemes {
+    literal CDPROOFTYPE;
+    literal LOCAL;
+  }
+  datatype CDPROOFschemesObject = String;
+
+  datatype CDPROOFvalues = String;
+
+  enumeration CDQUANTITYPREFIXvalues {
+    literal ana;
+    literal anaad;
+    literal ad;
+    literal qs;
+  }
+  datatype CDQUANTITYPREFIXvaluesObject = String;
+
+  enumeration CDREFSCOPEvalues {
+    literal age;
+    literal sex;
+    literal gestationnal;
+  }
+  datatype CDREFSCOPEvaluesObject = String;
+
+  datatype CDREFUSALMYCARENETvalues = String;
+
+  datatype CDREIMBURSEMENTNOMENCLATUREvalues = String;
+
+  enumeration CDREVCOMPONENTvalues {
+    literal patella;
+    literal femur;
+    literal tibia;
+    literal insert;
+  }
+  datatype CDREVCOMPONENTvaluesObject = String;
+
+  enumeration CDSEVERITYschemes {
+    literal CDSEVERITY;
+    literal CDNYHA;
+  }
+  datatype CDSEVERITYschemesObject = String;
+
+  enumeration CDSEVERITYvalues {
+    literal abnormal;
+    literal high;
+    literal low;
+    literal normal;
+    literal resistent;
+    literal susceptible;
+    literal susceptibleintermediate;
+    literal veryabnormal;
+    literal veryhigh;
+    literal verylow;
+    literal extremelyhigh;
+    literal extremelylow;
+    literal verysusceptible;
+  }
+  datatype CDSEVERITYvaluesObject = String;
+
+  enumeration CDSEXvalues {
+    literal changed;
+    literal female;
+    literal male;
+    literal unknown;
+    literal undefined;
+  }
+  datatype CDSEXvaluesObject = String;
+
+  enumeration CDSITEschemes {
+    literal CDSITE;
+    literal CDDEFIBSITE;
+  }
+  datatype CDSITEschemesObject = String;
+
+  enumeration CDSITEvalues {
+    literal BE;
+    literal blood;
+    literal BN;
+    literal BU;
+    literal CT;
+    literal LA;
+    literal LAC;
+    literal LACF;
+    literal LD;
+    literal LE;
+    literal LEJ;
+    literal LF;
+    literal LG;
+    literal LH;
+    literal LIJ;
+    literal LLAQ;
+    literal LLFA;
+    literal LMFA;
+    literal LN;
+    literal LPC;
+    literal LSC;
+    literal LT;
+    literal LUA;
+    literal LUAQ;
+    literal LUFA;
+    literal LVG;
+    literal LVL;
+    literal NB;
+    literal OD;
+    literal OS;
+    literal OU;
+    literal PA;
+    literal PERIN;
+    literal RA;
+    literal RAC;
+    literal RACF;
+    literal RD;
+    literal RE;
+    literal REJ;
+    literal RF;
+    literal RG;
+    literal RH;
+    literal RIJ;
+    literal RLAQ;
+    literal RLFA;
+    literal RMFA;
+    literal RN;
+    literal RPC;
+    literal RSC;
+    literal RT;
+    literal RUA;
+    literal RUAQ;
+    literal RUFA;
+    literal RVG;
+    literal RVL;
+    literal lk;
+    literal rk;
+    literal lhip;
+    literal rhip;
+    literal lfem;
+    literal rfem;
+    literal ltib;
+    literal rtib;
+  }
+  datatype CDSITEvaluesObject = String;
+
+  datatype CDSNOMEDvalues = String;
+
+  enumeration CDSTANDARDvalues {
+    literal _20010424;
+    literal _20021205;
+    literal _20030909;
+    literal _20090101;
+    literal _20100601;
+    literal _20100901;
+    literal _20110701;
+    literal _20120401;
+    literal _20120701;
+    literal _20121001;
+    literal _20130701;
+    literal _20131001;
+    literal _20140401;
+    literal _20140701;
+    literal _20141001;
+    literal _20141201;
+    literal _20150301;
+    literal _20150601;
+    literal _20150901;
+    literal _20151201;
+    literal _20160301;
+    literal _20160601;
+    literal _20160901;
+    literal _20161201;
+    literal _20170301;
+    literal _20170601;
+    literal _20170901;
+    literal _20171201;
+    literal _20180301;
+    literal _20180601;
+    literal _20180901;
+    literal _20181201;
+    literal _20190301;
+    literal _20190901;
+    literal _20200301;
+    literal _20200601;
+    literal _20200901;
+    literal _20201201;
+    literal _20210120;
+    literal _20220401;
+    literal _20220701;
+    literal _20221001;
+    literal _20230401;
+  }
+  datatype CDSTANDARDvaluesObject = String;
+
+  enumeration CDSTENTBRIDGETYPEvalues {
+    literal saphena1;
+    literal saphena2;
+    literal saphena3;
+    literal saphena4;
+    literal saphena5;
+    literal lima;
+    literal rima;
+    literal gepa;
+    literal freeima;
+    literal radialis;
+  }
+  datatype CDSTENTBRIDGETYPEvaluesObject = String;
+
+  enumeration CDSTENTDEVICEvalues {
+    literal bms;
+    literal des;
+    literal bvs;
+    literal other;
+  }
+  datatype CDSTENTDEVICEvaluesObject = String;
+
+  enumeration CDSTENTDOMINANCEvalues {
+    literal left;
+    literal right;
+  }
+  datatype CDSTENTDOMINANCEvaluesObject = String;
+
+  enumeration CDSTENTLESIONTYPEvalues {
+    literal simple;
+    literal multiSegment;
+    literal aortoOstiale;
+    literal bifurcation;
+    literal occlusionchroniquetotplus3m;
+  }
+  datatype CDSTENTLESIONTYPEvaluesObject = String;
+
+  enumeration CDSTENTSEGMENTvalues {
+    literal proxrca;
+    literal midrca;
+    literal distrca;
+    literal rightposteriordescending;
+    literal leftmain;
+    literal proxlad;
+    literal midlad;
+    literal distlad;
+    literal d1;
+    literal d2;
+    literal d3;
+    literal proxcx;
+    literal intermediatebissectrice;
+    literal m1;
+    literal m2;
+    literal distcx;
+    literal pl1;
+    literal pl2;
+    literal pl3;
+    literal leftposteriordescending;
+    literal rv;
+    literal rightpl2;
+    literal rightpl3;
+    literal pl4;
+  }
+  datatype CDSTENTSEGMENTvaluesObject = String;
+
+  enumeration CDSUBSTANCEschemes {
+    literal CDINNCLUSTER;
+    literal CDATC;
+    literal CDEAN;
+    literal CDSUBSTANCECNK;
+  }
+  datatype CDSUBSTANCEschemesObject = String;
+
+  datatype CDTECHNICALvalues = String;
+
+  enumeration CDTELECOMschemes {
+    literal CDADDRESS;
+    literal _CDTELECOM;
+  }
+  datatype CDTELECOMschemesObject = String;
+
+  enumeration CDTELECOMvalues {
+    literal phone;
+    literal mobile;
+    literal fax;
+    literal email;
+    literal carenet;
+  }
+  datatype CDTELECOMvaluesObject = String;
+
+  enumeration CDTEMPORALITYvalues {
+    literal oneshot;
+    literal acute;
+    literal chronic;
+    literal reactivation;
+    literal remission;
+    literal subacute;
+  }
+  datatype CDTEMPORALITYvaluesObject = String;
+
+  enumeration CDTHERAPEUTICLINKschemes {
+    literal CDTHERAPEUTICLINKTYPE;
+    literal LOCAL;
+  }
+  datatype CDTHERAPEUTICLINKschemesObject = String;
+
+  datatype CDTHERAPEUTICLINKvalues = String;
+
+  enumeration CDTIMEUNITschemes {
+    literal CDTIMEUNIT;
+    literal LOCAL;
+  }
+  datatype CDTIMEUNITschemesObject = String;
+
+  enumeration CDTIMEUNITvalues {
+    literal a;
+    literal mo;
+    literal wk;
+    literal d;
+    literal hr;
+    literal min;
+    literal s;
+    literal ms;
+    literal us;
+    literal ns;
+  }
+  datatype CDTIMEUNITvaluesObject = String;
+
+  enumeration CDTRANSACTIONCARENETvalues {
+    literal admission;
+    literal _732;
+    literal discharge;
+    literal _725;
+    literal _null;
+  }
+  datatype CDTRANSACTIONCARENETvaluesObject = String;
+
+  enumeration CDTRANSACTIONMAAvalues {
+    literal agreementrequest;
+    literal agreementresponse;
+    literal freeappendix;
+    literal reglementaryappendix;
+    literal consultationrequest;
+    literal consultationresponse;
+  }
+  datatype CDTRANSACTIONMAAvaluesObject = String;
+
+  enumeration CDTRANSACTIONMYCARENETvalues {
+    literal gmd;
+    literal gmdclosure;
+    literal gmdextension;
+    literal tariff;
+    literal tariffmediprima;
+    literal cga;
+    literal cgd;
+    literal mea;
+    literal cgacancellation;
+    literal maa;
+    literal maaextension;
+    literal maaappendix;
+    literal maacancellation;
+    literal maaclosure;
+    literal maaagreement;
+    literal maarefusal;
+    literal maaintreatment;
+  }
+  datatype CDTRANSACTIONMYCARENETvaluesObject = String;
+
+  enumeration CDTRANSACTIONREGvalues {
+    literal qermidStentIntervention;
+    literal orthoprideIntervention;
+    literal defibIntervention;
+    literal pacemakerIntervention;
+    literal arthritisNotification;
+  }
+  datatype CDTRANSACTIONREGvaluesObject = String;
+
+  enumeration CDTRANSACTIONschemes {
+    literal CDTRANSACTION;
+    literal CDTRANSACTIONCARENET;
+    literal CDTRANSACTIONMAA;
+    literal CDCHAPTER4APPENDIX;
+    literal CDTRANSACTIONREG;
+    literal CDTRANSACTIONMYCARENET;
+    literal CDTRANSACTIONTYPE;
+    literal CDHUBSERVICE;
+    literal CDDIARY;
+    literal LOCAL;
+    literal CDLABORESULTTYPE;
+  }
+  datatype CDTRANSACTIONschemesObject = String;
+
+  enumeration CDTRANSACTIONTYPEvalues {
+    literal incapacity;
+    literal incapacityextension;
+    literal incapacityrelapse;
+    literal nursing;
+    literal physiotherapy;
+    literal intermediarynursing;
+    literal intermediaryphysiotherapy;
+    literal transferdocument;
+    literal childrecord;
+  }
+  datatype CDTRANSACTIONTYPEvaluesObject = String;
+
+  enumeration CDTRANSACTIONvalues {
+    literal admission;
+    literal alert;
+    literal contactreport;
+    literal death;
+    literal discharge;
+    literal dischargereport;
+    literal epidemiology;
+    literal labrequest;
+    literal labresult;
+    literal note;
+    literal hospitalpharmaceuticalprescription;
+    literal pharmaceuticalprescription;
+    literal productdelivery;
+    literal quickdischargereport;
+    literal referral;
+    literal request;
+    literal _result;
+    literal vaccination;
+    literal sumehr;
+    literal ecareSafeConsultation;
+    literal ebirthMotherNotification;
+    literal ebirthBabyNotification;
+    literal ebirthBabyMedicalform;
+    literal ebirthMotherMedicalform;
+    literal clinicalsummary;
+    literal medicaladvisoragreement;
+    literal bvtSample;
+    literal clinicalpath;
+    literal telemonitoring;
+    literal radiationexposuremonitoring;
+    literal intervention;
+    literal medicationschemeelement;
+    literal treatmentsuspension;
+    literal prescription;
+    literal notification;
+    literal report;
+    literal medicationscheme;
+    literal vaccinationscheme;
+    literal vaccinationschemeelement;
+    literal ecareTardisConsultation;
+    literal genericregistryentry;
+    literal populationBasedScreening;
+    literal childPrevention;
+    literal careplan;
+    literal applicationlink;
+    literal diarynote;
+    literal mea;
+    literal perinatal;
+    literal belraiReport;
+    literal nursingsummaryreport;
+    literal pharmaceuticalmedicationscheme;
+  }
+  datatype CDTRANSACTIONvaluesObject = String;
+
+  enumeration CDTUCOPATHOLOGYTYPEvalues {
+    literal diabetedietarycontrol;
+    literal diabeteoralmedication;
+    literal diabeteinsulin;
+    literal diabetenewlydiagnosed;
+    literal diabete;
+    literal renalfailurelessthan30ml;
+    literal instentrestenosis;
+    literal cardioshockatstartpci;
+    literal stroke;
+    literal peripheralvasculardisease;
+    literal stentthrombosis;
+  }
+  datatype CDTUCOPATHOLOGYTYPEvaluesObject = String;
+
+  enumeration CDTUCOSTEMITYPEvalues {
+    literal stemipci;
+    literal stemirescue;
+    literal stemilate;
+    literal nonstemiurgent;
+    literal nonstemielective;
+    literal nonstemilate;
+    literal emergentpci;
+    literal electivepci;
+    literal outofhospitalarrest;
+    literal stagedpci;
+    literal complicationpriorpci;
+    literal recurrendischaemia;
+  }
+  datatype CDTUCOSTEMITYPEvaluesObject = String;
+
+  enumeration CDUNITschemes {
+    literal CDUNIT;
+    literal CDCURRENCY;
+    literal UCUM;
+    literal CDTIMEUNIT;
+  }
+  datatype CDUNITschemesObject = String;
+
+  enumeration CDUNITvalues {
+    literal _null;
+    literal vv;
+    literal wv;
+    literal ww;
+    literal _1000Mm3;
+    literal mgDl;
+    literal amp;
+    literal bag;
+    literal bitperminute;
+    literal bol;
+    literal bot;
+    literal box;
+    literal c;
+    literal can;
+    literal cap;
+    literal cc;
+    literal cm;
+    literal cmm;
+    literal cnt;
+    literal ctr;
+    literal daily;
+    literal day;
+    literal spoon;
+    literal week;
+    literal month;
+    literal degree;
+    literal dis;
+    literal drm;
+    literal fl;
+    literal fld;
+    literal flo;
+    literal ftc;
+    literal fts;
+    literal gDl;
+    literal mg;
+    literal mgMl;
+    literal mgL;
+    literal mgM2;
+    literal minute;
+    literal mm;
+    literal mmH;
+    literal mmhg;
+    literal second;
+    literal millisecond;
+    literal hour;
+    literal goutte;
+    literal ml;
+    literal ctg;
+    literal gal;
+    literal gm;
+    literal gr;
+    literal in;
+    literal inc;
+    literal jar;
+    literal kg;
+    literal kgM2;
+    literal kit;
+    literal l;
+    literal lb;
+    literal lm;
+    literal loz;
+    literal mcg;
+    literal mcl;
+    literal mcm;
+    literal mcn;
+    literal meq;
+    literal mic;
+    literal mil;
+    literal min;
+    literal mis;
+    literal mmo;
+    literal mol;
+    literal nl;
+    literal nmg;
+    literal nmo;
+    literal ns;
+    literal oz;
+    literal pel;
+    literal pg;
+    literal pkg;
+    literal pnu;
+    literal ppm;
+    literal pt;
+    literal qs;
+    literal qt;
+    literal sat;
+    literal spr;
+    literal sqc;
+    literal stp;
+    literal sup;
+    literal syr;
+    literal tab;
+    literal tbl;
+    literal tes;
+    literal ton;
+    literal tpn;
+    literal trc;
+    literal tro;
+    literal tsp;
+    literal tub;
+    literal umg;
+    literal unt;
+    literal vil;
+    literal vpr;
+    literal waf;
+    literal x;
+    literal ydl;
+    literal yds;
+    literal ondemand;
+    literal mgper100ml;
+    literal mlMin;
+    literal shock;
+    literal atptreatment;
+    literal gyCm2;
+    literal mlMin173m2;
+  }
+  datatype CDUNITvaluesObject = String;
+
+  enumeration CDURGENCYvalues {
+    literal asap;
+    literal hour;
+    literal _4hours;
+    literal _12hours;
+    literal day;
+    literal week;
+    literal month;
+  }
+  datatype CDURGENCYvaluesObject = String;
+
+  enumeration CDVACCINEINDICATIONvalues {
+    literal poliomyelitis;
+    literal measles;
+    literal rubella;
+    literal mumps;
+    literal seasonalinfluenza;
+    literal hepatitisa;
+    literal hepatitisb;
+    literal rabies;
+    literal varicella;
+    literal rotavirus;
+    literal papillomavirus;
+    literal yellowfever;
+    literal tickborneencephalitis;
+    literal ej;
+    literal diphteria;
+    literal tetanus;
+    literal pertussis;
+    literal hib;
+    literal meningitisc;
+    literal meningitis;
+    literal pneumonia23;
+    literal pneumonia7;
+    literal tuberculosis;
+    literal typhoid;
+    literal pandemics;
+    literal herpeszoster;
+    literal cholera;
+    literal covid19;
+    literal meningitisb;
+    literal pneumonia15;
+    literal pneumonia20;
+  }
+  datatype CDVACCINEINDICATIONvaluesObject = String;
+
+  enumeration CDVACCINEvalues {
+    literal polio;
+    literal diteper;
+    literal haemo;
+    literal mmr;
+    literal hepatitiesb;
+    literal mmr12;
+    literal dite12;
+    literal meningitisc;
+    literal influenza;
+    literal pneumonia;
+    literal ditepro;
+  }
+  datatype CDVACCINEvaluesObject = String;
+
+  enumeration CDWEEKDAYvalues {
+    literal sunday;
+    literal monday;
+    literal tuesday;
+    literal wednesday;
+    literal thursday;
+    literal friday;
+    literal saturday;
+  }
+  datatype CDWEEKDAYvaluesObject = String;
+
+  datatype ICDvalues = String;
+
+  datatype ICPCvalues = String;
+
+  class TextType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute l : String;
+
+
+  }
+
+
+  class IDHCPARTY {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class IDINSURANCE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class IDKMEHR {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class IDPATIENT {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class IDPROFESSION {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class INSS {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDACCESSRIGHT {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDACKNOWLEDGMENT {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDACTSNURSING {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDADDRESS {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDADMINISTRATIONUNIT {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDATC {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDAUTONOMY {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDBALLONDEVICE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDBCRDIFFERENTATIONDEGREE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDBEARINGSURFACE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDBVTAVAILABLEMATERIALS {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDBVTCONSERVATIONDELAY {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDBVTCONSERVATIONMODE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDBVTLATERALITY {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDBVTPATIENTOPPOSITION {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDBVTSAMPLETYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDBVTSTATUS {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCARENETACCIDENTTYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCARENETAGREEMENTTYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCARENETDOCUMENT {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCARENETINSURANCYSTATUS {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCARENETMESSAGE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCARENETMUTATIONINDICATOR {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCARENETNATIONALINSURANCE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCARENETPERSONALPART {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCARENETREFUSALREASON {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCARENETSISCARDERROR {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCARENETTHIRDPAYERCONTRACT {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCARENETTYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCAREPATH {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCERTAINTY {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCHAPTER4CATEGORY {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCHAPTER4CRITERIA {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCHAPTER4DOCUMENTSEQAPPENDIX {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCHAPTER4FORMALINTERPRETATION {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCHAPTER4PARAGRAPH {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCHAPTER4VERSE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCHAPTER4VERSESEQAPPENDIX {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCIVILSTATE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCLINICAL {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCLINICALPLAN {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCONSENT {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCONTACTPERSON {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDCONTENT {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute nullFlavor : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+    query codingSystem() : String
+    pre: true
+    post: (s = "ICPC" & sV = "2" => result = "http://h17.org/fhir/sid/icpc-2") & 
+      (s = "ICD" & sV = "10" => result = "http://h17.org/fhir/sid/icd-10") & 
+      (true => result = "unknown");  
+
+    query hasCodingSystem() : boolean
+    pre: true 
+    post: 
+      (self.codingSystem() /= "unknown" => result = true); 
+
+  }
+
+
+  class CDCOUNTRY {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+   query countryString() : String 
+   pre: true  
+   post: result = value->toUpperCase(); 
+
+  }
+
+
+  class CDCURRENCY {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDDAYPERIOD {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+  }
+
+
+  class CDDISCHARGETYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDDRUGCNK {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDDRUGPRESENTATION {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDDRUGROUTE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDEBIRTHARTIFICIALRESPIRATIONTYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDEBIRTHCAESAREANINDICATION {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDEBIRTHCHILDPOSITION {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDEBIRTHCONGENITALMALFORMATION {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDEBIRTHDELIVERYWAY {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDEBIRTHFOETALMONITORING {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDEBIRTHNEONATALDEPTTYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDEBIRTHPLACE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDEBIRTHPREGNANCYORIGIN {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDEBIRTHSPECIALVALUES {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDECG {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDEMERGENCYEVALUATION {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDEMPLOYMENTSITUATION {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDENCOUNTER {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDENCOUNTERSAFETYISSUE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDENCRYPTIONACTOR {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDENCRYPTIONMETHOD {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDERROR {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDERRORMYCARENET {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDEXTERNALSOURCE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDFORMULARY {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDGALENICFORM {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDHCPARTY {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+    query isOrganization() : boolean
+    pre: true 
+    post: (value /= null & value->hasPrefix("org") => result = true); 
+
+    query isPractitioner() : boolean
+    pre: true 
+    post: (value /= null & value->hasPrefix("pers") => result = true); 
+
+  }
+
+
+  class CDHEADING {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDHEADINGREG {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDIMPLANTATIONDEVICE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDIMPLANTATIONTYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDINCAPACITY {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDINCAPACITYREASON {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDINNCLUSTER {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDITEM {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute nullFlavor : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDITEMBVT {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDITEMCARENET {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDITEMEBIRTH {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDITEMMAA {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDITEMMS {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDITEMMYCARENET {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDITEMREG {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDLAB {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDLEGALSERVICE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDLIFECYCLE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDMAACOVERAGETYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDMAAREFUSALJUSTIFICATION {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDMAAREQUESTTYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDMAARESPONSETYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDMAATYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDMEDICATION {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDMESSAGE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDMICROORGANISM {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDMKGADMISSION {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDMKGDESTINATION {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDMKGDISCHARGE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDMKGORIGIN {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDMKGREFERRER {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDMSADAPTATION {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDMSMEDICATIONTYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDMSORIGIN {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDMYCARENETJUSTIFICATION {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDORTHOAPPROACH {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDORTHODIAGNOSIS {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDORTHOGRAFT {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDORTHOINTERFACE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDORTHOKNEEINSERT {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDORTHONAVCOM {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDORTHOTECHREVISION {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDORTHOTYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDPARAMETER {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDPATIENTWILL {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDPATIENTWILLHOSP {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDPATIENTWILLRES {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDPERIODICITY {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDPROOF {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDQUANTITYPREFIX {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDREFSCOPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDREIMBURSEMENTNOMENCLATURE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDREVCOMPONENT {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDSEVERITY {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDSEX {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+  }
+
+
+  class CDSITE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDSNOMED {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDSTANDARD {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDSTENTBRIDGETYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDSTENTDEVICE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDSTENTDOMINANCE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDSTENTLESIONTYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDSTENTSEGMENT {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDSUBSTANCE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDTECHNICAL {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDTELECOM {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+    static operation newCDTELECOM(tval : String) : CDTELECOM
+    pre: true
+    post: 
+      CDTELECOM->exists( cdtelex | 
+        cdtelex.$id = "CDTELECOM_" + tval & 
+        cdtelex.s = "CD-TELECOM" & 
+        cdtelex.value = tval & 
+        result = cdtelex ); 
+  }
+
+
+  class CDTEMPORALITY {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDTHERAPEUTICLINK {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDTIMEUNIT {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDTRANSACTION {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDTRANSACTIONCARENET {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDTRANSACTIONMAA {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDTRANSACTIONMYCARENET {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDTRANSACTIONREG {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDTRANSACTIONTYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDTUCOPATHOLOGYTYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDTUCOSTEMITYPE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDUNIT {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDURGENCY {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDVACCINE {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDVACCINEINDICATION {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class CDWEEKDAY {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class EMPTY {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class ICD {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class ICPC {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class LnkType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute mEDIATYPE : String;
+    attribute sIZE : String;
+    attribute tYPE : String;
+    attribute uRL : String;
+
+
+  }
+
+
+  class LOCAL {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute dN : String;
+    attribute l : String;
+    attribute s : String;
+    attribute sL : String;
+    attribute sV : String;
+
+
+  }
+
+
+  class AcknowledgmentType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDACKNOWLEDGMENT;
+
+  }
+
+
+  class CountryType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDCOUNTRY;
+
+   query countryString() : String 
+   pre: true 
+   post: result = cd.value->toUpperCase(); 
+
+    static operation newCountryType(cc : String) : CountryType
+    pre: true 
+    post: 
+      CountryType->exists( ctx | 
+        ctx.$id = "CountryType_" + cc & 
+        CDCOUNTRY->exists( cdx | 
+          cdx.$id = "CDCOUNTRY_" + cc &
+          cdx.value = cc &  
+          ctx.cd = cdx & 
+          result = ctx ) );   
+  }
+
+
+  abstract class AddressTypeBase {
+    stereotype source;
+
+    attribute $id identity : String;
+    attribute zip : String;
+    attribute nis : String;
+    attribute city : String;
+    attribute district : String;
+    attribute street : String;
+    attribute housenumber : String;
+    attribute postboxnumber : String;
+
+    reference id[*] container : IDKMEHR;
+    reference cd[*] container : CDADDRESS;
+    reference country[0-1] container : CountryType;
+    reference text[*] container : TextType;
+
+    query addressLine() : String
+    pre: true
+    post: result = street + "\t" + housenumber + "\t" + postboxnumber;
+
+   query countryString() : String 
+   pre: true 
+   post: (self.country->isEmpty() => result = "") & 
+     (self.country->notEmpty() => result = self.country.any.countryString()); 
+
+  }
+
+
+  class AddressType extends AddressTypeBase {
+  stereotype source;
+
+
+
+  }
+
+
+  class UnitType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDUNIT;
+
+  }
+
+
+  class UrgencyType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDURGENCY;
+
+  }
+
+
+  abstract class WeekdayType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDWEEKDAY;
+
+  }
+
+
+  class WeekdayType1 extends WeekdayType {
+  stereotype source;
+
+    attribute weeknumber : int;
+
+
+  }
+
+
+  class AdministrationunitType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDADMINISTRATIONUNIT;
+
+  }
+
+
+  class AdministrationquantityType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute decimal : String;
+
+    reference unit[0-1] container : AdministrationunitType;
+
+  }
+
+
+  class QuantityprefixType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDQUANTITYPREFIX;
+
+  }
+
+
+  class QuantityType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute decimal : String;
+
+    reference unit[0-1] container : UnitType;
+
+  }
+
+
+  class StrengthType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute decimal : String;
+
+    reference unit container : UnitType;
+
+  }
+
+
+  class SubstanceproductType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute intendedname : String;
+    attribute deliveredname : String;
+
+    reference intendedcd container : CDINNCLUSTER;
+    reference deliveredcd[0-1] container : CDDRUGCNK;
+
+  }
+
+
+  class SubstanceType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute substancename : String;
+
+    reference cd[0-1] container : CDSUBSTANCE;
+
+  }
+
+
+  class TakesType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute low : String;
+    attribute high : String;
+
+
+  }
+
+
+  class TemporalityType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDTEMPORALITY;
+
+  }
+
+
+  class TextWithLayoutType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute mixed : String;
+    attribute any : String;
+    attribute l : String;
+
+
+  }
+
+
+  class ThirdpayercontractType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDCARENETTHIRDPAYERCONTRACT;
+
+  }
+
+
+  class TimeunitType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDTIMEUNIT;
+
+  }
+
+
+  class TimequantityType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute decimal : String;
+
+    reference unit[0-1] container : TimeunitType;
+
+  }
+
+
+  class NationalityType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDCOUNTRY;
+
+  }
+
+
+  class TelecomType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute telecomnumber : String;
+
+    reference id[*] container : IDKMEHR;
+    reference cd[*] container : CDTELECOM;
+
+    query system() : String
+    pre: true
+    post: let telecd : CDTELECOM = self.cd->select( cdx | cdx.s = "CD-TELECOM")->any() in (telecd /= null => result = telecd.value);  
+
+    query contactPointUse() : String
+    pre: true 
+    post:
+      (cd->exists( cdx | cdx.value = "phone") & 
+       PersonType->exists( personx |
+                             self : personx.telecom) => 
+                   result = "home") &  
+      (cd->exists( cdx | cdx.value = "phone") => result = "work") & 
+      (cd->exists( cdx | cdx.value = "mobile") => result = "mobile") & 
+      (true => result = null); 
+  }
+
+
+  class HcpartyType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute name : String;
+    attribute firstname : String;
+    attribute familyname : String;
+
+    reference id[*] container : IDHCPARTY;
+    reference cd[*] container : CDHCPARTY;
+    reference address[*] container : AddressType;
+    reference telecom[*] container : TelecomType;
+
+    query isOrganization() : boolean
+    pre: true 
+    post: (cd->exists( cdx | cdx.isOrganization()) => result = true); 
+
+    query isPractitioner() : boolean
+    pre: true 
+    post: (cd->exists( cdx | cdx.isPractitioner()) => result = true); 
+
+  }
+
+
+  class AuthorType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference hcparty[*] container : HcpartyType;
+
+    query txAuthor() : HcpartyType 
+    pre: true 
+    post: 
+      (self.hcparty->size() > 0 => result = self.hcparty->any()) & 
+      (self.hcparty->size() = 0 => result = null); 
+
+  }
+
+
+  class Base64EncryptedValueType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute encoding : String;
+
+
+  }
+
+
+  class Base64EncryptedDataType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDENCRYPTIONMETHOD;
+    reference base64EncryptedValue container : Base64EncryptedValueType;
+
+  }
+
+
+  class GalenicformType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd[0-1] container : CDGALENICFORM;
+    reference galenicformtext[0-1] container : TextType;
+
+  }
+
+
+  class CertaintyType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDCERTAINTY;
+
+  }
+
+
+  class CivilstateType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDCIVILSTATE;
+
+  }
+
+
+  class FormularyreferenceType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute formularyname : String;
+
+    reference cd[*] container : CDFORMULARY;
+
+  }
+
+
+  class MedicinalProductType {
+
+    stereotype source;
+
+    attribute $id identity : String;
+    attribute intendedname : String;
+    attribute deliveredname : String;
+
+    reference intendedcd[*] container : CDDRUGCNK;
+    reference deliveredcd[*] container : CDDRUGCNK;
+
+    query intendedCNKCode() : String
+    pre: true
+    post: 
+      result = self.intendedcd->select( cdx | cdx.s = "CD-DRUG-CNK")->collect( cdx | cdx.value)->first(); 
+
+  }
+
+
+  class MemberinsuranceType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute membership : String;
+
+    reference id container : IDINSURANCE;
+
+  }
+
+
+  class MinrefType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute decimal : String;
+
+    reference text[0-1] container : TextType;
+
+  }
+
+
+  class CompoundType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference id[*] container : IDKMEHR;
+    reference medicinalproduct[0-1] container : MedicinalProductType;
+    reference substance[0-1] container : SubstanceType;
+    reference quantityprefix[0-1] container : QuantityprefixType;
+    reference quantity[0-1] container : QuantityType;
+
+  }
+
+
+  class CompoundprescriptionType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute mixed : String;
+    attribute l : String;
+
+    reference compound[*] container : CompoundType;
+    reference formularyreference[0-1] container : FormularyreferenceType;
+    reference magistraltext[0-1] container : TextType;
+    reference galenicform[0-1] container : GalenicformType;
+    reference quantity[0-1] container : QuantityType;
+
+  }
+
+
+  class ConfidentialityType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference hcparty[*] container : HcpartyType;
+
+  }
+
+
+  abstract class MomentType {
+ 
+    stereotype source;
+
+    attribute $id identity : String;
+    attribute year : String;
+    attribute yearmonth : String;
+    attribute date : Date;
+    attribute time : Time;
+
+    reference text[0-1] container : TextType;
+
+  }
+
+
+  class ProfessionType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference id[*] container : IDPROFESSION;
+    reference cd[*] container : CDEMPLOYMENTSITUATION;
+    reference text[0-1] container : TextType;
+
+  }
+
+
+  class PersonType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute firstname : String;
+    attribute familyname : String;
+    attribute usuallanguage : String;
+    attribute recorddatetime : String;
+
+    reference id[*] container : IDPATIENT;
+    reference birthdate[0-1] container : DateType;
+    reference birthlocation[0-1] container : AddressTypeBase;
+    reference deathdate[0-1] container : DateType;
+    reference deathlocation[0-1] container : AddressTypeBase;
+    reference sex container : SexType;
+    reference nationality[0-1] container : NationalityType;
+    reference address[*] container : AddressType;
+    reference telecom[*] container : TelecomType;
+    reference profession[0-1] container : ProfessionType;
+    reference insurancystatus[0-1] container : InsuranceType;
+    reference insurancymembership[0-1] container : MemberinsuranceType;
+    reference text[*] container : TextType;
+    reference civilstate[0-1] container : CivilstateType;
+
+  }
+
+
+  class ContentlocalitemattributeType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute decimal : String;
+    attribute _boolean : boolean;
+    attribute date : Date;
+    attribute time : Time;
+
+    reference id[*] container : IDKMEHR;
+    reference cd[*] container : CDCONTENT;
+    reference text[0-1] container : TextType;
+    reference hcparty[0-1] container : HcpartyType;
+    reference person[0-1] container : PersonType;
+    reference unit[0-1] container : UnitType;
+
+  }
+
+
+  class ContentType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute decimal : String;
+    attribute unsignedInt : String;
+    attribute _boolean : boolean;
+    attribute year : String;
+    attribute yearmonth : String;
+    attribute date : Date;
+    attribute time : Time;
+
+    reference id[*] container : IDKMEHR;
+    reference cd[*] container : CDCONTENT;
+    reference text[*] container : TextType;
+    reference hcparty[0-1] container : HcpartyType;
+    reference person[0-1] container : PersonType;
+    reference insurance[0-1] container : InsuranceType;
+    reference incapacity[0-1] container : IncapacityType;
+    reference error[0-1] container : ErrorType;
+    reference medicinalproduct[0-1] container : MedicinalProductType;
+    reference substanceproduct[0-1] container : SubstanceproductType;
+    reference compoundprescription[0-1] container : CompoundprescriptionType;
+    reference medication[0-1] container : MedicationType;
+    reference holter[0-1] container : HolterType;
+    reference ecg[0-1] container : TextType;
+    reference bacteriology[0-1] container : TextType;
+    reference lnk[*] container : LnkType;
+    reference location[0-1] container : LocationBirthPlaceType;
+    reference unit[0-1] container : UnitType;
+    reference minref[0-1] container : MinrefType;
+    reference maxref[0-1] container : MaxrefType;
+    reference refscope[*] container : RefscopeType;
+
+  }
+
+
+  class CostType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute decimal : String;
+
+    reference unit container : UnitType;
+
+  }
+
+
+  class DateType extends MomentType {
+  stereotype source;
+
+
+
+  }
+
+
+  class DayperiodType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDDAYPERIOD;
+  }
+
+
+  class DaytimeType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute time : Time;
+
+    reference dayperiod[0-1] container : DayperiodType;
+
+  }
+
+
+  class DenominatorType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference quantity container : TimequantityType;
+
+  }
+
+
+  class DocumentRoot {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute mixed : String;
+
+    reference kmehrmessage[0-1] container : Kmehrmessage;
+
+  }
+
+
+  class DurationType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute decimal : String;
+
+    reference unit container : TimeunitType;
+
+  }
+
+
+  class ErrorMyCarenetType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute url : String;
+
+    reference cd[*] container : CDERRORMYCARENET;
+    reference description container : TextType;
+
+  }
+
+
+  class ErrorType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute url : String;
+
+    reference id[*] container : IDKMEHR;
+    reference cd[*] container : CDERROR;
+    reference description container : TextType;
+
+  }
+
+
+  class ExternalsourceType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference source[*] container : SourceType;
+
+  }
+
+
+  class FCMAXType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute tIME : String;
+
+
+  }
+
+
+  class FCMINType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute tIME : String;
+
+
+  }
+
+
+  class FeedbackType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute reportrequested : boolean;
+
+    reference text[0-1] container : TextType;
+
+  }
+
+
+  class FolderType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference confidentiality[0-1] container : ConfidentialityType;
+    reference id[*] container : IDKMEHR;
+    reference patient container : PersonType;
+    reference transaction[*] container : TransactionType;
+    reference text[*] container : TextType;
+    reference lnk[*] container : LnkType;
+
+  }
+
+
+  class FrequencyType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute decimal : String;
+
+    reference nominator[0-1] container : NominatorType;
+    reference denominator[0-1] container : DenominatorType;
+    reference unit[0-1] container : UnitType;
+    reference text[0-1] container : TextType;
+    reference periodicity[0-1] container : PeriodicityType;
+
+  }
+
+
+  class HeaderType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute date : Date;
+    attribute time : Time;
+    attribute expirationdate : Date;
+
+    reference confidentiality[0-1] container : ConfidentialityType;
+    reference standard container : StandardType;
+    reference id[*] container : IDKMEHR;
+    reference sender container : SenderType;
+    reference recipient[*] container : RecipientType;
+    reference urgency[0-1] container : UrgencyType;
+    reference acknowledgment[0-1] container : AcknowledgmentType;
+    reference text[*] container : TextType;
+    reference lnk[*] container : LnkType;
+    reference externalsource[0-1] container : ExternalsourceType;
+
+  }
+
+
+  class HeadingType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute group : String;
+
+    reference confidentiality[0-1] container : ConfidentialityType;
+    reference id[*] container : IDKMEHR;
+    reference cd[*] container : CDHEADING;
+    reference heading[*] container : HeadingType;
+    reference item[*] container : ItemType;
+    reference text[*] container : TextType;
+    reference lnk[*] container : LnkType;
+
+  }
+
+
+  class HolterType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute fCAVG : String;
+    attribute fCAVGD : String;
+    attribute fCAVGN : String;
+    attribute qRSTOT : String;
+    attribute bRADY : String;
+    attribute pAUSE : String;
+    attribute lONG : String;
+    attribute eSV : String;
+    attribute dBLV : String;
+    attribute sALVV : String;
+    attribute bGV : String;
+    attribute tGV : String;
+    attribute tACHY : String;
+    attribute eSSV : String;
+    attribute dBLSV : String;
+    attribute sALVSV : String;
+    attribute bGSV : String;
+    attribute tGSV : String;
+    attribute tACHYSV : String;
+    attribute rRINST : String;
+
+    reference fCMAX[0-1] container : FCMAXType;
+    reference fCMIN[0-1] container : FCMINType;
+    reference rRMAX[0-1] container : RRMAXType;
+    reference rRMIN[0-1] container : RRMINType;
+
+  }
+
+
+  class IncapacityreasonType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDINCAPACITYREASON;
+
+  }
+
+
+  class IncapacityType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute percentage : String;
+    attribute outofhomeallowed : boolean;
+
+    reference cd[*] container : CDINCAPACITY;
+    reference incapacityreason[0-1] container : IncapacityreasonType;
+
+  }
+
+
+  class InsuranceType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute membership : String;
+    attribute siscard : String;
+    attribute begindate : Date;
+    attribute enddate : Date;
+    attribute cg1 : String;
+    attribute cg2 : String;
+    attribute socialfranchiseperiod1 : String;
+    attribute socialfranchiseperiod2 : String;
+    attribute begindatepayment : Date;
+    attribute approvalnumber : String;
+
+    reference id container : IDINSURANCE;
+    reference personalpart[*] container : PersonalpartType;
+    reference thirdpayercontract[0-1] container : ThirdpayercontractType;
+
+  }
+
+
+  class ItemType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute iscomplete : boolean;
+    attribute isvalidated : boolean;
+    attribute isrelevant : boolean;
+    attribute deliverydate : Date;
+    attribute batch : String;
+    attribute issubstitutionallowed : boolean;
+    attribute recorddatetime : String;
+
+    reference confidentiality[0-1] container : ConfidentialityType;
+    reference id[*] container : IDKMEHR;
+    reference cd[*] container : CDITEM;
+    reference content[*] container : ContentType;
+    reference text[*] container : TextType;
+    reference author[0-1] container : AuthorType;
+    reference beginmoment[0-1] container : DateType;
+// MomentType
+    reference endmoment[0-1] container : DateType;
+// MomentType
+    reference lifecycle[0-1] container : LifecycleType;
+    reference severity[0-1] container : SeverityType;
+    reference certainty[0-1] container : CertaintyType;
+    reference temporality[0-1] container : TemporalityType;
+    reference urgency[0-1] container : UrgencyType;
+    reference quantity[0-1] container : QuantityType;
+    reference strength[0-1] container : StrengthType;
+    reference frequency[0-1] container : FrequencyType;
+    reference site[*] container : SiteType;
+    reference cost[0-1] container : CostType;
+    reference dayperiod[*] container : DayperiodType;
+    reference duration[0-1] container : DurationType;
+    reference posology[0-1] container : PosologyType;
+    reference regimen[0-1] container : RegimenType;
+    reference renewal[0-1] container : RenewalType;
+    reference route[0-1] container : RouteType;
+    reference instructionforoverdosing[0-1] container : TextType;
+    reference instructionforpatient[0-1] container : TextType;
+    reference instructionforreimbursement[0-1] container : TextType;
+    reference feedback[0-1] container : FeedbackType;
+    reference local[*] container : LocalitemattributeType;
+    reference lnk[*] container : LnkType;
+
+    query hcpartyContent() : HcpartyType 
+    pre: true 
+    post: 
+      result = content->select( contx | contx /= null & contx.hcparty->size() > 0 )->collect( cntx | cntx.hcparty->any() )->any(); 
+
+    query isContactPerson() : boolean 
+    pre: true 
+    post: 
+      (cd->exists( cditemx | cditemx.s = "CD-ITEM" & cditemx.value = "contactperson") => result = true); 
+
+    query contactPersonRelationships() : Set(CDITEM)
+    pre: true
+    post: 
+      result = cd->select( cditemx | cditemx.s = "CD-CONTACT-PERSON" ); 
+ 
+    query isMedication() : boolean 
+    pre: true 
+    post: 
+      (cd->exists( cditemx | cditemx.s = "CD-ITEM" & cditemx.value = "medication") => result = true); 
+
+    query isAllergy() : boolean 
+    pre: true 
+    post: 
+      (cd->exists( cditemx | cditemx.s = "CD-ITEM" & cditemx.value = "allergy") => result = true); 
+
+    query isIntolerance() : boolean 
+    pre: true 
+    post: 
+      (cd->exists( cditemx | cditemx.s = "CD-ITEM" & cditemx.value = "adr") => result = true); 
+
+    query isAllergyOrIntolerance() : boolean
+    pre: true 
+    post: 
+      (self.isAllergy() => result = true) & 
+      (self.isIntolerance() => result = true); 
+
+    query isActiveProblem() : boolean 
+    pre: true 
+    post: 
+      (cd->exists( cditemx | cditemx.s = "CD-ITEM" & cditemx.value = "problem") & lifecycle.cd.value->includes("active") => result = true); 
+
+    query isInactiveProblem() : boolean 
+    pre: true 
+    post: 
+      (cd->exists( cditemx | cditemx.s = "CD-ITEM" & cditemx.value = "problem") & lifecycle.cd.value->includes("inactive") => result = true); 
+
+    query isProblem() : boolean
+    pre: true 
+    post: 
+      (self.isActiveProblem() => result = true) & 
+      (self.isInactiveProblem() => result = true); 
+
+    query isVaccine() : boolean 
+    pre: true 
+    post: 
+      (cd->exists( cditemx | cditemx.s = "CD-ITEM" & cditemx.value = "vaccine") => result = true); 
+
+    query refPrefix() : String
+    pre: true
+    post: 
+      (self.isMedication() => result = "Medication/") & 
+      (self.isAllergy() or self.isIntolerance() => 
+                             result = "AllergyIntolerance/") &
+      (self.isActiveProblem() or self.isInactiveProblem() => 
+                             result = "Condition/") & 
+      (self.isVaccine() => result = "Immunization/") & 
+      (true => result = "Unknown/"); 
+
+    query authorPrefix() : String
+    pre: true
+    post: 
+      (self.hcpartyContent() = null => result = "Other/") & 
+      ((self.hcpartyContent()).isOrganization() => 
+                             result = "Organization/") &
+      ((self.hcpartyContent()).isPractitioner() => 
+                             result = "Practitioner/") & 
+      (true => result = "Other/"); 
+
+
+    query allergyOrIntoleranceLC() : String
+    pre: true
+    post: 
+      (self.isAllergy() => result = "allergy") & 
+      (true => result = "intolerance"); 
+
+    query allergyOrIntoleranceUC() : String
+    pre: true
+    post: 
+      (self.isAllergy() => result = "Allergy") & 
+      (true => result = "Intolerance"); 
+
+    query conditionLC() : String
+    pre: true
+    post: 
+      (self.isActiveProblem() => result = "active") & 
+      (true => result = "inactive"); 
+
+    query conditionUC() : String
+    pre: true
+    post: 
+      (self.isActiveProblem() => result = "Active") & 
+      (true => result = "Inactive"); 
+
+    operation codedContent() : Sequence(CDCONTENT) 
+    pre: true 
+    post: true
+    activity: 
+      var allcd : Sequence(CDCONTENT) := Sequence{} ; 
+      for conx : self.content 
+      do 
+        allcd := allcd->union(conx.cd->select( cdx | cdx.hasCodingSystem())); 
+      return allcd; 
+
+    operation vaccineIndication() : Sequence(CDCONTENT) 
+    pre: true 
+    post: true
+    activity: 
+      var allcd : Sequence(CDCONTENT) := Sequence{} ; 
+      for conx : self.content 
+      do 
+        allcd := allcd->union(conx.cd->select( cdx | cdx.s = "CD-VACCINEINDICATION")); 
+      return allcd; 
+
+  }
+
+
+  class Kmehrmessage {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference confidentiality[0-1] container : ConfidentialityType;
+    reference header container : HeaderType;
+    reference folder[*] container : FolderType;
+    reference base64EncryptedData[0-1] container : Base64EncryptedDataType;
+
+  }
+
+
+  class LifecycleType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDLIFECYCLE;
+
+  }
+
+
+  class LocalitemattributeType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference id[*] container : IDKMEHR;
+    reference cd container : LOCAL;
+    reference content container : ContentlocalitemattributeType;
+
+  }
+
+
+  class LocationBirthPlaceType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd[0-1] container : CDEBIRTHPLACE;
+    reference text[0-1] container : TextType;
+    reference address container : AddressType;
+
+  }
+
+
+  class MaxrefType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute decimal : String;
+
+    reference text[0-1] container : TextType;
+
+  }
+
+
+  class MedicationType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute tradename : String;
+    attribute batch : String;
+    attribute numberofpackage : String;
+    attribute quantityperpackage : String;
+    attribute issubstitutionallowed : boolean;
+
+    reference cd[0-1] container : CDMEDICATION;
+    reference inn[0-1] container : TextType;
+    reference magistral[0-1] container : TextType;
+    reference presentation[0-1] container : PresentationType;
+    reference strength[0-1] container : StrengthType;
+    reference route[0-1] container : RouteType;
+    reference _package[0-1] container : PackageType;
+    reference instructionforoverdosing[0-1] container : TextType;
+    reference instructionforpatient[0-1] container : TextType;
+    reference instructionforreimbursement[0-1] container : TextType;
+
+  }
+
+
+  class NominatorType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference quantity container : TimequantityType;
+
+  }
+
+
+  class PackageType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDUNIT;
+
+  }
+
+
+  class PeriodicityType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDPERIODICITY;
+
+  }
+
+
+  class PersonalpartType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute date : Date;
+    attribute time : Time;
+
+    reference id container : IDKMEHR;
+    reference cd container : CDCARENETPERSONALPART;
+
+  }
+
+
+  class PersonTypeLight {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute firstname : String;
+    attribute familyname : String;
+
+    reference id[*] container : IDPATIENT;
+    reference address[*] container : AddressType;
+    reference telecom[*] container : TelecomType;
+
+  }
+
+
+  class PosologyType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute low : String;
+    attribute high : String;
+
+    reference unit[0-1] container : AdministrationunitType;
+    reference takes[0-1] container : TakesType;
+    reference text[0-1] container : TextType;
+
+  }
+
+
+  class PresentationType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDDRUGPRESENTATION;
+
+  }
+
+
+  class RecipientType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute dummyFriend : String;
+
+    reference hcparty[*] container : HcpartyType;
+
+  }
+
+
+  class RefscopeType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDREFSCOPE;
+    reference refvalue[*] container : RefvalueType;
+
+  }
+
+
+  class RefvalueType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference minref[0-1] container : MinrefType;
+    reference maxref[0-1] container : MaxrefType;
+    reference context container : TextType;
+
+  }
+
+
+  class RegimenType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute group : String;
+    attribute daynumber : int;
+    attribute date : Date;
+
+    reference weekday[*] container : WeekdayType1;
+    reference daytime[*] container : DaytimeType;
+    reference quantity[*] container : AdministrationquantityType;
+
+  }
+
+
+  class RenewalType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute decimal : String;
+
+    reference duration[0-1] container : DurationType;
+    reference text[0-1] container : TextType;
+
+  }
+
+
+  class RouteType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDDRUGROUTE;
+
+  }
+
+
+  class RRMAXType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute tIME : String;
+
+
+  }
+
+
+  class RRMINType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute value : String;
+    attribute tIME : String;
+
+
+  }
+
+
+  class SenderType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference hcparty[*] container : HcpartyType;
+
+  }
+
+
+  class SeverityType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDSEVERITY;
+
+  }
+
+
+  class SexType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDSEX;
+
+    static operation newSexType(sval : String) : SexType 
+    pre: true 
+    post: 
+      SexType->exists( stypex | 
+        stypex.$id = "SexType_" + sval & 
+        CDSEX->exists( cdx | cdx.$id = "CDSEX_" + sval & 
+                   cdx.value = sval & 
+                   stypex.cd = cdx & 
+                   result = stypex ) ); 
+
+  }
+
+
+  class SiteType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd[0-1] container : CDSITE;
+    reference text[0-1] container : TextType;
+
+  }
+
+
+  class SourceType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute datetime : String;
+    attribute version : String;
+    attribute proof : String;
+
+    reference cd[*] container : CDEXTERNALSOURCE;
+
+  }
+
+
+  class SpecialisationType {
+  stereotype source;
+
+    attribute $id identity : String;
+    attribute version : String;
+
+    reference cd container : CDMESSAGE;
+
+  }
+
+
+  class StandardType {
+  stereotype source;
+
+    attribute $id identity : String;
+
+    reference cd container : CDSTANDARD;
+    reference specialisation[0-1] container : SpecialisationType;
+
+  }
+
+
+  class TransactionType {
+    stereotype source; 
+
+    attribute $id identity : String;
+    reference confidentiality container : ConfidentialityType; 
+    reference id[*] container : IDKMEHR; 
+    reference cd[*] container : CDTRANSACTION; 
+    attribute date : Date; 
+    attribute time : Time; 
+    reference author container : AuthorType; 
+    reference redactor container : AuthorType; 
+    attribute iscomplete : boolean; 
+    attribute isvalidated : boolean; 
+    attribute expirationdate : Date; 
+    reference heading[*] : HeadingType; 
+    reference item[*] : ItemType; 
+    reference text[*] : TextType; 
+    reference textWithLayout[*] : TextWithLayoutType; 
+    reference lnk[*] : LnkType; 
+    attribute recorddatetime : DateTime; 
+    attribute version : String; 
+
+    query isSumehr() : boolean 
+    pre: true 
+    post: 
+      (self.cd->exists( cdx | cdx.value = "sumehr" ) => result = true);  
+
+    query txAuthor() : HcpartyType 
+    pre: true 
+    post: result = self.author.txAuthor();
+
+    query hcpartyContent() : Sequence(HcpartyType) 
+    pre: true 
+    post: 
+      result = self.item->select( itemx | itemx.hcpartyContent() /= null)->collect( itemxx | itemxx.hcpartyContent() ); 
+
+    query transactionStatus() : String
+    pre: true 
+    post: (iscomplete & isvalidated => result = "final") & 
+      (iscomplete & not(isvalidated) => result = "preliminary") & 
+      (true => result = "partial");  
+
+    query authorPrefix() : String
+    pre: true
+    post: 
+      ((author.txAuthor()).isOrganization() => result = "Organization/") & 
+      ((author.txAuthor()).isPractitioner() => result = "Practitioner/") & 
+      (true => result = "Other/"); 
+  }
+
+  enumeration AdministrativeGenderEnum {
+    literal male;
+    literal female;
+    literal other;
+    literal unknown;
+  }
+
+  abstract class Base {
+  stereotype abstract;
+
+    attribute $id identity : String; 
+
+    stereotype target; 
+  }
+
+
+  class FhirBoolean extends Element {
+
+    attribute value : String;
+
+    static operation newFhirBoolean(strx : String) : FhirBoolean
+    pre: true 
+    post: 
+      FhirBoolean->exists( fboolx |
+            fboolx.$id = "FhirBoolean_" + strx &  
+            fboolx.value = strx & result = fboolx ); 
+
+    stereotype target;
+  }
+
+  class FhirInteger extends Element {
+
+    attribute value : String;
+
+    static operation newFhirInteger(strx : String) : FhirInteger
+    pre: true 
+    post: 
+      FhirInteger->exists( fintx | 
+            fintx.$id = "FhirInteger_" + strx &  
+            fintx.value = strx & result = fintx ); 
+
+    stereotype target;
+  }
+
+
+  class Id extends Element {
+
+    attribute value : String;
+
+    stereotype target;
+
+    static operation newId(uid : String) : Id
+    pre: true 
+    post: 
+      Id->exists( idx | idx.$id = "Id_" + uid & 
+                    idx.value = uid & 
+                    result = idx ); 
+  }
+
+
+
+  class Uri extends Element {
+
+    static attribute urnPrefix : String := "urn:uuid"; 
+
+    attribute value : String;
+
+    stereotype target;
+
+    static operation newUri(sys : String) : Uri
+    pre: true
+    post: Uri->exists( urix | urix.$id = "Uri_" + sys & 
+                  urix.value = sys->trim() & 
+                  result = urix ); 
+            
+    static operation newUrn(uid : String) : Uri
+    pre: true
+    post: Uri->exists( urix | 
+            urix.$id = "Uri_" + Uri.urnPrefix + uid & 
+            urix.value = Uri.urnPrefix + uid & 
+            result = urix ); 
+  }
+
+
+  class Url extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+
+  class FhirString extends Element {
+
+    attribute value : String;
+
+    stereotype target;
+
+   static operation newFhirString(sx : String) : FhirString
+   pre: true 
+   post: FhirString->exists( strx | 
+               strx.$id = "FhirString_" + sx & 
+               strx.value = sx & 
+               result = strx );
+
+  }
+
+
+  class FhirDate extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+
+   static operation newFhirDate(sx : String) : FhirDate
+   pre: true 
+   post: FhirDate->exists( strx | 
+               strx.$id = "FhirDate_" + sx & 
+               strx.value = sx & 
+               result = strx );
+  }
+
+
+  class DateTime extends Element {
+
+    attribute value : String;
+
+    stereotype target;
+
+   static operation newDateTime(sx : String) : DateTime
+   pre: true 
+   post: DateTime->exists( strx | 
+               strx.$id = "DateTime_" + sx & 
+               strx.value = sx & 
+               result = strx );
+ 
+  }
+
+
+  class Decimal extends Element {
+
+    attribute value : String;
+
+    stereotype target;
+
+   static operation newDecimal(sx : String) : Decimal
+   pre: true 
+   post: Decimal->exists( strx | 
+               strx.$id = "Decimal_" + sx & 
+               strx.value = sx & 
+               result = strx );
+ 
+  }
+
+
+  class Period extends DataType {
+
+    reference start[0-1] container : DateTime;
+    reference end[0-1] container : DateTime;
+
+    stereotype target; 
+
+    static operation newPeriod(dt1 : DateTime, dt2 : DateTime) : Period 
+    pre: true
+    post: 
+      Period->exists( perx | 
+        perx.$id = "Period_" + dt1.$id + "_" + dt2.$id & 
+        dt1 : perx.start & 
+        dt2 : perx.end & 
+        result = perx ); 
+  }
+
+  class FhirAddressType extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+
+  class AddressUse extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+  class Address extends DataType {
+
+    reference use[0-1] container : AddressUse;
+    reference type[0-1] container : FhirAddressType;
+    reference text[0-1] container : FhirString;
+    reference line[*] container : FhirString;
+    reference city[0-1] container : FhirString;
+    reference district[0-1] container : FhirString;
+    reference state[0-1] container : FhirString;
+    reference postalCode[0-1] container : FhirString;
+    reference country[0-1] container : FhirString;
+    reference period[0-1] container : Period;
+
+    stereotype target; 
+  }
+
+
+
+
+  class Extension extends DataType {
+
+    attribute url : String;
+
+    stereotype target; 
+  } 
+
+  abstract class Element extends Base {
+
+    attribute id : String;
+
+    reference extension[*] container : Extension;
+
+    stereotype target; 
+  }
+
+
+
+  abstract class DataType extends Element {
+
+    stereotype target; 
+  }
+
+
+  class PositiveInt extends Element {
+
+    attribute value : String;
+
+    stereotype target;
+
+   static operation newPositiveInt(sx : String) : PositiveInt
+   pre: true 
+   post: PositiveInt->exists( strx | 
+               strx.$id = "PositiveInt_" + sx & 
+               strx.value = sx & 
+               result = strx );
+ 
+}
+
+
+  class Code extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+
+    static operation newCode(cde : String) : Code
+    pre: true 
+    post: Code->exists( codex | codex.$id = "Code_" + cde & 
+                   codex.value = cde->trim() & 
+                   result = codex ); 
+  }
+
+
+  class Coding extends DataType {
+
+    stereotype target; 
+
+    reference system[0-1] container : Uri;
+    reference version[0-1] container : FhirString;
+    reference code[0-1] container : Code;
+    reference display[0-1] container : FhirString;
+    reference userSelected[0-1] container : FhirBoolean;
+
+   static operation newCoding(sys : String, cde : String) : Coding
+   pre: true 
+   post: Coding->exists( codingx | 
+           codingx.$id = "Coding_" + sys + "/" + cde & 
+           Uri.newUri(sys) : codingx.system & 
+           Code.newCode(cde) : codingx.code & 
+           result = codingx ); 
+ 
+    static operation newCodingDisplay(idx : String, dispx : String) : Coding
+    pre: true 
+    post: 
+      Coding->exists( codingx | codingx.$id = "Coding_" + idx & 
+        codingx.display = Set{FhirString.newFhirString(dispx)} & 
+        result = codingx );  
+  }
+
+  class CodeableConcept extends DataType {
+
+    reference coding[*] container : Coding;
+    reference text[0-1] container : FhirString;
+
+    stereotype target; 
+
+    static operation newCodeableConcept(codingx : Coding) : CodeableConcept
+    pre: true 
+    post: CodeableConcept->exists( cdex | 
+            cdex.$id = "CodeableConcept_" + codingx.$id & 
+            cdex.coding = Set{codingx} & 
+            result = cdex ); 
+
+    static operation newCodeableConceptCodings(idx : String, codingsx : Sequence(Coding)) : CodeableConcept
+    pre: true 
+    post: CodeableConcept->exists( cdex | 
+            cdex.$id = "CodeableConcept_" + idx & 
+            codingsx <: cdex.coding & 
+            result = cdex ); 
+  }
+
+  class ContactPointSystem extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+
+  class ContactPointUse extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+  class ContactPoint extends DataType {
+
+    reference system[0-1] container : ContactPointSystem;
+    reference value[0-1] container : FhirString;
+    reference use[0-1] container : ContactPointUse;
+    reference rank[0-1] container : PositiveInt;
+    reference period[0-1] container : Period;
+
+    stereotype target; 
+  }
+
+
+  class Instant extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+  class Canonical extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+  class UnsignedInt extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+
+  class Meta extends DataType {
+
+    reference versionId[0-1] container : Id;
+    reference lastUpdated[0-1] container : Instant;
+    reference source[0-1] container : Uri;
+    reference profile[*] container : Canonical;
+    reference security[*] container : Coding;
+    reference tag[*] container : Coding;
+
+    stereotype target; 
+  }
+
+  abstract class Resource extends Base {
+  
+    reference id[0-1] container : Id;
+    reference meta[0-1] container : Meta;
+    reference implicitRules[0-1] container : Uri;
+    reference language[0-1] container : Code;
+
+    stereotype target; 
+  }
+
+  class NarrativeStatus extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+
+  class Narrative extends DataType {
+
+    attribute div : String;
+
+    reference status container : NarrativeStatus;
+
+    stereotype target; 
+  }
+
+
+  class AllergyIntoleranceCategory extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+
+  class AllergyIntoleranceCriticality extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+
+    static operation newAllergyIntoleranceCriticality(valx : String) : AllergyIntoleranceCriticality 
+    pre: true 
+    post: 
+      AllergyIntoleranceCriticality->exists( aicx | 
+        aicx.$id = "AllergyIntoleranceCriticality_" + valx & 
+        aicx.value = valx & 
+        result = aicx ); 
+  }
+
+
+  class Age extends Quantity {
+
+    stereotype target; 
+  }
+
+
+  class AllergyIntolerance extends DomainResource {
+
+    reference identifier[*] container : Identifier;
+
+    reference clinicalStatus[0-1] container : CodeableConcept;
+    reference verificationStatus[0-1] container : CodeableConcept;
+    reference type[0-1] container : CodeableConcept;
+    reference category[*] container : AllergyIntoleranceCategory;
+    reference criticality[0-1] container : AllergyIntoleranceCriticality;
+    reference code[0-1] container : CodeableConcept;
+    reference patient container : Reference;
+    reference encounter[0-1] container : Reference;
+    reference onsetDateTime[0-1] container : DateTime;
+    reference onsetAge[0-1] container : Age;
+    reference onsetPeriod[0-1] container : Period;
+    reference onsetRange[0-1] container : Range;
+    reference onsetString[0-1] container : FhirString;
+    reference recordedDate[0-1] container : DateTime;
+//    reference participant[*] container : AllergyIntoleranceParticipant;
+    reference lastOccurrence[0-1] container : DateTime;
+    reference note[*] container : Annotation;
+//    reference reaction[*] container : AllergyIntoleranceReaction;
+
+    stereotype target; 
+  } 
+
+
+  class Condition extends DomainResource {
+
+    reference identifier[*] container : Identifier;
+    reference clinicalStatus container : CodeableConcept;
+    reference verificationStatus[0-1] container : CodeableConcept;
+    reference category[*] container : CodeableConcept;
+    reference severity[0-1] container : CodeableConcept;
+    reference code[0-1] container : CodeableConcept;
+    reference bodySite[*] container : CodeableConcept;
+    reference subject container : Reference;
+    reference encounter[0-1] container : Reference;
+    reference onsetDateTime[0-1] container : DateTime;
+    reference onsetAge[0-1] container : Age;
+    reference onsetPeriod[0-1] container : Period;
+    reference onsetRange[0-1] container : Range;
+    reference onsetString[0-1] container : FhirString;
+    reference abatementDateTime[0-1] container : DateTime;
+    reference abatementAge[0-1] container : Age;
+    reference abatementPeriod[0-1] container : Period;
+    reference abatementRange[0-1] container : Range;
+    reference abatementString[0-1] container : FhirString;
+    reference recordedDate[0-1] container : DateTime;
+//    reference participant[*] container : ConditionParticipant;
+//    reference stage[*] container : ConditionStage;
+    reference evidence[*] container : CodeableReference;
+    reference note[*] container : Annotation;
+
+    stereotype target; 
+  }
+
+  class ImmunizationStatusCodes extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+
+    static operation newImmunizationStatusCodes(valx : String) : ImmunizationStatusCodes
+    pre: true 
+    post: 
+      ImmunizationStatusCodes->exists( immsx | 
+        immsx.$id = "ImmunizationStatusCodes_" + valx & 
+        immsx.value = valx & 
+        result = immsx ); 
+  }
+
+  class Immunization extends DomainResource {
+
+    reference identifier[*] container : Identifier;
+    reference basedOn[*] container : Reference;
+    reference status container : ImmunizationStatusCodes;
+    reference statusReason[0-1] container : CodeableConcept;
+    reference vaccineCode container : CodeableConcept;
+    reference administeredProduct[0-1] container : CodeableReference;
+    reference manufacturer[0-1] container : CodeableReference;
+    reference lotNumber[0-1] container : FhirString;
+    reference expirationDate[0-1] container : FhirDate;
+    reference patient container : Reference;
+    reference encounter[0-1] container : Reference;
+    reference supportingInformation[*] container : Reference;
+    reference occurrenceDateTime[0-1] container : DateTime;
+    reference occurrenceString[0-1] container : FhirString;
+    reference primarySource[0-1] container : FhirBoolean;
+    reference informationSource[0-1] container : CodeableReference;
+    reference location[0-1] container : Reference;
+    reference site[0-1] container : CodeableConcept;
+    reference route[0-1] container : CodeableConcept;
+    reference doseQuantity[0-1] container : Quantity;
+//    reference performer[*] container : ImmunizationPerformer;
+    reference note[*] container : Annotation;
+    reference reason[*] container : CodeableReference;
+    reference isSubpotent[0-1] container : FhirBoolean;
+    reference subpotentReason[*] container : CodeableConcept;
+//    reference programEligibility[*] container : ImmunizationProgramEligibility;
+    reference fundingSource[0-1] container : CodeableConcept;
+//    reference reaction[*] container : ImmunizationReaction;
+//    reference protocolApplied[*] container : ImmunizationProtocolApplied;
+
+    stereotype target; 
+  }
+
+
+  class Organization extends DomainResource {
+
+    reference identifier[*] container : Identifier;
+    reference active[0-1] container : FhirBoolean;
+    reference type[*] container : CodeableConcept;
+    reference name[0-1] container : FhirString;
+    reference alias[*] container : FhirString;
+    reference description[0-1] container : Markdown;
+//    reference contact[*] container : ExtendedContactDetail;
+    reference partOf[0-1] container : Reference;
+    reference endpoint[*] container : Reference;
+//    reference qualification[*] container : OrganizationQualification;
+
+    stereotype target; 
+  }
+
+  class Practitioner extends DomainResource {
+
+
+    reference identifier[*] container : Identifier;
+    reference active[0-1] container : FhirBoolean;
+    reference name[*] container : HumanName;
+    reference telecom[*] container : ContactPoint;
+    reference gender[0-1] container : AdministrativeGender;
+    reference birthDate[0-1] container : FhirDate;
+    reference deceasedBoolean[0-1] container : FhirBoolean;
+    reference deceasedDateTime[0-1] container : DateTime;
+    reference address[*] container : Address;
+    reference photo[*] container : Attachment;
+//    reference qualification[*] container : PractitionerQualification;
+//    reference communication[*] container : PractitionerCommunication;
+
+    stereotype target; 
+  }
+
+  class MedicationBatch extends BackboneElement {
+
+    reference lotNumber[0-1] container : FhirString;
+    reference expirationDate[0-1] container : DateTime;
+
+    stereotype target; 
+  }
+
+  class Ratio extends DataType {
+
+
+    reference numerator[0-1] container : Quantity;
+    reference denominator[0-1] container : Quantity;
+
+    stereotype target; 
+  }
+
+
+  class MedicationIngredient extends BackboneElement {
+
+    reference item container : CodeableReference;
+    reference isActive[0-1] container : FhirBoolean;
+    reference strengthRatio[0-1] container : Ratio;
+    reference strengthCodeableConcept[0-1] container : CodeableConcept;
+    reference strengthQuantity[0-1] container : Quantity;
+
+    stereotype target; 
+  }
+
+  class MedicationStatusCodes extends Element {
+
+    attribute value : String;
+
+
+    stereotype target; 
+
+    static operation newMedicationStatusCodes(valx : String) : MedicationStatusCodes 
+    pre: true 
+    post: 
+      MedicationStatusCodes->exists( medsx | 
+         medsx.$id = "MedicationStatusCodes_" + valx & 
+         medsx.value = valx & 
+         result = medsx ); 
+  }
+
+
+
+  class Medication extends DomainResource {
+
+    reference identifier[*] container : Identifier;
+    reference code[0-1] container : CodeableConcept;
+    reference status[0-1] container : MedicationStatusCodes;
+    reference marketingAuthorizationHolder[0-1] container : Reference;
+    reference doseForm[0-1] container : CodeableConcept;
+    reference totalVolume[0-1] container : Quantity;
+    reference ingredient[*] container : MedicationIngredient;
+    reference batch[0-1] container : MedicationBatch;
+    reference definition[0-1] container : Reference;
+
+    stereotype target; 
+  }
+
+
+  class ResourceContainer {
+
+    attribute $id identity : String; 
+
+    reference allergyIntolerance[0-1] container : AllergyIntolerance;
+    reference composition[0-1] container : Composition;
+    reference condition[0-1] container : Condition;
+    reference immunization[0-1] container : Immunization;
+    
+    reference organization[0-1] container : Organization;
+    reference practitioner[0-1] container : Practitioner;
+    reference medication[0-1] container : Medication;
+    reference medicationStatement[0-1] container : MedicationStatement;
+
+    reference patient[0-1] container : Patient; 
+
+    stereotype target; 
+
+    static operation newResourceContainer(idx : String) : ResourceContainer
+    pre: true 
+    post: ResourceContainer->exists( rcx | 
+             rcx.$id = "ResourceContainer_" + idx & 
+             result = rcx ); 
+
+  }
+
+  abstract class DomainResource extends Resource {
+  
+    reference text[0-1] container : Narrative;
+    reference contained[*] container : ResourceContainer;
+    reference extension[*] container : Extension;
+    reference modifierExtension[*] container : Extension;
+
+    stereotype target; 
+  }
+
+  class IdentifierUse extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+  class Reference extends DataType {
+
+    reference _reference[0-1] container : FhirString;
+    reference type[0-1] container : Uri;
+    reference identifier[0-1] container : Identifier;
+    reference display[0-1] container : FhirString;
+
+    stereotype target;
+
+    static operation newReference(reftext : String) : Reference
+    pre: true 
+    post: 
+      Reference->exists( refx | refx.$id = "Reference_" + reftext & 
+         refx._reference = Set{FhirString.newFhirString(reftext)} & 
+         result = refx );  
+
+    static operation newPatientReference(pid : String) : Reference
+    pre: true 
+    post: 
+      Reference->exists( refx | refx.$id = "patRef_" + pid & 
+         refx._reference = Set{FhirString.newFhirString("Patient/" + pid)} & 
+         result = refx );  
+
+    static operation newMedicationReference(pid : String) : Reference
+    pre: true 
+    post: 
+      Reference->exists( refx | refx.$id = "medRef_" + pid & 
+         refx._reference = Set{FhirString.newFhirString("Medication/" + pid)} & 
+         result = refx );  
+  }
+
+
+  class Identifier extends DataType {
+
+    reference use[0-1] container : IdentifierUse;
+    reference type[0-1] container : CodeableConcept;
+    reference system[0-1] container : Uri;
+    reference value[0-1] container : FhirString;
+    reference period[0-1] container : Period;
+    reference assigner[0-1] container : Reference;
+
+    stereotype target;
+
+  }
+
+  class NameUse extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+  class HumanName extends DataType {
+
+    reference use[0-1] container : NameUse;
+    reference text[0-1] container : FhirString;
+    reference family[0-1] container : FhirString;
+    reference given[*] container : FhirString;
+    reference prefix[*] container : FhirString;
+    reference suffix[*] container : FhirString;
+    reference period[0-1] container : Period;
+
+    stereotype target; 
+  }
+
+  class AdministrativeGender extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+
+  class Base64Binary extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+  class Integer64 extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+
+  class Attachment extends DataType {
+
+    reference contentType[0-1] container : Code;
+    reference language[0-1] container : Code;
+    reference data[0-1] container : Base64Binary;
+    reference url[0-1] container : Url;
+    reference size[0-1] container : Integer64;
+    reference hash[0-1] container : Base64Binary;
+    reference title[0-1] container : FhirString;
+    reference creation[0-1] container : DateTime;
+    reference height[0-1] container : PositiveInt;
+    reference width[0-1] container : PositiveInt;
+    reference frames[0-1] container : PositiveInt;
+    reference duration[0-1] container : Decimal;
+    reference pages[0-1] container : PositiveInt;
+
+    stereotype target; 
+  }
+
+  class PatientCommunication extends BackboneElement {
+
+    reference language container : CodeableConcept;
+    reference preferred[0-1] container : FhirBoolean;
+
+    stereotype target; 
+  }
+
+  abstract class BackboneElement extends Element {
+  stereotype abstract;
+
+    reference modifierExtension[*] container : Extension;
+
+    stereotype target; 
+  }
+
+  class PatientContact extends BackboneElement {
+
+    reference relationship[*] container : CodeableConcept;
+    reference name[0-1] container : HumanName;
+    reference telecom[*] container : ContactPoint;
+    reference address[0-1] container : Address;
+    reference gender[0-1] container : AdministrativeGender;
+    reference organization[0-1] container : Reference;
+    reference period[0-1] container : Period;
+
+    stereotype target; 
+  }
+
+  class LinkType extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+
+  class PatientLink extends BackboneElement {
+
+    reference other container : Reference;
+    reference type container : LinkType;
+
+    stereotype target; 
+  }
+
+
+
+  class Patient extends DomainResource {
+
+    reference identifier[*] container : Identifier;
+    reference active[0-1] container : FhirBoolean;
+    reference name[*] container : HumanName;
+    reference telecom[*] container : ContactPoint;
+    reference gender[0-1] container : AdministrativeGender;
+    reference birthDate[0-1] container : FhirDate;
+    reference deceasedBoolean[0-1] container : FhirBoolean;
+    reference deceasedDateTime[0-1] container : DateTime;
+    reference address[*] container : Address;
+    reference maritalStatus[0-1] container : CodeableConcept;
+    reference multipleBirthBoolean[0-1] container : FhirBoolean;
+    reference multipleBirthInteger[0-1] container : FhirInteger;
+    reference photo[*] container : Attachment;
+    reference contact[*] container : PatientContact;
+    reference communication[*] container : PatientCommunication;
+    reference generalPractitioner[*] container : Reference;
+    reference managingOrganization[0-1] container : Reference;
+    reference link[*] container : PatientLink;
+
+    stereotype target; 
+  }
+
+  class Signature extends DataType {
+
+    reference type[*] container : Coding;
+    reference when[0-1] container : Instant;
+    reference who[0-1] container : Reference;
+    reference onBehalfOf[0-1] container : Reference;
+    reference targetFormat[0-1] container : Code;
+    reference sigFormat[0-1] container : Code;
+    reference data[0-1] container : Base64Binary;
+
+    stereotype target; 
+  }
+
+
+  class LinkRelationTypes extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+
+  class BundleLink extends BackboneElement {
+
+    reference relation container : LinkRelationTypes;
+    reference url container : Uri;
+
+    stereotype target; 
+  }
+
+
+  class BundleEntry extends BackboneElement {
+
+    reference link[*] container : BundleLink;
+    reference fullUrl[0-1] container : Uri;
+    reference resource[0-1] container : ResourceContainer;
+    
+    stereotype target; 
+
+    static operation newBundleEntry(idx : String) : BundleEntry
+    pre: true 
+    post: 
+      BundleEntry->exists( bundlex | 
+        bundlex.$id = "BundleEntry_" + idx &
+        Uri.newUrn(idx) : bundlex.fullUrl &
+        ResourceContainer.newResourceContainer("rcx_" + idx) : bundlex.resource &  
+        result = bundlex ); 
+
+  }
+
+  class BundleType extends Element {
+
+    attribute value : String;
+
+    static operation newBundleType(valx : String) : BundleType
+    pre: true 
+    post: 
+      BundleType->exists( bundx | 
+        bundx.$id = "BundleType_" + valx & 
+        bundx.value = valx & 
+        result = bundx ); 
+
+    stereotype target;
+  }
+
+
+  class Bundle extends Resource {
+
+    reference identifier[0-1] container : Identifier;
+    reference type container : BundleType;
+    reference timestamp[0-1] container : Instant;
+    reference total[0-1] container : UnsignedInt;
+    reference link[*] container : BundleLink;
+    reference entry[*] ordered : BundleEntry;
+    reference signature[0-1] container : Signature;
+    reference issues[0-1] container : ResourceContainer;
+
+    stereotype target; 
+  }
+
+
+  class CodeableReference extends DataType {
+
+    reference concept[0-1] container : CodeableConcept;
+    reference _reference[0-1] container : Reference;
+
+    stereotype target; 
+
+    static operation newCodeableReference(ccx : CodeableConcept) : CodeableReference
+    pre: true 
+    post: 
+      CodeableReference->exists( cref | 
+        cref.$id = "CodeableReference_" + ccx.$id & 
+        ccx : cref.concept & 
+        result = cref ); 
+
+    static operation newCodeableRef(ccx : Reference) : CodeableReference
+    pre: true
+    post: 
+      CodeableReference->exists( crx | 
+        crx.$id = "CodeableReference_" + ccx.$id & 
+        ccx : crx._reference & 
+        result = crx );  
+  }
+
+  class FhirDocumentRoot {
+
+    attribute $id identity : String; 
+
+    attribute mixed : String;
+
+    reference bundle[0-1] container : Bundle;
+  
+    stereotype target; 
+  }
+
+  class CompositionSection extends BackboneElement {
+
+    static attribute loincURL : String := "http://loinc.org"; 
+
+    reference title[0-1] container : FhirString;
+    reference code[0-1] container : CodeableConcept;
+    reference author[*] container : Reference;
+    reference focus[0-1] container : Reference;
+    reference text[0-1] container : Narrative;
+    reference orderedBy[0-1] container : CodeableConcept;
+    reference entry[*] container : Reference;
+    reference emptyReason[0-1] container : CodeableConcept;
+    reference section[*] container : CompositionSection;
+
+    stereotype target; 
+
+    static operation newCompositionSection(idx : String) : CompositionSection
+    pre: true 
+    post: 
+      CompositionSection->exists( csx | 
+        csx.$id = "CompositionSection_" + idx & 
+        Code->exists( codex | codex.$id = "code_" + idx & 
+          Uri->exists( urix | urix.$id = "loinc_" + idx & 
+                 urix.value = AuxOps.loincURL & 
+            Coding->exists( codingx | 
+                 codingx.$id = "coding_" + idx & 
+                 urix : codingx.system & 
+                 codex : codingx.code & 
+              CodeableConcept->exists( ccx | 
+                 ccx.$id = "cc_" + idx & 
+                 ccx.coding = Set{codingx} & 
+                 csx.code = Set{ccx} & 
+                 result = csx ) ) ) ) ); 
+  }
+
+  class CompositionAttester extends BackboneElement {
+
+    reference mode container : CodeableConcept;
+    reference time[0-1] container : DateTime;
+    reference party[0-1] container : Reference;
+
+    stereotype target; 
+  }
+
+
+  class CompositionEvent extends BackboneElement {
+
+    reference period[0-1] container : Period;
+    reference detail[*] container : CodeableReference;
+
+    stereotype target; 
+  }
+
+  class CompositionStatus extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+
+    static operation newCompositionStatus(valx : String) : CompositionStatus
+    pre: true
+    post: 
+      CompositionStatus->exists( compstatx | 
+        compstatx.$id = "CompositionStatus_" + valx & 
+        compstatx.value = valx & 
+        result = compstatx ); 
+  }
+
+  class Markdown extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+
+  class Annotation extends DataType {
+
+    reference authorReference[0-1] container : Reference;
+    reference authorString[0-1] container : FhirString;
+    reference time[0-1] container : DateTime;
+    reference text container : Markdown;
+
+    stereotype target; 
+  }
+
+
+  abstract class Quantity extends DataType {
+  stereotype abstract;
+
+    reference value[0-1] container : Decimal;
+    reference comparator[0-1] container : QuantityComparator;
+    reference unit[0-1] container : FhirString;
+    reference system[0-1] container : Uri;
+    reference code[0-1] container : Code;
+
+    stereotype target; 
+  }
+
+
+  class QuantityComparator extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+  }
+
+  class Range extends DataType {
+
+    reference low[0-1] container : Quantity;
+    reference high[0-1] container : Quantity;
+
+    stereotype target; 
+  }
+
+
+  class UsageContext extends DataType {
+
+    reference code container : Coding;
+    reference valueCodeableConcept[0-1] container : CodeableConcept;
+    reference valueQuantity[0-1] container : Quantity;
+    reference valueRange[0-1] container : Range;
+    reference valueReference[0-1] container : Reference;
+
+    stereotype target; 
+  }
+
+  class Composition extends DomainResource {
+
+    reference url[0-1] container : Uri;
+    reference identifier[*] container : Identifier;
+    reference version[0-1] container : FhirString;
+    reference status container : CompositionStatus;
+    reference type container : CodeableConcept;
+    reference category[*] container : CodeableConcept;
+    reference subject[*] container : Reference;
+    reference encounter[0-1] container : Reference;
+    reference date container : DateTime;
+    reference useContext[*] container : UsageContext;
+    reference author[*] container : Reference;
+    reference name[0-1] container : FhirString;
+    reference title container : FhirString;
+    reference note[*] container : Annotation;
+    reference attester[*] container : CompositionAttester;
+    reference custodian[0-1] container : Reference;
+//    reference relatesTo[*] container : RelatedArtifact;
+    reference event[*] container : CompositionEvent;
+    reference section[*] container : CompositionSection;
+
+    stereotype target; 
+  }
+
+  class EventTiming extends Element {
+
+    attribute value : String;
+
+    static operation newEventTiming(valx : String) : EventTiming
+    pre: true 
+    post: 
+      EventTiming->exists( evx | 
+        evx.$id = "EventTiming_" + valx & 
+        evx.value = valx & 
+        result = evx ); 
+
+    stereotype target; 
+  }
+
+  class UnitsOfTime extends Element {
+
+    attribute value : String;
+
+    stereotype target; 
+
+    static operation newUnitsOfTime(vx : String) : UnitsOfTime 
+    pre: true 
+    post: 
+      UnitsOfTime->exists( utx | 
+        utx.$id = "UnitsOfTime_" + vx & 
+        utx.value = vx & 
+        result = utx ); 
+  }
+
+  abstract class BackboneType extends DataType {
+  stereotype abstract;
+
+//    reference modifierExtension[*] container : Extension;
+
+    stereotype target; 
+ }
+
+
+  class TimingRepeat extends BackboneType {
+
+//    reference boundsDuration[0-1] container : Duration;
+//    reference boundsRange[0-1] container : Range;
+//    reference boundsPeriod[0-1] container : Period;
+    reference count[0-1] container : PositiveInt;
+//    reference countMax[0-1] container : PositiveInt;
+//    reference duration[0-1] container : Decimal;
+//    reference durationMax[0-1] container : Decimal;
+//    reference durationUnit[0-1] container : UnitsOfTime;
+//    reference frequency[0-1] container : PositiveInt;
+//    reference frequencyMax[0-1] container : PositiveInt;
+//    reference period[0-1] container : Decimal;
+//    reference periodMax[0-1] container : Decimal;
+    reference periodUnit[0-1] container : UnitsOfTime;
+//    reference dayOfWeek[*] container : Code;
+//    reference timeOfDay[*] container : FhirTime;
+    reference when[*] ordered : EventTiming;
+//    reference offset[0-1] container : UnsignedInt;
+
+    stereotype target; 
+  }
+
+  class Timing extends BackboneType {
+
+    reference event[*] container : DateTime;
+    reference repeat[0-1] container : TimingRepeat;
+    reference code[0-1] container : CodeableConcept;
+
+    stereotype target; 
+  }
+
+
+  class DosageDoseAndRate extends BackboneType {
+
+
+    reference type[0-1] container : CodeableConcept;
+    reference doseRange[0-1] container : Range;
+    reference doseQuantity[0-1] container : Quantity;
+    reference rateRatio[0-1] container : Ratio;
+    reference rateRange[0-1] container : Range;
+    reference rateQuantity[0-1] container : Quantity;
+
+    stereotype target; 
+  }
+
+  class Dosage extends BackboneType {
+
+    reference sequence[0-1] container : FhirInteger;
+    reference text[0-1] container : FhirString;
+    reference additionalInstruction[*] container : CodeableConcept;
+    reference patientInstruction[0-1] container : FhirString;
+    reference timing[0-1] container : Timing;
+    reference asNeeded[0-1] container : FhirBoolean;
+    reference asNeededFor[*] container : CodeableConcept;
+    reference site[0-1] container : CodeableConcept;
+    reference route[0-1] container : CodeableConcept;
+    reference method[0-1] container : CodeableConcept;
+    reference doseAndRate[*] container : DosageDoseAndRate;
+    reference maxDosePerPeriod[*] container : Ratio;
+    reference maxDosePerAdministration[0-1] container : Quantity;
+    reference maxDosePerLifetime[0-1] container : Quantity;
+
+    stereotype target; 
+  }
+
+  class MedicationStatementStatusCodes extends Element {
+
+    attribute value : String;
+
+    static operation newMedicationStatementStatusCodes(vx : String) : MedicationStatementStatusCodes
+    pre: true 
+    post: 
+      MedicationStatementStatusCodes->exists( mssx | 
+        mssx.$id = "MedicationStatementStatusCodes_" + vx & 
+        mssx.value = vx & 
+        result = mssx ); 
+ 
+    stereotype target; 
+  }
+
+  class MedicationStatement extends DomainResource {
+
+    reference identifier[*] container : Identifier;
+//    reference partOf[*] container : Reference;
+    reference status container : MedicationStatementStatusCodes;
+    reference category[*] container : CodeableConcept;
+    reference medication container : CodeableReference;
+    reference subject container : Reference;
+//    reference encounter[0-1] container : Reference;
+//    reference effectiveDateTime[0-1] container : DateTime;
+    reference effectivePeriod[0-1] container : Period;
+//    reference effectiveTiming[0-1] container : Timing;
+//    reference dateAsserted[0-1] container : DateTime;
+//    reference informationSource[*] container : Reference;
+//    reference derivedFrom[*] container : Reference;
+//    reference reason[*] container : CodeableReference;
+//    reference note[*] container : Annotation;
+//    reference relatedClinicalInformation[*] container : Reference;
+//    reference renderedDosageInstruction[0-1] container : Markdown;
+    reference dosage[*] container : Dosage;
+//    reference adherence[0-1] container : MedicationStatementAdherence;
+
+    stereotype target; 
+  }
+
+
+}
