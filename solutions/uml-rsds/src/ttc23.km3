@@ -698,7 +698,7 @@ package kmehr {
             AuxOps.CodeableConceptForCoding(
               AuxOps.doseRateTypeURL, 
               "ordered", "Ordered") : ddrx.type &
-            medix.dosage.any.doseAndRate = Set{ddrx} ) )  
+            medix.dosage->forAll( dosx | dosx.doseAndRate = Set{ddrx} ) ) )  
             
 
     FolderType::
