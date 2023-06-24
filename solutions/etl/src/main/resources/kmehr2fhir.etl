@@ -65,6 +65,9 @@ rule Folder
 
   t.entry.addAll(s.`transaction`.equivalents().flatten().select(e|e.isKindOf(FHIR!BundleEntry)));
   t.entry.addAll(s.patient.equivalents().flatten().select(e|e.isKindOf(FHIR!BundleEntry)));
+  t.entry.addAll(s.`transaction`
+    .collect(tr | tr.item.collect(i | i.hcpartyContent().equivalents()))
+    .flatten().select(e|e.isKindOf(FHIR!BundleEntry)));
 }
 
 rule SumEHRTransaction
@@ -342,6 +345,13 @@ operation KMEHR!AuthorType txAuthor() : KMEHR!HcpartyType {
   return self.hcparty.first;
 }
 
+operation KMEHR!ItemType hcpartyContent() : KMEHR!HcpartyType {
+	return self.content
+		.select(c | c.hcparty.isDefined())
+		.collect(c | c.hcparty)
+		.first;
+}
+
 @cached
 operation KMEHR!TelecomType system() {
   var systemStr = self.cd.select(cd | cd.s = KMEHR!CDTELECOMschemes#CDTELECOM)
@@ -422,6 +432,15 @@ rule PatientBundleEntry
   extends BundleEntry
 {
   rc.patient = s.equivalents('Patient').selectFirst(e|e.isKindOf(FHIR!Patient));
+}
+
+rule OrganizationBundleEntry
+  transform s: KMEHR!HcpartyType
+  to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
+  extends BundleEntry
+{
+  guard: s.isOrganization()
+  rc.organization = s.equivalents().selectFirst(e|e.isKindOf(FHIR!Organization));
 }
 
 // CompositionSection rule hierarchy
