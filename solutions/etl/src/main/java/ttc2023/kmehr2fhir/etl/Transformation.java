@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epsilon.emc.emf.EmfModel;
+import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
 import org.eclipse.epsilon.etl.EtlModule;
 import org.hl7.emf.fhir.FhirPackage;
 
@@ -43,9 +44,13 @@ public class Transformation {
 
 			EtlModule etl = new EtlModule();
 			try {
+				etl.parse(Transformation.class.getResource("/kmehr2fhir.etl"));
+				if (!etl.getParseProblems().isEmpty()) {
+					throw new EolRuntimeException("Parse problems: " + etl.getParseProblems());
+				}
+
 				etl.getContext().getModelRepository().addModel(inputModel);
 				etl.getContext().getModelRepository().addModel(outputModel);
-				etl.parse(Transformation.class.getResource("/kmehr2fhir.etl"));
 				etl.execute();
 			} catch (Exception ex) {
 				ex.printStackTrace();
