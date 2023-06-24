@@ -216,6 +216,45 @@ rule PatientContact
   humanName.given = s.firstname.collect(e | FhirString(e));
 }
 
+rule Organization
+  transform s: KMEHR!HcpartyType
+  to t: FHIR!Organization, oid: FHIR!Id, nihii: FHIR!Identifier, riziv: FHIR!Reference
+{
+  guard: s.isOrganization()
+
+  t.id = oid;
+  t.identifier = Sequence { nihii };
+  t.active = FhirBoolean(true);
+  t.name = FhirString(s.name);
+
+  oid.value = s.uuid();
+
+  nihii.assigner = riziv;
+  nihii.value = FhirString(s.id.value.first);
+
+  riziv.display = FhirString('NIHII');
+}
+
+rule Practitioner
+  transform s: KMEHR!HcpartyType
+  to t: FHIR!Practitioner, pid: FHIR!Id, nihii: FHIR!Identifier, riziv: FHIR!Reference, humanName: FHIR!HumanName
+{
+  t.id = pid;
+  t.identifier = Sequence { nihii };
+  t.active = FhirBoolean(true);
+  t.name = Sequence { humanName };
+
+  pid.value = s.uuid();
+
+  nihii.assigner = riziv;
+  nihii.value = FhirString(s.id.value.first);
+
+  riziv.display = FhirString('NIHII');
+
+  humanName.family = FhirString(s.familyname);
+  humanName.given = Sequence { FhirString(s.firstname) };
+}
+
 // CONTEXT OPERATIONS
 
 operation Any countryString() : String {
@@ -441,6 +480,16 @@ rule OrganizationBundleEntry
 {
   guard: s.isOrganization()
   rc.organization = s.equivalents().selectFirst(e|e.isKindOf(FHIR!Organization));
+}
+
+rule PractitionerBundleEntry
+  transform s: KMEHR!HcpartyType
+  to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
+  extends BundleEntry
+{
+  guard: s.isPractitioner()
+
+  rc.practitioner = s.equivalents().selectFirst(e|e.isKindOf(FHIR!Practitioner));
 }
 
 // CompositionSection rule hierarchy
