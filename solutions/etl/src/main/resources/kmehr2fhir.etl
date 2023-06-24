@@ -42,6 +42,7 @@ pre {
     'stepmother' = 'STPMTH',
     'sisterinlaw' = 'SISINLAW'
   };
+
 }
 
 // RULES
@@ -154,12 +155,10 @@ rule Patient
       tx.item.select(i | i.isContactPerson())
              .collect(i | i.content.collect(c | c.person))
     ).flatten();
-  contactSources.println('sources: ');
 
   var mappedSources = contactSources
      .collect(contact | contact.equivalent('PatientContact'))
-     .reject(e|e.isUndefined();
-  mappedSources.println('mapped sources: ');
+     .reject(e|e.isUndefined());
 
   t.contact.addAll(mappedSources);
 
@@ -191,7 +190,7 @@ rule Telecom
 }
 
 rule PatientContact
-  transform i: KMEHR!PersonType
+  transform s: KMEHR!PersonType
   to t: FHIR!PatientContact, humanName: FHIR!HumanName
 {
   guard: (
@@ -206,9 +205,9 @@ rule PatientContact
 
   t.name = humanName;
   t.gender = s.sex.equivalent('AdministrativeGender');
-  t.address ::= s.address;
-  t.telecom ::= s.telecom;
-  t.relationship ::= i.contactPersonRelationships;
+  t.address ::= s.address.first;
+  t.telecom = s.telecom.equivalent().select(e|e.isKindOf(FHIR!ContactPoint));
+  t.relationship ::= i.contactPersonRelationships();
 
   humanName.family = FhirString(s.familyname);
   humanName.given = s.firstname.collect(e | FhirString(e));
@@ -276,6 +275,12 @@ operation KMEHR!HcpartyType isOrganization() : Boolean {
 operation KMEHR!HcpartyType isPractitioner() : Boolean {
   return self.cd.exists(cd | cd.isPractitioner());
 }
+
+@cached
+operation KMEHR!ItemType contactPersonRelationships() : Sequence {
+	self.cd.select(cd | cd.s = KMEHR!CDITEMschemes#CDCONTACTPERSON);
+}
+
 
 @cached
 operation KMEHR!ItemType isContactPerson() : Boolean {
