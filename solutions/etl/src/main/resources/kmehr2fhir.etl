@@ -15,6 +15,33 @@ pre {
     "fax" = FHIR!ContactPointSystemEnum#fax,
     "email" = FHIR!ContactPointSystemEnum#email
   };
+
+  var relationshipMap = Map {
+    'father' = 'FTH',
+    'child' = 'CHILD',
+    'familymember' = 'FAMMEMB',
+    'spouse' = 'SPS',
+    'husband' = 'HUSB',
+    'partner' = 'DOMPART',
+    'other' = 'thirdParty',
+    'brother' = 'BRO',
+    'sister' = 'SIS',
+    'brotherinlaw' = 'BROINLAW',
+    'tutor' = 'thirdParty',
+    'notary' = 'thirdParty',
+    'lawyer' = 'thirdParty',
+    'employer' = 'thirdParty',
+    'grandparent' = 'GRPRN',
+    'son' = 'SON',
+    'daugher' = 'DAU',
+    'grandchild' = 'GRNDCHILD',
+    'neighbour' = 'NBOR',
+    'stepson' = 'STPSON',
+    'stepdaughter' = 'STPDAU',
+    'stepfather' = 'STPFTH',
+    'stepmother' = 'STPMTH',
+    'sisterinlaw' = 'SISINLAW'
+  };
 }
 
 // RULES
@@ -126,11 +153,15 @@ rule Patient
   var contactSources = f.`transaction`.collect(tx |
       tx.item.select(i | i.isContactPerson())
              .collect(i | i.content.collect(c | c.person))
-    ).flatten()
-     .collect(contact | contact.equivalent('PatientContact'))
-     .reject(e|e.isUndefined());
+    ).flatten();
+  contactSources.println('sources: ');
 
-  t.contact.addAll(contactSources);
+  var mappedSources = contactSources
+     .collect(contact | contact.equivalent('PatientContact'))
+     .reject(e|e.isUndefined();
+  mappedSources.println('mapped sources: ');
+
+  t.contact.addAll(mappedSources);
 
   pid.value = s.uuid();
   humanName.family = FhirString(s.familyname);
@@ -157,6 +188,30 @@ rule Telecom
 
   system.value = s.system();
   use.value = s.contactPointUse();
+}
+
+rule PatientContact
+  transform i: KMEHR!PersonType
+  to t: FHIR!PatientContact, humanName: FHIR!HumanName
+{
+  guard: (
+    s.eContainer.isDefined()
+    and s.eContainingFeature.name = 'person'
+    and s.eContainer.eContainer.isDefined()
+    and s.eContainer.eContainer.isContactPerson()
+  )
+
+  var c = s.eContainer;
+  var i = c.eContainer;
+
+  t.name = humanName;
+  t.gender = s.sex.equivalent('AdministrativeGender');
+  t.address ::= s.address;
+  t.telecom ::= s.telecom;
+  t.relationship ::= i.contactPersonRelationships;
+
+  humanName.family = FhirString(s.familyname);
+  humanName.given = s.firstname.collect(e | FhirString(e));
 }
 
 // CONTEXT OPERATIONS
@@ -308,6 +363,20 @@ operation KMEHR!TelecomType contactPointUse() {
 @cached
 operation KMEHR!TransactionType custodianItem(): KMEHR!ItemType {
   return s.item.selectFirst(i | i.cd.exists(cd | cd.value = 'gmdmanager'));
+}
+
+// Contact relationships
+
+@lazy
+rule PatientContactRelationship
+  transform s: KMEHR!CDITEM
+  to t: FHIR!CodeableConcept, coding: FHIR!Coding, roleCode: FHIR!Uri, code: FHIR!Code
+{
+  t.coding = Sequence { coding };
+  coding.system = roleCode;
+  coding.code = code;
+  roleCode.value = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode';
+  code.value = relationshipMap.get(s.value);
 }
 
 // Gender mapping
