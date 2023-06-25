@@ -1,0 +1,765 @@
+package kmehr { 
+ 
+  class AuxOps { 
+
+    static attribute genderMap : Map(CDSEXvalues, AdministrativeGenderEnum) := Map{ changed |-> other, female |-> female, male |-> male, undefined |-> other };
+
+    static attribute cachedUUIDs : Map(OclAny,String) := Map{ null |-> "" }; 
+
+    static attribute relationshipMap : Map(String, String) := Map{ "mother" |-> "MTH", "father" |-> "FTH", "child" |-> "CHILD", "familymember" |-> "FAMMEMB", "spouse" |-> "SPS", "husband" |-> "HUSB", "partner" |-> "DOMPART", "brother" |-> "BRO", "sister" |-> "SIS", "brotherinlaw" |-> "BROINLAW", "grandparent" |-> "GRPRN", "son" |-> "SON", "daughter" |-> "DAU", "grandchild" |-> "GRNDCHILD", "neighbour" |-> "NBOR", "stepson" |-> "STPSON", "stepdaughter" |-> "STPDAU", "stepfather" |-> "STPFTH", "stepmother" |-> "STPMTH", "sisterinlaw" |-> "SISINLAW" };
+
+   static attribute dayPeriodMap : Map(String,String) := 
+      Map{ "afterbreakfast" |-> "PCM", "afterdinner" |-> "PCV", "afterlunch" |-> "PCD", "aftermeal" |-> "PC", "afternoon" |-> "AFT", "beforebreakfast" |-> "ACM", "beforedinner" |-> "ACV", "beforelunch" |-> "ACD", "betweenbreakfastandlunch" |-> "PCM", "betweendinnerandsleep" |-> "PCV", "betweenlunchanddinner" |-> "PCD", "betweenmeals" |-> "PC", "evening" |-> "EVE", "morning" |-> "MORN", "night" |-> "NIGHT", "thehourofsleep" |-> "HS", "duringbreakfast" |-> "CM", "duringlunch" |-> "CD", "duringdinner" |-> "CV"}; 
+
+
+    static attribute h17RoleCode : String := "http://terminology.h17.org/CodeSystem/v3-RoleCode";
+
+    static attribute ipsCode : String := "urn:oid:2.16.724.4.8.10.200.10";
+
+    static attribute medicationMessage : String := "History of Medication use Narrative"; 
+
+    static attribute medicationCode : String := "10160-0"; 
+
+    static attribute sumehrCode : String := "60591-5"; 
+
+    static attribute sumehrMessage : String := "Patient summary document"; 
+
+    static attribute allergiesMessage : String := "Allergies and adverse reactions Document"; 
+
+    static attribute allergiesCode : String := "48765-2"; 
+
+    static attribute allergyIntoleranceClinical : String := "http://terminology.h17.org/CodeSystem/allergyintolerance-clinical"; 
+
+    static attribute allergyIntoleranceVerification : String := "http://terminology.h17.org/CodeSystem/allergyintolerance-verification"; 
+
+    static attribute allergyIntoleranceType : String := "http://terminology.h17.org/CodeSystem/allergy-intolerance-type"; 
+
+    static attribute problemsMessage : String := "Problem list Reported"; 
+
+    static attribute problemsCode : String := "11450-4"; 
+
+    static attribute conditionClinical : String := "http://terminology.h17.org/CodeSystem/condition-clinical"; 
+
+    static attribute conditionVerification : String := "http://terminology.h17.org/CodeSystem/condition-ver-status"; 
+
+    static attribute conditionCategoryCode : String := "75326-9"; 
+
+
+    static attribute immunizationsMessage : String := "History of Immunization Narrative"; 
+
+    static attribute immunizationsCode : String := "11369-6"; 
+
+    static attribute vaccineIndicationCode : String := "https://www.ehealth.fgov.be/standards/kmehr/en/tables/vaccine-indication-codes"; 
+
+    static attribute historyMessage : String := "Hx of Past Illness"; 
+
+    static attribute historyCode : String := "11348-0"; 
+
+    static attribute doseRateTypeURL : String := "http://terminology.h17.org/CodeSystem/dose-rate-type"; 
+
+    static attribute unitsOfMeasureURL : String := 
+       "http://unitsofmeasure.org"; 
+
+    static attribute cnkCodes : String := "https://www.ehealth.fgov.be/standards/fhir/medication/NamingSystem/cnk-codes"; 
+
+    static query toGender(genderx : CDSEXvalues) : AdministrativeGenderEnum
+    pre: true 
+    post: 
+      (genderx = CDSEXvalues.changed or 
+       genderx = CDSEXvalues.undefined => result =  AdministrativeGenderEnum.other) & 
+      (genderx = CDSEXvalues.male => result = AdministrativeGenderEnum.male) & 
+      (genderx = CDSEXvalues.female => result = AdministrativeGenderEnum.female); 
+
+    static query toGender(genstr : String) : String
+    pre: true 
+    post: 
+      (genstr = "changed" or 
+       genstr = "undefined" => result = "other") & 
+      (genstr = "male" => result = "male") & 
+      (genstr = "female" => result = "female"); 
+
+   static operation SexType2AdministrativeGender(sexx : SexType) : AdministrativeGender
+   pre: not(sexx.cd->oclIsUndefined()) & not(sexx.cd.value->oclIsUndefined())
+   post: 
+     AdministrativeGender->exists( admingenx | 
+       admingenx.$id = "AdministrativeGender_" + sexx.cd.value &
+       admingenx.value = AuxOps.toGender(sexx.cd.value) & 
+       result = admingenx ); 
+
+   static operation toEventTiming(cdx : CDDAYPERIOD) : String
+   pre: true 
+   post: 
+     (cdx = null => result = "") & 
+     (cdx /= null => result = AuxOps.dayPeriodMap->at(cdx.value)); 
+
+   static operation MomentType2DateTime(mmt : MomentType) : DateTime
+   pre: true 
+   post: 
+     (mmt->oclIsUndefined() => result = DateTime.newDateTime("")) & 
+     (true => result = DateTime.newDateTime(mmt.date + "")); 
+
+   static operation Moments2Period(mmt1 : MomentType, mmt2 : MomentType) : Period
+   pre: true 
+   post: 
+     result = 
+       Period.newPeriod(AuxOps.MomentType2DateTime(mmt1), 
+                        AuxOps.MomentType2DateTime(mmt2)); 
+
+   static operation ItemType2Dosage(itemx : ItemType) : Dosage
+   pre: true 
+   post: 
+     Dosage->exists( dosex | 
+       dosex.$id = "Dosage_" + itemx.$id & 
+       Timing->exists( timex | 
+         timex.$id = "Timing_" + itemx.$id & 
+         TimingRepeat->exists( trx | 
+           trx.$id = "TimingRepeat_" + itemx.$id & 
+           trx.count = Set{ PositiveInt.newPositiveInt("" + itemx.dayperiod->size()) } & 
+           UnitsOfTime.newUnitsOfTime("d") : trx.periodUnit & 
+           trx.when = itemx.dayperiod->collect( dpx | 
+                        EventTiming.newEventTiming(
+                          AuxOps.toEventTiming(dpx.cd))) & 
+           trx : timex.repeat & 
+           timex : dosex.timing & 
+           result = dosex ) ) );   
+
+   static query getFhirRelationshipCode(krel : String) : String
+   pre: true 
+   post: 
+     (AuxOps.relationshipMap->keys()->includes(krel) => result = AuxOps.relationshipMap->at(krel)) & 
+     (true => result = "thirdparty"); 
+
+   static operation uuid(objx : OclAny) : String
+   pre: true 
+   post: true 
+   activity: 
+     if objx : AuxOps.cachedUUIDs->keys() 
+     then 
+       skip
+     else  
+       AuxOps.cachedUUIDs[objx] := OclRandom.randomString(12); 
+     return AuxOps.cachedUUIDs->at(objx);   
+
+   
+  static operation TranslateCodingWithDisplay(sys : String, cde : String, disp : String) : Coding 
+  pre: true 
+  post: true
+  activity: 
+    var codex : Coding := 
+          Coding.newCoding(sys, cde);  
+    codex.display := 
+       Set{ FhirString.newFhirString(disp->trim()) };
+    return codex;
+
+   static operation CDContent2Coding(cdx : CDCONTENT) : Coding
+   pre: true 
+   post: 
+     (cdx.dN->oclIsUndefined() => 
+        result = Coding.newCoding(cdx.codingSystem(), cdx.value)) & 
+     (true => result = AuxOps.TranslateCodingWithDisplay(cdx.codingSystem(), cdx.value, cdx.dN) ); 
+
+   static operation ContentType2Coding(contentx : ContentType) : Coding
+   pre: true 
+   post: 
+     result = AuxOps.CDContent2Coding(contentx.cd->any()); 
+
+   static operation CodeableConceptForCoding(sys : String, cde : String, disp : String) : CodeableConcept
+   pre: true 
+   post: 
+     result = 
+       CodeableConcept.newCodeableConcept(
+          AuxOps.TranslateCodingWithDisplay(
+                          sys, cde, disp));  
+
+   static operation CodeableConceptFromCodedContent(itemx : ItemType) : CodeableConcept
+   pre: true 
+   post: 
+     result = CodeableConcept.newCodeableConceptCodings(itemx.$id, itemx.codedContent()->collect( ccx | AuxOps.CDContent2Coding(ccx) )); 
+
+   static operation CodeableConceptFromVaccineIndications(itemx : ItemType) : CodeableConcept
+   pre: true 
+   post: 
+     result = CodeableConcept.newCodeableConceptCodings(itemx.$id, itemx.vaccineIndication()->collect( ccx | AuxOps.CDContent2Coding(ccx) )); 
+
+   static operation PersonType2HumanName(personx : PersonType) : HumanName
+   pre: true
+   post: 
+     HumanName->exists( humanx | 
+       humanx.$id = "HumanName_" + personx.$id & 
+       FhirString.newFhirString(personx.familyname) : humanx.family & 
+       FhirString.newFhirString(personx.firstname) : humanx.given & result = humanx ); 
+
+   static operation HcpartyType2HumanName(hcx : HcpartyType) : HumanName
+   pre: true
+   post: 
+     HumanName->exists( humanx | 
+       humanx.$id = "HumanName_" + hcx.$id & 
+       FhirString.newFhirString(hcx.familyname) : humanx.family & 
+       FhirString.newFhirString(hcx.firstname) : humanx.given & result = humanx ); 
+  
+    static operation allContactPersonInformation(folderx : FolderType) : Sequence(PatientContact)
+    pre: true
+    post: true
+    activity: 
+      var allinfo : Sequence(PatientContact) ;
+      allinfo := Sequence{};  
+      for tx : folderx.transaction 
+      do 
+        for ix : tx.item 
+        do 
+          if ix.isContactPerson() 
+          then 
+            for pcx : ix.content 
+            do 
+              allinfo := allinfo->union(PatientContact[pcx.person.$id])
+          else skip; 
+      return allinfo;
+
+    static operation getCodeSystemRoleCode() : Uri
+    pre: true 
+    post:
+      result = Uri.newUri( AuxOps.h17RoleCode ); 
+
+    static operation getPatientContactRelationship(cditemx : CDITEM) : CodeableConcept
+    pre: true 
+    post: 
+      CodeableConcept->exists( codex | 
+        codex.$id = cditemx.$id & 
+        Coding->exists( codingx | 
+          codingx.$id = "coding_" + cditemx.$id &
+          AuxOps.getCodeSystemRoleCode() : codingx.system &
+          Code.newCode(
+            AuxOps.getFhirRelationshipCode(cditemx.value)) : 
+                                           codingx.code & 
+          codingx : codex.coding & 
+          result = codex ) );
+
+    static operation allPatientContactRelationships(itemx : ItemType) : Sequence(CodeableConcept)
+    pre: true 
+    post: 
+      result = itemx.contactPersonRelationships()->collect( cditemx | AuxOps.getPatientContactRelationship(cditemx)); 
+
+    static operation CNKCode(mptx : MedicinalProductType) : Coding
+    pre: true 
+    post: 
+      let codex : Coding = Coding.newCodingDisplay("coding_" + mptx.$id, mptx.intendedname.replaceAll("[\n\t ]+", " ")) 
+      in 
+        (codex.system = Set{Uri.newUri(AuxOps.cnkCodes)} & 
+         codex.code = Set{Code.newCode(mptx.intendedCNKCode())} & 
+         result = codex ); 
+
+    static operation CompositionBundleEntry(tx : TransactionType) : BundleEntry
+    pre: true
+    post: true 
+    activity: 
+      var compx : Composition := Composition[tx.$id] ; 
+      var bundlex : BundleEntry := BundleEntry.newBundleEntry("CompositionBundleEntry_" + tx.$id) ; 
+      var rcx : ResourceContainer := bundlex.resource->any() ; 
+      rcx.composition := Set{compx} ; 
+      return bundlex;
+
+    static operation CompositionBundleEntries(txs : Set(TransactionType)) : Sequence(BundleEntry)
+    pre: true 
+    post: 
+      result = txs->select( tx | tx.isSumehr() )->collect( txx | AuxOps.CompositionBundleEntry(txx) ); 
+
+    static operation PatientBundleEntry(px : PersonType) : BundleEntry
+    pre: true
+    post: true 
+    activity: 
+      var patientx : Patient := Patient[px.$id] ; 
+      var bundlex : BundleEntry := BundleEntry.newBundleEntry("PatientBundleEntry_" + px.$id) ; 
+      var rcx : ResourceContainer := bundlex.resource->any() ; 
+      rcx.patient := Set{patientx} ; 
+      return bundlex;
+
+    static operation OrganizationBundleEntry(hcx : HcpartyType) : BundleEntry
+    pre: hcx.isOrganization()
+    post: true 
+    activity: 
+      var organizationx : Organization := Organization[hcx.$id] ; 
+      var bundlex : BundleEntry := BundleEntry.newBundleEntry("OrganizationBundleEntry_" + hcx.$id) ; 
+      var rcx : ResourceContainer := bundlex.resource->any() ; 
+      rcx.organization := Set{organizationx} ; 
+      return bundlex;
+
+    static operation OrganizationBundleEntries(txs : Set(TransactionType)) : Sequence(BundleEntry)
+    pre: true 
+    post: true
+    activity: 
+      var allbs : Sequence(BundleEntry) := Sequence{} ; 
+      for tx : txs 
+      do 
+        for orgx : tx.hcpartyContent()
+        do 
+          allbs := allbs->append( AuxOps.OrganizationBundleEntry(orgx) );
+      return allbs;  
+
+    static operation PractitionerBundleEntry(hcx : HcpartyType) : BundleEntry
+    pre: hcx.isPractitioner()
+    post: true 
+    activity: 
+      var pracx : Practitioner := Practitioner[hcx.$id] ; 
+      var bundlex : BundleEntry := BundleEntry.newBundleEntry("PractitionerBundleEntry_" + hcx.$id) ; 
+      var rcx : ResourceContainer := bundlex.resource->any() ; 
+      rcx.practitioner := Set{pracx} ; 
+      return bundlex;
+
+    static operation PractitionerBundleEntries(txs : Set(TransactionType)) : Sequence(BundleEntry)
+    pre: true 
+    post: 
+      result = txs->select( tx | tx.txAuthor() /= null )->collect( txx | AuxOps.PractitionerBundleEntry(txx.txAuthor()) ); 
+
+    static operation MedicationBundleEntry(itemx : ItemType) : BundleEntry
+    pre: itemx.isMedication()
+    post: true 
+    activity: 
+      var medicx : Medication := Medication[itemx.$id] ; 
+      var bundlex : BundleEntry := BundleEntry.newBundleEntry("MedicationBundleEntry_" + itemx.$id) ; 
+      var rcx : ResourceContainer := bundlex.resource->any() ; 
+      rcx.medication := Set{medicx} ; 
+      return bundlex;
+
+    static operation MedicationBundleEntries(txs : Set(TransactionType)) : Sequence(BundleEntry)
+    pre: true 
+    post: 
+      result = txs.item->select( ix | ix.isMedication() )->collect( ixx | AuxOps.MedicationBundleEntry(ixx) ); 
+
+    static operation PosologyBundleEntry(posx : PosologyType) : BundleEntry
+    pre: true
+    post: true 
+    activity: 
+      var medicx : MedicationStatement := MedicationStatement[posx.$id] ; 
+      var bundlex : BundleEntry := BundleEntry.newBundleEntry("PosologyBundleEntry_" + posx.$id) ; 
+      var rcx : ResourceContainer := bundlex.resource->any() ; 
+      rcx.medicationStatement := Set{medicx} ; 
+      return bundlex;
+
+    static operation PosologyBundleEntries(txs : Set(TransactionType)) : Sequence(BundleEntry)
+    pre: true 
+    post: 
+      result = txs.item->select( ix | ix.isMedication() & ix.posology->size() > 0 )->collect( ixx | AuxOps.PosologyBundleEntry(ixx.posology->any()) ); 
+
+
+    static operation AllergyIntoleranceBundleEntry(itemx : ItemType) : BundleEntry
+    pre: itemx.isAllergy() or itemx.isIntolerance()
+    post: true 
+    activity: 
+      var allergyx : AllergyIntolerance := AllergyIntolerance[itemx.$id] ; 
+      var bundlex : BundleEntry := BundleEntry.newBundleEntry("AllergyIntoleranceBundleEntry_" + itemx.$id) ; 
+      var rcx : ResourceContainer := bundlex.resource->any() ; 
+      rcx.allergyIntolerance := Set{allergyx} ; 
+      return bundlex;
+
+    static operation AllergyIntoleranceBundleEntries(txs : Set(TransactionType)) : Sequence(BundleEntry)
+    pre: true 
+    post: 
+      result = txs.item->select( ix | ix.isAllergy() or ix.isIntolerance() )->collect( ixx | AuxOps.AllergyIntoleranceBundleEntry(ixx) ); 
+
+    static operation ConditionBundleEntry(itemx : ItemType) : BundleEntry
+    pre: itemx.isProblem() 
+    post: true 
+    activity: 
+      var conditionx : Condition := Condition[itemx.$id] ; 
+      var bundlex : BundleEntry := BundleEntry.newBundleEntry("ConditionBundleEntry_" + itemx.$id) ; 
+      var rcx : ResourceContainer := bundlex.resource->any() ; 
+      rcx.condition := Set{ conditionx } ; 
+      return bundlex;
+
+    static operation ConditionBundleEntries(txs : Set(TransactionType)) : Sequence(BundleEntry)
+    pre: true 
+    post: 
+      result = txs.item->select( ix | ix.isProblem() )->collect( ixx | AuxOps.ConditionBundleEntry(ixx) ); 
+
+
+    static operation ImmunizationBundleEntry(itemx : ItemType) : BundleEntry
+    pre: itemx.isVaccine()
+    post: true 
+    activity: 
+      var immx : Immunization := Immunization[itemx.$id] ; 
+      var bundlex : BundleEntry := BundleEntry.newBundleEntry("ImmunizationBundleEntry_" + itemx.$id) ; 
+      var rcx : ResourceContainer := bundlex.resource->any() ; 
+      rcx.immunization := Set{immx} ; 
+      return bundlex;
+
+    static operation ImmunizationBundleEntries(txs : Set(TransactionType)) : Sequence(BundleEntry)
+    pre: true 
+    post: 
+      result = txs.item->select( ix | ix.isVaccine() )->collect( ixx | AuxOps.ImmunizationBundleEntry(ixx) ); 
+
+
+   static operation CompositionIdentifier(transx : TransactionType) : Identifier
+   pre: true 
+   post: 
+     Identifier->exists( ips | 
+        ips.$id = "Identifier_" + transx.$id & 
+        Uri->exists( ipsUri | ipsUri.$id = "ipsUri_" + transx.$id & 
+           ipsUri.value = AuxOps.ipsCode() & 
+           ipsUri : ips.system & 
+           FhirString.newFhirString(AuxOps.uuid(transx)) : ips.value & 
+           result = ips ) ); 
+
+   static operation CompositionSectionEntry(itemx : ItemType) : Reference
+   pre: true 
+   post: 
+     Reference->exists( refx | 
+        refx.$id = "CompositionSectionEntryReference_" + itemx.$id & 
+        refx._reference = Set{ FhirString.newFhirString( itemx.refPrefix() + AuxOps.uuid(itemx) ) } & 
+        result = refx ); 
+   
+    static operation MedicationSection(transx : TransactionType) : CompositionSection
+    pre: true 
+    post: true
+    activity: 
+      var compx : CompositionSection := CompositionSection.newCompositionSection("MedicationSection_" + transx.$id) ; 
+      compx.title := Set{FhirString.newFhirString("Medication")} ;
+      compx.entry := transx.item->select( itemx | itemx.isMedication() )->collect( itemx | AuxOps.CompositionSectionEntry(itemx) )->asSet() ;  
+      for codingx : compx.code.coding
+      do 
+        codingx.display := 
+          Set{FhirString.newFhirString(AuxOps.medicationMessage)};
+      for codex : compx.code.coding.code
+      do 
+        codex.value := AuxOps.medicationCode; 
+      return compx;       
+
+    static operation AllergyIntoleranceSection(transx : TransactionType) : CompositionSection
+    pre: true 
+    post: 
+      let compx : CompositionSection = CompositionSection.newCompositionSection("AllergyIntoleranceSection_" + transx.$id) 
+      in
+        (compx.title = Set{FhirString.newFhirString("Allergies and Intolerances")} & 
+         transx.item->select( itemx | itemx.isAllergy() or itemx.isIntolerance() )->collect( itemx | AuxOps.CompositionSectionEntry(itemx) ) <: compx.entry &   
+
+         Coding["coding_AllergyIntoleranceSection_" + 
+                transx.$id].display = 
+               Set{FhirString.newFhirString(AuxOps.allergiesMessage)} &
+
+         Code["code_AllergyIntoleranceSection_" + 
+              transx.$id].value = AuxOps.allergiesCode & 
+  
+         result = compx );  
+       
+    static operation ActiveProblemSection(transx : TransactionType) : CompositionSection
+    pre: true 
+    post: 
+      let compx : CompositionSection = CompositionSection.newCompositionSection("ActiveProblemSection_" + transx.$id) 
+      in
+        (compx.title = Set{FhirString.newFhirString("Active Problems")} & 
+         transx.item->select( itemx | itemx.isActiveProblem() )->collect( itemx | AuxOps.CompositionSectionEntry(itemx) ) <: compx.entry &   
+
+         Coding["coding_ActiveProblemSection_" + transx.$id].display = 
+               Set{FhirString.newFhirString(AuxOps.problemsMessage)} & 
+
+         Code["code_ActiveProblemSection_" + 
+              transx.$id].value = AuxOps.problemsCode &
+ 
+         result = compx );  
+       
+    static operation ImmunizationSection(transx : TransactionType) : CompositionSection
+    pre: true 
+    post: 
+      let compx : CompositionSection = CompositionSection.newCompositionSection("ImmunizationSection_" + transx.$id) 
+      in
+        (compx.title = Set{FhirString.newFhirString("Immunizations")} & 
+         transx.item->select( itemx | itemx.isVaccine() )->collect( itemx | AuxOps.CompositionSectionEntry(itemx) ) <: compx.entry &   
+
+         Coding["coding_ImmunizationSection_" + transx.$id].display = 
+               Set{FhirString.newFhirString(AuxOps.immunizationsMessage)} & 
+
+         Code["code_ImmunizationSection_" + 
+              transx.$id].value = AuxOps.immunizationsCode &
+ 
+         result = compx );  
+
+    static operation HistorySection(transx : TransactionType) : CompositionSection
+    pre: true 
+    post: 
+      let compx : CompositionSection = CompositionSection.newCompositionSection("HistorySection_" + transx.$id) 
+      in
+        (compx.title = Set{FhirString.newFhirString("History of Past Illness")} & 
+         transx.item->select( itemx | itemx.isInactiveProblem() )->collect( itemx | AuxOps.CompositionSectionEntry(itemx) ) <: compx.entry &   
+
+         Coding["coding_HistorySection_" + transx.$id].display = 
+               Set{FhirString.newFhirString(AuxOps.historyMessage)} & 
+
+         Code["code_HistorySection_" + 
+              transx.$id].value = AuxOps.historyCode &
+ 
+         result = compx );  
+       
+    static operation newNIHII(hcx : HcpartyType) : Identifier
+    pre: true 
+    post: 
+      Identifier->exists( idenx | 
+        idenx.$id = "NIHII_" + hcx.$id & 
+        Reference->exists( riziv | 
+          riziv.$id = "riziv_" + hcx.$id & 
+          FhirString.newFhirString("NIHII") : riziv.display &
+          riziv : idenx.assigner & 
+          FhirString.newFhirString(hcx.id->collect( idx | idx.value)->first()) : idenx.value & 
+          result = idenx ) ); 
+
+    static operation MedicinalItem2CodeableConcept(itemx : ItemType) : CodeableConcept
+    pre: true 
+    post: 
+      CodeableConcept->exists( ccx | 
+        ccx.$id = "medCodes_CodeableConcept_" + itemx.$id & 
+        itemx.content->select( contx | contx.medicinalproduct->notEmpty() )->collect( contx | AuxOps.CNKCode(contx.medicinalproduct->any()) ) <: ccx.coding & 
+        result = ccx ); 
+
+             
+  } 
+
+
+  usecase mainModule : void { 
+
+    AddressType::
+      Address->exists( addrx | 
+        addrx.$id = self.$id &
+        FhirString.newFhirString(self.addressLine()) : addrx.line & 
+        FhirString.newFhirString(self.zip) : addrx.postalCode & 
+        FhirString.newFhirString(
+                   self.countryString()) : addrx.country)
+
+    TelecomType::
+      ContactPoint->exists( contactx | 
+        contactx.$id = self.$id & 
+        ContactPointSystem->exists( cpsys |          
+          cpsys.$id = "cpsys_" + $id & 
+          cpsys.value = self.system() & 
+          ContactPointUse->exists( cpuse |
+            cpuse.$id = "cpuse_" + $id & 
+            cpuse.value = self.contactPointUse() & 
+            cpsys : contactx.system & 
+            cpuse : contactx.use & 
+            FhirString.newFhirString(telecomnumber->trim()) : contactx.value)))
+
+    ItemType::
+      self.isContactPerson() & 
+      contentx : self.content & 
+      personxx : contentx.person => 
+        PatientContact->exists( pconx | 
+          pconx.$id = personxx.$id & 
+          Address[personxx.address.$id] <: pconx.address & 
+          pconx.telecom = ContactPoint[personxx.telecom.$id]     & 
+          AuxOps.PersonType2HumanName(personxx) : pconx.name & 
+          AuxOps.SexType2AdministrativeGender(personxx.sex) : pconx.gender &
+          AuxOps.allPatientContactRelationships(self) <: pconx.relationship)
+      
+ 
+    FolderType:: 
+      self.patient /= null & 
+      patientx = self.patient =>
+        Patient->exists( fhirpx | fhirpx.$id = patientx.$id &
+          Id->exists( pid | 
+            pid.$id = "pid_" + patientx.$id &   
+            pid.value = AuxOps.uuid(patientx) & 
+            pid : fhirpx.id ) & 
+            fhirpx.active = 
+              Set{ FhirBoolean.newFhirBoolean("true") } & 
+            AuxOps.PersonType2HumanName(patientx) : fhirpx.name & 
+            AuxOps.SexType2AdministrativeGender(patientx.sex) : fhirpx.gender & 
+            fhirpx.address = Address[patientx.address.$id] & 
+            fhirpx.telecom = ContactPoint[patientx.telecom.$id] & 
+            AuxOps.allContactPersonInformation(self) <: fhirpx.contact )
+
+
+    HcpartyType::
+      self.isOrganization() =>
+        Organization->exists( orgx | 
+          orgx.$id = self.$id & 
+          Id.newId(AuxOps.uuid(self)) : orgx.id & 
+          AuxOps.newNIHII(self) : orgx.identifier & 
+          FhirBoolean.newFhirBoolean("true") : orgx.active &
+          FhirString.newFhirString(self.name) : orgx.name )
+ 
+   HcpartyType::
+      self.isPractitioner() =>
+        Practitioner->exists( pracx | 
+          pracx.$id = self.$id & 
+          Id.newId(AuxOps.uuid(self)) : pracx.id & 
+          AuxOps.newNIHII(self) : pracx.identifier & 
+          FhirBoolean.newFhirBoolean("true") : pracx.active &
+          AuxOps.HcpartyType2HumanName(self) : pracx.name )
+
+   ItemType::
+      self.isMedication() =>
+        Medication->exists( medx | 
+          medx.$id = self.$id & 
+          Id.newId(AuxOps.uuid(self)) : medx.id & 
+          MedicationStatusCodes.newMedicationStatusCodes("active") : medx.status &
+          AuxOps.MedicinalItem2CodeableConcept(self) : medx.code )
+
+    FolderType:: 
+      tx : self.transaction & 
+      itemx : tx.item & 
+      itemx.isAllergyOrIntolerance() =>  
+        AllergyIntolerance->exists( allergyx | 
+          allergyx.$id = itemx.$id & 
+          Id.newId(AuxOps.uuid(itemx)) : allergyx.id & 
+          AllergyIntoleranceCriticality.newAllergyIntoleranceCriticality("high") : allergyx.criticality & 
+          allergyx.patient = 
+            Reference.newPatientReference(
+                         AuxOps.uuid(self.patient)) & 
+          AuxOps.MomentType2DateTime(itemx.beginmoment->any()) : allergyx.onsetDateTime & 
+          AuxOps.CodeableConceptForCoding(
+            AuxOps.allergyIntoleranceClinical, 
+            "active", "Active") : allergyx.clinicalStatus & 
+          AuxOps.CodeableConceptForCoding(
+            AuxOps.allergyIntoleranceVerification, 
+            "confirmed", "Confirmed") : allergyx.verificationStatus & 
+          AuxOps.CodeableConceptForCoding(
+            AuxOps.allergyIntoleranceType, 
+            itemx.allergyOrIntoleranceLC(), 
+            itemx.allergyOrIntoleranceUC()) : allergyx.type )  
+
+    FolderType:: 
+      tx : self.transaction & 
+      itemx : tx.item & 
+      itemx.isAllergyOrIntolerance() =>  
+        AllergyIntolerance->exists( allergyx | 
+          allergyx.$id = itemx.$id & 
+          AuxOps.CodeableConceptFromCodedContent(itemx) : allergyx.code )
+
+    FolderType:: 
+      tx : self.transaction & 
+      itemx : tx.item & 
+      itemx.isProblem() =>  
+        Condition->exists( condx | 
+          condx.$id = itemx.$id & 
+          Id.newId(AuxOps.uuid(itemx)) : condx.id & 
+          condx.clinicalStatus = 
+            AuxOps.CodeableConceptForCoding(
+              AuxOps.conditionClinical, itemx.conditionLC(), 
+              itemx.conditionUC()) & 
+          AuxOps.CodeableConceptForCoding(
+            AuxOps.conditionVerification, 
+            "confirmed", "Confirmed") : condx.verificationStatus & 
+         AuxOps.CodeableConceptForCoding(
+            CompositionSection.loincURL, 
+            AuxOps.conditionCategoryCode, 
+            "Problem") : condx.category & 
+         condx.subject =             
+           Reference.newPatientReference(
+                  AuxOps.uuid(self.patient)) & 
+         AuxOps.MomentType2DateTime(itemx.beginmoment->any()) : condx.onsetDateTime & 
+         AuxOps.MomentType2DateTime(itemx.endmoment->any()) : condx.abatementDateTime 
+        ) 
+
+    FolderType:: 
+      tx : self.transaction & 
+      itemx : tx.item & 
+      itemx.isProblem() =>  
+        Condition->exists( condx | 
+          condx.$id = itemx.$id & 
+          AuxOps.CodeableConceptFromCodedContent(itemx) : condx.code )
+
+   FolderType::
+      tx : self.transaction & 
+      itemx : tx.item & 
+      itemx.isVaccine() =>  
+        Immunization->exists( immx | 
+          immx.$id = itemx.$id & 
+          Id.newId(AuxOps.uuid(itemx)) : immx.id & 
+          immx.status = ImmunizationStatusCodes.newImmunizationStatusCodes("completed")  &
+          CodeableReference.newCodeableReference(AuxOps.MedicinalItem2CodeableConcept(itemx)) : immx.administeredProduct & 
+         immx.patient =             
+           Reference.newPatientReference(
+                  AuxOps.uuid(self.patient)) & 
+         AuxOps.MomentType2DateTime(itemx.beginmoment->any()) : immx.occurrenceDateTime & 
+         immx.vaccineCode = AuxOps.CodeableConceptFromVaccineIndications(itemx) )
+
+    FolderType::
+      transtx : self.transaction & 
+      itemx : transtx.item & 
+      itemx.isMedication() & 
+      posologyx : itemx.posology => 
+        MedicationStatement->exists( medix | 
+          medix.$id = posologyx.$id & 
+          medix.id = Set{Id.newId(AuxOps.uuid(posologyx))} & 
+          medix.status = MedicationStatementStatusCodes.newMedicationStatementStatusCodes("recorded") & 
+          medix.subject = Reference.newPatientReference(AuxOps.uuid(self.patient)) & 
+          medix.medication = CodeableReference.newCodeableRef(Reference.newMedicationReference(AuxOps.uuid(itemx))) & 
+          AuxOps.Moments2Period(itemx.beginmoment->any(), itemx.endmoment->any()) : medix.effectivePeriod & 
+          AuxOps.ItemType2Dosage(itemx) : medix.dosage)
+
+    FolderType::
+      transtx : self.transaction & 
+      itemx : transtx.item & 
+      itemx.isMedication() & 
+      posologyx : itemx.posology & 
+      posologyx.unit->size() > 0 & 
+      posologyx.takes->size() > 0 => 
+        MedicationStatement->exists( medix | 
+          medix.$id = posologyx.$id & 
+          DosageDoseAndRate->exists( ddrx | 
+            ddrx.$id = "doseAndRate_" + posologyx.$id & 
+            AuxOps.CodeableConceptForCoding(
+              AuxOps.doseRateTypeURL, 
+              "ordered", "Ordered") : ddrx.type &
+            medix.dosage->forAll( dosx | dosx.doseAndRate = Set{ddrx} ) ) )  
+            
+
+    FolderType::
+      transtypex : self.transaction & 
+      transtypex.isSumehr() => 
+        Composition->exists( compox | 
+          compox.$id = transtypex.$id & 
+          compox.id = Set{Id.newId(AuxOps.uuid(transtypex))} &
+          AuxOps.CompositionIdentifier(transtypex) : compox.identifier & 
+          compox.date = DateTime.newDateTime(transtypex.date + "T" + transtypex.time) & 
+          compox.subject = Set{Reference.newPatientReference(AuxOps.uuid(self.patient))} & 
+          compox.title = FhirString.newFhirString(AuxOps.sumehrMessage) & 
+          compox.status = 
+            CompositionStatus.newCompositionStatus(
+                transtypex.transactionStatus()) &
+          compox.type = 
+            AuxOps.CodeableConceptForCoding(
+                CompositionSection.loincURL, 
+                AuxOps.sumehrCode, AuxOps.sumehrMessage) &  
+          AuxOps.MedicationSection(transtypex) : compox.section & 
+          AuxOps.AllergyIntoleranceSection(transtypex) : compox.section & 
+          AuxOps.ActiveProblemSection(transtypex) : compox.section & 
+          AuxOps.ImmunizationSection(transtypex) : compox.section & 
+          AuxOps.HistorySection(transtypex) : compox.section)
+
+    FolderType::
+      transtypex : self.transaction & 
+      transtypex.isSumehr() & 
+      transtypex.txAuthor() /= null => 
+        Composition->exists( compox | 
+          compox.$id = transtypex.$id &
+          compox.author = Set{ Reference.newReference( transtypex.authorPrefix() + AuxOps.uuid(transtypex)) } ) 
+
+    FolderType::
+      transtypex : self.transaction & 
+      transtypex.isSumehr() & 
+      itemx : transtypex.item & 
+      itemx.cd->exists( cdxx | cdxx.value = "gmdmanager" ) => 
+        Composition->exists( compox | 
+          compox.$id = transtypex.$id &
+          compox.custodian = Set{ Reference.newReference( itemx.authorPrefix() + AuxOps.uuid(itemx.hcpartyContent()) ) } ) 
+
+    FolderType::
+      self.patient /= null => 
+        Bundle->exists( bundlex | bundlex.$id = self.$id &
+          bundlex.type = BundleType.newBundleType("document") &
+          AuxOps.CompositionBundleEntries(self.transaction) <: bundlex.entry &  
+          AuxOps.PatientBundleEntry(self.patient) : bundlex.entry & 
+          AuxOps.PractitionerBundleEntries(self.transaction) <: bundlex.entry &
+          AuxOps.OrganizationBundleEntries(self.transaction) <: bundlex.entry & 
+          AuxOps.MedicationBundleEntries(self.transaction) <: bundlex.entry & 
+          AuxOps.PosologyBundleEntries(self.transaction) <: bundlex.entry & 
+          AuxOps.AllergyIntoleranceBundleEntries(self.transaction) <: bundlex.entry & 
+          AuxOps.ConditionBundleEntries(self.transaction) <: bundlex.entry & 
+          AuxOps.ImmunizationBundleEntries(self.transaction) <: bundlex.entry)
+
+    DocumentRoot::
+      FhirDocumentRoot->exists( rootx | 
+        rootx.$id = self.$id & 
+        Bundle[self.kmehrmessage.folder->select( fx | fx.patient /= null )->collect($id)] <: rootx.bundle )
+  }  
+
+
+}

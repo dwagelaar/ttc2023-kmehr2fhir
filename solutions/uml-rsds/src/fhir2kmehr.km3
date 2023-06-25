@@ -1,0 +1,63 @@
+package kmehr { 
+
+
+  class AuxOps { 
+    static operation streetValue(ss : FhirString) : String
+    pre: true 
+    post: result = ss.value->before("\t"); 
+
+    static operation houseNumber(ss : FhirString) : String
+    pre: true 
+    post: 
+      let strs : Sequence(String) = ss.value->split("\t") 
+      in 
+         if strs->size() > 2 
+         then result = strs->at(2)
+         else result = ""
+         endif; 
+
+    static operation postboxNumber(ss : FhirString) : String
+    pre: true 
+    post: 
+      let strs : Sequence(String) = ss.value->split("\t") 
+      in 
+         if strs->size() > 2 
+         then result = strs->at(3)
+         else result = ""
+         endif; 
+
+ } 
+
+  usecase fhir2kmehr : void { 
+
+    Address::
+      AddressType->exists( atx | 
+        atx.$id = self.$id & 
+        atx.street = AuxOps.streetValue(self.line->any()) & 
+        atx.housenumber = AuxOps.houseNumber(self.line->any()) & 
+        atx.postboxnumber = AuxOps.postboxNumber(self.line->any()) & 
+        atx.zip = self.postalCode.any.value & 
+        CountryType.newCountryType(self.country.any.value) : atx.country  )
+
+    ContactPoint::
+      cpsys : self.system & 
+      cpuse : self.use => 
+        TelecomType->exists( telex | 
+          telex.$id = self.$id & 
+          CDTELECOM.newCDTELECOM(cpsys.value) : telex.cd & 
+          telex.telecomnumber = self.value.any.value )
+
+    Patient::
+      hnamex : self.name & 
+      agenx : self.gender => 
+        PersonType->exists( persx | 
+          persx.$id = self.$id & 
+          persx.address = AddressType[self.address.$id] & 
+          persx.telecom = TelecomType[self.telecom.$id] & 
+          persx.familyname = hnamex.family.any.value & 
+          persx.firstname = hnamex.given.any.value & 
+          persx.sex = SexType.newSexType(agenx.value) )
+  } 
+}
+
+
