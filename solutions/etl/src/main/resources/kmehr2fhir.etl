@@ -43,6 +43,89 @@ pre {
     'sisterinlaw' = 'SISINLAW'
   };
 
+  var dayPeriodMap = Map {
+		KMEHR!CDDAYPERIODvalues#afterbreakfast = FHIR!EventTimingEnum#PCM,
+		KMEHR!CDDAYPERIODvalues#afterdinner = FHIR!EventTimingEnum#PCV,
+		KMEHR!CDDAYPERIODvalues#afterlunch = FHIR!EventTimingEnum#PCD,
+		KMEHR!CDDAYPERIODvalues#aftermeal = FHIR!EventTimingEnum#PC,
+		KMEHR!CDDAYPERIODvalues#afternoon = FHIR!EventTimingEnum#AFT,
+		KMEHR!CDDAYPERIODvalues#beforebreakfast = FHIR!EventTimingEnum#ACM,
+		KMEHR!CDDAYPERIODvalues#beforedinner = FHIR!EventTimingEnum#ACV,
+		KMEHR!CDDAYPERIODvalues#beforelunch = FHIR!EventTimingEnum#ACD,
+		KMEHR!CDDAYPERIODvalues#betweenbreakfastandlunch = FHIR!EventTimingEnum#PCM,
+		KMEHR!CDDAYPERIODvalues#betweendinnerandsleep = FHIR!EventTimingEnum#PCV,
+		KMEHR!CDDAYPERIODvalues#betweenlunchanddinner = FHIR!EventTimingEnum#PCD,
+		KMEHR!CDDAYPERIODvalues#betweenmeals = FHIR!EventTimingEnum#PC,
+		KMEHR!CDDAYPERIODvalues#evening = FHIR!EventTimingEnum#EVE,
+		KMEHR!CDDAYPERIODvalues#morning = FHIR!EventTimingEnum#MORN,
+		KMEHR!CDDAYPERIODvalues#night = FHIR!EventTimingEnum#NIGHT,
+		KMEHR!CDDAYPERIODvalues#thehourofsleep = FHIR!EventTimingEnum#HS,
+		KMEHR!CDDAYPERIODvalues#duringbreakfast = FHIR!EventTimingEnum#CM,
+		KMEHR!CDDAYPERIODvalues#duringlunch = FHIR!EventTimingEnum#CD,
+		KMEHR!CDDAYPERIODvalues#duringdinner = FHIR!EventTimingEnum#CV
+  };
+
+  var unitsOfMeasureMap = Map {
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00001` = '5 ml',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00002` = 'amp.',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00003` = 'applic.',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00004` = 'caps.',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00005` = 'compr.',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00006` = 'dosis',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00007` = 'drops',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00008` = 'flac.',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00009` = 'implant',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00010` = 'perfusion',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00011` = 'inhal.',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00012` = 'insert',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00013` = 'chewing gum',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00014` = 'Compress(es)',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00015` = 'lav.',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00016` = 'ml',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00017` = 'ov.',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00018` = 'pearl(s)',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00019` = 'pastille',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00020` = 'patch',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00021` = 'cart.',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00022` = 'pen',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00023` = 'puff(s)',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00024` = 'sponge',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00025` = 'stylo',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00026` = 'suppo',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00027` = 'tube',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00028` = 'wick',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00029` = 'bag',
+		KMEHR!CDADMINISTRATIONUNITvalues#`_00030` = 'bag(s)',
+		KMEHR!CDADMINISTRATIONUNITvalues#cm = 'cm',
+		KMEHR!CDADMINISTRATIONUNITvalues#dropsperminute = 'drp/min',
+		KMEHR!CDADMINISTRATIONUNITvalues#gm = 'g',
+		KMEHR!CDADMINISTRATIONUNITvalues#internationalunits = 'international units',
+		KMEHR!CDADMINISTRATIONUNITvalues#`mckH` = 'mg/h',
+		KMEHR!CDADMINISTRATIONUNITvalues#`mckKgMinute` = 'mg/kg/min',
+		KMEHR!CDADMINISTRATIONUNITvalues#measure = 'measure',
+		KMEHR!CDADMINISTRATIONUNITvalues#`mgH` = 'mg/h',
+		KMEHR!CDADMINISTRATIONUNITvalues#`mlH` = 'ml/h',
+		KMEHR!CDADMINISTRATIONUNITvalues#tbl = 'tablespoon',
+		KMEHR!CDADMINISTRATIONUNITvalues#tsp = 'teaspoon',
+		KMEHR!CDADMINISTRATIONUNITvalues#`untH` = 'units/h',
+		KMEHR!CDADMINISTRATIONUNITvalues#mg = 'mg',
+		KMEHR!CDADMINISTRATIONUNITvalues#`mgMl` = 'mg/ml',
+		KMEHR!CDADMINISTRATIONUNITvalues#meq = 'milli-equivalent',
+		KMEHR!CDADMINISTRATIONUNITvalues#miu = 'miu',
+		KMEHR!CDADMINISTRATIONUNITvalues#iu = 'iu',
+		KMEHR!CDADMINISTRATIONUNITvalues#mmol = 'mmol',
+		KMEHR!CDADMINISTRATIONUNITvalues#`effervescentTablet` = 'effervescent tablet',
+		KMEHR!CDADMINISTRATIONUNITvalues#micrograms = 'micrograms',
+		KMEHR!CDADMINISTRATIONUNITvalues#bandage = 'bandage',
+		KMEHR!CDADMINISTRATIONUNITvalues#piece = 'piece',
+		KMEHR!CDADMINISTRATIONUNITvalues#box = 'box',
+		KMEHR!CDADMINISTRATIONUNITvalues#liter = 'l',
+		KMEHR!CDADMINISTRATIONUNITvalues#syringe = 'syringe',
+		KMEHR!CDADMINISTRATIONUNITvalues#ampoule = 'ampoule',
+		KMEHR!CDADMINISTRATIONUNITvalues#bottle = 'bottle',
+		KMEHR!CDADMINISTRATIONUNITvalues#`syringeAmpoule` = 'syringe ampoule'
+  };
+
 }
 
 // RULES
@@ -68,6 +151,11 @@ rule Folder
   t.entry.addAll(s.`transaction`
     .collect(tr | tr.item.collect(i | i.hcpartyContent().equivalents()))
     .flatten().select(e|e.isKindOf(FHIR!BundleEntry)));
+
+  t.entry.addAll(s.`transaction`
+    .collect(tr | tr.item.select(i | i.isMedication())
+      .collect(i | Sequence { i.posology, i }.equivalents()))
+    .flatten.select(e | e.isKindOf(FHIR!BundleEntry)));
 }
 
 rule SumEHRTransaction
@@ -255,6 +343,84 @@ rule Practitioner
   humanName.given = Sequence { FhirString(s.firstname) };
 }
 
+rule Medication
+  transform s: KMEHR!ItemType
+  to t: FHIR!Medication, mid: FHIR!Id, medCodes: FHIR!CodeableConcept, status: FHIR!MedicationStatusCodes
+{
+  guard: s.isMedication()
+
+  t.id = mid;
+  t.code = medCodes;
+  t.status = status;
+
+  mid.value = s.uuid();
+
+  medCodes.coding.addAll(s.content
+    .select(c|c.medicinalproduct.isDefined())
+    .collect(c | c.medicinalproduct.equivalents('CNKCode'))
+    .flatten().select(e | e.isKindOf(FHIR!Coding)));
+
+  status.value = FHIR!MedicationStatusCodesEnum#active;
+}
+
+rule Posology
+  transform s: KMEHR!PosologyType
+  to t: FHIR!MedicationStatement, msid: FHIR!Id, medCodRef: FHIR!CodeableReference,
+     medRef: FHIR!Reference, msstatus: FHIR!MedicationStatementStatusCodes,
+     subRef: FHIR!Reference, effectivePeriod: FHIR!Period, dosage: FHIR!Dosage,
+     timing: FHIR!Timing, repeat: FHIR!TimingRepeat, periodUnit: FHIR!UnitsOfTime
+{
+  var i = s.eContainer();
+  var tx = i.eContainer();
+  var f = tx.eContainer();
+
+  t.id = msid;
+  t.medication = medCodRef;
+  t.status = msstatus;
+  t.subject = subRef;
+  t.effectivePeriod = effectivePeriod;
+  t.dosage = Sequence { dosage };
+
+  msid.value = s.uuid();
+  medCodRef.reference = medRef;
+  medRef.reference = FhirString('Medication/' + i.uuid());
+  msstatus.value = FHIR!MedicationStatementStatusCodesEnum#recorded;
+  subRef.reference = FhirString('Patient/' + f.patient.uuid());
+
+  effectivePeriod.start = i.beginmoment.equivalent('FhirDateTime');
+  effectivePeriod.end = i.endmoment.equivalent('FhirDateTime');
+
+  dosage.timing = timing;
+  timing.repeat = repeat;
+  repeat.count = FhirPositiveInt(i.dayperiod.size());
+  repeat.periodUnit = periodUnit;
+  repeat.when = i.dayperiod.equivalent('EventTiming');
+  periodUnit.value = FHIR!UnitsOfTimeEnum#d;
+
+  if (s.unit.isDefined() and s.takes.isDefined()) {
+    var doseAndRate = new FHIR!DosageDoseAndRate;
+    doseAndRate.type = CodeableConcept(CodingWithDisplay(
+      'http://terminology.hl7.org/CodeSystem/dose-rate-type',
+	  'ordered',
+	  'Ordered'
+    ));
+
+    var doseQuantity = new FHIR!Quantity;
+    doseAndRate.doseQuantity = doseQuantity;
+    dosage.doseAndRate = Sequence { doseAndRate };
+
+    var qSys = new FHIR!Uri;
+    doseQuantity.system = qSys;
+    var qCode = new FHIR!Code;
+    doseQuantity.code = qCode;
+    doseQuantity.unit = FhirString(s.unit.cd.toUnitsOfMeasureValue());
+    doseQuantity.value = FhirDecimal(s.takes.high);
+
+    qSys.value = 'http://unitsofmeasure.org';
+    qCode.value = '1';
+  }
+}
+
 // CONTEXT OPERATIONS
 
 operation Any countryString() : String {
@@ -284,6 +450,13 @@ operation KMEHR!AddressType countryString() : String {
 
 operation KMEHR!CountryType countryString() : String {
   return self.cd.countryString();
+}
+
+operation KMEHR!CDADMINISTRATIONUNIT toUnitsOfMeasureValue() : String {
+  if (self.value.isDefined()) {
+    return unitsOfMeasureMap.get(self.value);
+  }
+  return null;
 }
 
 operation KMEHR!CDCOUNTRY countryString() : String {
@@ -375,6 +548,15 @@ operation KMEHR!ItemType refPrefix(): String {
 }
 
 @cached
+operation KMEHR!MedicinalProductType intendedCNKCode() : String {
+	return self.intendedcd
+		.select(cd | cd.s = KMEHR!CDDRUGCNKschemes#CDDRUGCNK)
+		.collect(cd | cd.value)
+		.first;
+}
+
+
+@cached
 operation KMEHR!TransactionType txAuthor() : KMEHR!HcpartyType {
   return self.author.txAuthor();
 }
@@ -417,6 +599,21 @@ operation KMEHR!TelecomType contactPointUse() {
 @cached
 operation KMEHR!TransactionType custodianItem(): KMEHR!ItemType {
   return s.item.selectFirst(i | i.cd.exists(cd | cd.value = 'gmdmanager'));
+}
+
+// Codings
+
+@lazy
+rule CNKCode
+  transform s: KMEHR!MedicinalProductType
+  to t: FHIR!Coding, cnk: FHIR!Uri, code: FHIR!Code
+{
+  t.system = cnk;
+  t.code = code;
+  t.display = FhirString(s.intendedname.normalize());
+
+  cnk.value = 'https://www.ehealth.fgov.be/standards/fhir/medication/NamingSystem/cnk-codes';
+  code.value = s.intendedCNKCode();
 }
 
 // Contact relationships
@@ -490,6 +687,23 @@ rule PractitionerBundleEntry
   guard: s.isPractitioner()
 
   rc.practitioner = s.equivalents().selectFirst(e|e.isKindOf(FHIR!Practitioner));
+}
+
+rule MedicationBundleEntry
+  transform s: KMEHR!ItemType
+  to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
+  extends BundleEntry
+{
+  guard: s.isMedication()
+  rc.medication = s.equivalents().selectFirst(e|e.isKindOf(FHIR!Medication));
+}
+
+rule PosologyBundleEntry
+  transform s: KMEHR!PosologyType
+  to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
+  extends BundleEntry
+{
+  rc.medicationStatement = s.equivalents().selectFirst(e|e.isKindOf(FHIR!MedicationStatement));
 }
 
 // CompositionSection rule hierarchy
@@ -581,6 +795,19 @@ rule HistorySection
   code.value = '11348-0';
 }
 
+// Utility operations
+
+operation String normalize() : String {
+  return self.trim().replaceAll('(\t|\n| )+', ' ');
+}
+
+operation KMEHR!CDDAYPERIOD toEventTiming() {
+  if (self.value.isDefined()) {
+    return dayPeriodMap.get(self.value);
+  }
+  return null;
+}
+
 // "LAZY RULE" OPERATIONS
 
 operation CodeableConcept(coding: FHIR!Coding) {
@@ -591,7 +818,15 @@ operation CodeableConcept(coding: FHIR!Coding) {
 
 operation CodingWithDisplay(system: String, code: String, display: String) {
   var coding = new FHIR!Coding;
-  coding.display = FhirString(display.trim());
+
+  coding.system = new FHIR!Uri;
+  coding.system.value = system.trim();
+  coding.code = new FHIR!Code;
+  coding.code.value = code.trim();
+  if (display.isDefined()) {
+    coding.display = FhirString(display.trim());
+  }
+
   return coding;
 }
 
@@ -609,6 +844,14 @@ operation CompositionSectionEntry(s: KMEHR!ItemType) {
   return t;
 }
 
+@lazy
+rule EventTiming
+  transform s: KMEHR!DayperiodType
+  to t: FHIR!EventTiming
+{
+  t.value = s.cd.toEventTiming();
+}
+
 operation FhirBoolean(s: Boolean): FHIR!fhir::`Boolean` {
   var fhirB = new FHIR!fhir::`Boolean`;
   fhirB.value = s;
@@ -621,6 +864,26 @@ rule FhirDate
 {
   guard: s.date.isDefined()
   t.value = s.date;
+}
+
+rule FhirDateTime
+  transform s: KMEHR!MomentType
+  to t: FHIR!DateTime
+{
+  guard: s.date.isDefined()
+  t.value = s.date;
+}
+
+operation FhirDecimal(n) {
+  var v = new FHIR!Decimal;
+  v.value = n;
+  return v;
+}
+
+operation FhirPositiveInt(s: Integer): FHIR!PositiveInt {
+  var t = new FHIR!PositiveInt;
+  t.value = Native('java.math.BigInteger').valueOf(s.longValue());
+  return t;
 }
 
 operation FhirString(uuid: String) {
