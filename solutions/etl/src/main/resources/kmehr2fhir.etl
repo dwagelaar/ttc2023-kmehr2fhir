@@ -156,6 +156,11 @@ rule Folder
     .collect(tr | tr.item.select(i | i.isMedication())
       .collect(i | Sequence { i.posology, i }.equivalents()))
     .flatten.select(e | e.isKindOf(FHIR!BundleEntry)));
+
+  t.entry.addAll(s.`transaction`
+    .collect(tr | tr.item.select(i | i.isAllergy() or i.isIntolerance()).equivalents())
+    .flatten.select(e | e.isKindOf(FHIR!BundleEntry))
+  );
 }
 
 rule SumEHRTransaction
@@ -298,7 +303,11 @@ rule PatientContact
   t.gender = s.sex.equivalent('AdministrativeGender');
   t.address ::= s.address.first;
   t.telecom = s.telecom.equivalent().select(e|e.isKindOf(FHIR!ContactPoint));
-  t.relationship ::= i.contactPersonRelationships();
+
+  t.relationship.addAll(i.contactPersonRelationships()
+    .equivalents('PatientContactRelationship')
+    .select(e|e.isKindOf(FHIR!CodeableConcept))
+  );
 
   humanName.family = FhirString(s.familyname);
   humanName.given = s.firstname.collect(e | FhirString(e));
@@ -421,6 +430,49 @@ rule Posology
   }
 }
 
+rule AllergyOrIntolerance
+  transform s: KMEHR!ItemType
+  to t: FHIR!AllergyIntolerance, aid: FHIR!Id,
+     criticality: FHIR!AllergyIntoleranceCriticality, patRef: FHIR!Reference
+{
+  guard: s.isAllergy() or s.isIntolerance()
+
+  var tx = s.eContainer;
+  var f = tx.eContainer;
+
+  t.id = aid;
+  t.clinicalStatus = CodeableConcept(CodingWithDisplay(
+    'http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical', 
+    'active',
+    'Active'
+  ));
+  t.verificationStatus = CodeableConcept(CodingWithDisplay(
+    'http://terminology.hl7.org/CodeSystem/allergyintolerance-verification',
+    'confirmed',
+    'Confirmed'
+  ));
+  t.type = CodeableConcept(CodingWithDisplay(
+    'http://hl7.org/fhir/allergy-intolerance-type',
+    s.isAllergy() ? 'allergy' : 'intolerance',
+    s.isAllergy() ? 'Allergy' : 'Intolerance'
+  ));
+  t.criticality = criticality;
+  t.patient = patRef;
+  t.onsetDateTime = s.beginmoment.equivalent('FhirDateTime');
+  t.recordedDate = RecordDateTime(s);
+
+  aid.value = s.uuid();
+  criticality.value = FHIR!AllergyIntoleranceCriticalityEnum#high;
+  patRef.reference = FhirString('Patient/' + f.patient.uuid());
+
+  if (not s.codedContent().isEmpty()) {
+    t.code = new FHIR!CodeableConcept;
+    t.code.coding = s.codedContent().collect(c |
+      CodingWithDisplay(c.codingSystem(), c.value, c.dN)
+    );
+  }
+}
+
 // CONTEXT OPERATIONS
 
 operation Any countryString() : String {
@@ -492,10 +544,24 @@ operation KMEHR!HcpartyType isPractitioner() : Boolean {
 }
 
 @cached
-operation KMEHR!ItemType contactPersonRelationships() : Sequence {
-	self.cd.select(cd | cd.s = KMEHR!CDITEMschemes#CDCONTACTPERSON);
+operation KMEHR!ItemType contactPersonRelationships() {
+  return self.cd.select(cd | cd.s = KMEHR!CDITEMschemes#CDCONTACTPERSON);
 }
 
+@cached
+operation KMEHR!CDCONTENT codingSystem() : String {
+   if (self.s = KMEHR!CDCONTENTschemes#ICPC and self.sV = '2') {
+     return 'http://hl7.org/fhir/sid/icpc-2';
+   } else if (self.s = KMEHR!CDCONTENTschemes#ICD and self.sV = '10') {
+	 return 'http://hl7.org/fhir/sid/icd-10';
+   } else {
+     return null;
+   }
+}
+
+operation KMEHR!ItemType codedContent() {
+  return self.content.collect(c | c.cd.select(cd | cd.codingSystem().isDefined())).flatten();
+}
 
 @cached
 operation KMEHR!ItemType isContactPerson() : Boolean {
@@ -706,6 +772,15 @@ rule PosologyBundleEntry
   rc.medicationStatement = s.equivalents().selectFirst(e|e.isKindOf(FHIR!MedicationStatement));
 }
 
+rule AllergyIntoleranceBundleEntry
+  transform s: KMEHR!ItemType
+  to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
+  extends BundleEntry
+{
+  guard: s.isAllergy() or s.isIntolerance()
+  rc.allergyIntolerance = s.equivalents().selectFirst(e|e.isKindOf(FHIR!AllergyIntolerance));
+}
+
 // CompositionSection rule hierarchy
 
 @abstract
@@ -890,4 +965,13 @@ operation FhirString(uuid: String) {
   var fhirS = new FHIR!`fhir::String`;
   fhirS.value = uuid;
   return fhirS;
+}
+
+operation RecordDateTime(s: KMEHR!ItemType) {
+  if (s.recorddatetime.isDefined()) {
+    var t = new FHIR!DateTime;
+    t.value = s.recorddatetime;
+    return t;
+  }
+  return null;
 }
