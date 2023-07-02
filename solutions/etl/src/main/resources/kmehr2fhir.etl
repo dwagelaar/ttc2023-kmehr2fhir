@@ -161,6 +161,15 @@ rule Folder
     .collect(tr | tr.item.select(i | i.isAllergy() or i.isIntolerance()).equivalents())
     .flatten.select(e | e.isKindOf(FHIR!BundleEntry))
   );
+
+  t.entry.addAll(s.`transaction`
+    .collect(tr | tr.item.select(i | i.isActiveProblem()).equivalents())
+    .flatten.select(e | e.isKindOf(FHIR!BundleEntry))
+  );
+  t.entry.addAll(s.`transaction`
+    .collect(tr | tr.item.select(i | i.isInactiveProblem()).equivalents())
+    .flatten.select(e | e.isKindOf(FHIR!BundleEntry))
+  );
 }
 
 rule SumEHRTransaction
@@ -466,6 +475,47 @@ rule AllergyOrIntolerance
   patRef.reference = FhirString('Patient/' + f.patient.uuid());
 
   if (not s.codedContent().isEmpty()) {
+    t.code = new FHIR!CodeableConcept;
+    t.code.coding = s.codedContent().collect(c |
+      CodingWithDisplay(c.codingSystem(), c.value, c.dN)
+    );
+  }
+}
+
+rule Problem
+  transform s: KMEHR!ItemType
+  to t: FHIR!Condition, cid: FHIR!Id, subRef: FHIR!Reference
+{
+  guard: s.isActiveProblem() or s.isInactiveProblem()
+
+  var tx = s.eContainer;
+  var f = tx.eContainer;
+
+  t.id = cid;
+  t.clinicalStatus = CodeableConcept(CodingWithDisplay(
+    'http://terminology.hl7.org/CodeSystem/condition-clinical',
+    s.isActiveProblem() ? 'active' : 'inactive',
+    s.isActiveProblem() ? 'Active' : 'Inactive'
+  ));
+  t.verificationStatus = CodeableConcept(CodingWithDisplay(
+    'http://terminology.hl7.org/CodeSystem/condition-ver-status',
+    'confirmed',
+    'Confirmed'
+  ));
+  t.category = Sequence { CodeableConcept(CodingWithDisplay(
+    'http://loinc.org',
+    '75326-9',
+    'Problem'
+  ))};
+  t.subject = subRef;
+  t.onsetDateTime = s.beginmoment.equivalent('FhirDateTime');
+  t.abatementDateTime = s.endmoment.equivalent('FhirDateTime');
+  t.recordedDate = RecordDateTime(s);
+
+  cid.value = s.uuid();
+  subRef.reference = FhirString('Patient/' + f.patient.uuid());
+
+  if (s.codedContent().isDefined()) {
     t.code = new FHIR!CodeableConcept;
     t.code.coding = s.codedContent().collect(c |
       CodingWithDisplay(c.codingSystem(), c.value, c.dN)
@@ -779,6 +829,15 @@ rule AllergyIntoleranceBundleEntry
 {
   guard: s.isAllergy() or s.isIntolerance()
   rc.allergyIntolerance = s.equivalents().selectFirst(e|e.isKindOf(FHIR!AllergyIntolerance));
+}
+
+rule ConditionBundleEntry
+  transform s: KMEHR!ItemType
+  to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
+  extends BundleEntry
+{
+  guard: s.isActiveProblem() or s.isInactiveProblem()
+  rc.condition = s.equivalents().selectFirst(e|e.isKindOf(FHIR!Condition));
 }
 
 // CompositionSection rule hierarchy
