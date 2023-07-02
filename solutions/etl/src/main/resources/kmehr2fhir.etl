@@ -146,34 +146,32 @@ rule Folder
   bt.value = FHIR!BundleTypeEnum#document;
   t.type = bt;
 
-  t.entry.addAll(s.`transaction`.equivalents().flatten().select(e|e.isKindOf(FHIR!BundleEntry)));
-  t.entry.addAll(s.patient.equivalents().flatten().select(e|e.isKindOf(FHIR!BundleEntry)));
-  t.entry.addAll(s.`transaction`
-    .collect(tr | tr.item.collect(i | i.hcpartyContent().equivalents()))
-    .flatten().select(e|e.isKindOf(FHIR!BundleEntry)));
+  var inputElements = Sequence { s.`transaction`, s.patient };
 
-  t.entry.addAll(s.`transaction`
-    .collect(tr | tr.item.select(i | i.isMedication())
-      .collect(i | Sequence { i.posology, i }.equivalents()))
-    .flatten.select(e | e.isKindOf(FHIR!BundleEntry)));
+  inputElements.addAll(s.`transaction`
+    .collect(tr | tr.item.collect(i | i.hcpartyContent())).flatten());
 
-  t.entry.addAll(s.`transaction`
-    .collect(tr | tr.item.select(i | i.isAllergy() or i.isIntolerance()).equivalents())
-    .flatten.select(e | e.isKindOf(FHIR!BundleEntry))
-  );
+  inputElements.addAll(s.`transaction`
+      .collect(tr | tr.item.select(i | i.isMedication())
+          .collect(i | Sequence { i.posology, i }))
+      .flatten());
 
-  t.entry.addAll(s.`transaction`
-    .collect(tr | tr.item.select(i | i.isActiveProblem()).equivalents())
-    .flatten.select(e | e.isKindOf(FHIR!BundleEntry))
-  );
-  t.entry.addAll(s.`transaction`
-    .collect(tr | tr.item.select(i | i.isVaccine()).equivalents())
-    .flatten.select(e | e.isKindOf(FHIR!BundleEntry))
-  );
-  t.entry.addAll(s.`transaction`
-    .collect(tr | tr.item.select(i | i.isInactiveProblem()).equivalents())
-    .flatten.select(e | e.isKindOf(FHIR!BundleEntry))
-  );
+  inputElements.addAll(s.`transaction`
+    .collect(tr | tr.item.select(i | i.isAllergy() or i.isIntolerance()))
+    .flatten());
+  inputElements.addAll(s.`transaction`
+    .collect(tr | tr.item.select(i | i.isActiveProblem()))
+    .flatten());
+  inputElements.addAll(s.`transaction`
+    .collect(tr | tr.item.select(i | i.isVaccine()))
+    .flatten());
+  inputElements.addAll(s.`transaction`
+    .collect(tr | tr.item.select(i | i.isInactiveProblem()))
+    .flatten());
+
+  t.entry.addAll(inputElements
+    .collect(i | i.equivalents()).flatten()
+    .select(e | e.isKindOf(FHIR!BundleEntry)));
 }
 
 rule SumEHRTransaction
