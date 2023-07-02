@@ -167,6 +167,10 @@ rule Folder
     .flatten.select(e | e.isKindOf(FHIR!BundleEntry))
   );
   t.entry.addAll(s.`transaction`
+    .collect(tr | tr.item.select(i | i.isVaccine()).equivalents())
+    .flatten.select(e | e.isKindOf(FHIR!BundleEntry))
+  );
+  t.entry.addAll(s.`transaction`
     .collect(tr | tr.item.select(i | i.isInactiveProblem()).equivalents())
     .flatten.select(e | e.isKindOf(FHIR!BundleEntry))
   );
@@ -523,6 +527,38 @@ rule Problem
   }
 }
 
+rule Vaccine
+  transform s: KMEHR!ItemType
+  to t: FHIR!Immunization, iid: FHIR!Id, vacCodes: FHIR!CodeableConcept, admProd: FHIR!CodeableReference,
+     admProdCodes: FHIR!CodeableConcept, status: FHIR!ImmunizationStatusCodes, patRef: FHIR!Reference
+{
+  guard: s.isVaccine()
+
+  var tx = s.eContainer;
+  var f = tx.eContainer;
+
+  t.id = iid;
+  t.vaccineCode = vacCodes;
+  t.administeredProduct = admProd;
+  t.status = status;
+  t.patient = patRef;
+  t.occurrenceDateTime = s.beginmoment.equivalent('FhirDateTime');
+
+  iid.value = s.uuid();
+  vacCodes.coding = s.vaccineIndication().collect(cd | CodingWithDisplay(
+    'https://www.ehealth.fgov.be/standards/kmehr/en/tables/vaccine-indication-codes',
+	cd.value, null
+  ));
+  admProd.concept = admProdCodes;
+  admProdCodes.coding.addAll(s.content
+    .select(c | c.medicinalproduct.isDefined())
+    .collect(c | c.medicinalproduct.equivalents('CNKCode'))
+    .flatten().select(e | e.isKindOf(FHIR!Coding)));
+
+  status.value = FHIR!ImmunizationStatusCodesEnum#completed;
+  patRef.reference = FhirString('Patient/' + f.patient.uuid());
+}
+
 // CONTEXT OPERATIONS
 
 operation Any countryString() : String {
@@ -611,6 +647,10 @@ operation KMEHR!CDCONTENT codingSystem() : String {
 
 operation KMEHR!ItemType codedContent() {
   return self.content.collect(c | c.cd.select(cd | cd.codingSystem().isDefined())).flatten();
+}
+
+operation KMEHR!ItemType vaccineIndication() {
+  return self.content.collect(c | c.cd.select(cd | cd.s = KMEHR!CDCONTENTschemes#CDVACCINEINDICATION)).flatten();
 }
 
 @cached
@@ -838,6 +878,15 @@ rule ConditionBundleEntry
 {
   guard: s.isActiveProblem() or s.isInactiveProblem()
   rc.condition = s.equivalents().selectFirst(e|e.isKindOf(FHIR!Condition));
+}
+
+rule ImmunizationBundleEntry
+  transform s: KMEHR!ItemType
+  to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
+  extends BundleEntry
+{
+  guard: s.isVaccine()
+  rc.immunization = s.equivalents().selectFirst(e | e.isKindOf(FHIR!Immunization));
 }
 
 // CompositionSection rule hierarchy
