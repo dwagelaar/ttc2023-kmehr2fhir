@@ -58,7 +58,7 @@ def benchmark(conf):
                 os.environ['SourcePath'] = os.path.abspath(os.path.join(BASE_DIRECTORY, 'models', model))
                 no_ext = os.path.splitext(model)[0]
                 os.environ['TargetPath'] = os.path.abspath(os.path.join(
-                    BASE_DIRECTORY, 'models', no_ext,
+                    BASE_DIRECTORY, 'models', no_ext, tool,
                     'output.fhir'))
                 print("Running benchmark: tool = {}, model = {}, run = {}".format(tool, model, r))
                 try:
