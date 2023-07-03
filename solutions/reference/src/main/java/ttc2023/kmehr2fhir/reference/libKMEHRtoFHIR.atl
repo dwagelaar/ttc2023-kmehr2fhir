@@ -215,6 +215,15 @@ helper context KMEHR!HcpartyType def : isPractitioner : Boolean =
 helper context KMEHR!CDHCPARTY def : isPractitioner : Boolean =
 	not self.value.oclIsUndefined() and self.value.startsWith('pers');
 
+--- Returns 'true' if self is contained in the KMEHR Header.
+helper context OclAny def : isHeaderContent : Boolean =
+	not self.oclIsUndefined() and
+	(
+		let container : OclAny = self.refImmediateComposite() in
+		container.oclIsKindOf(KMEHR!HeaderType) or
+		container.isHeaderContent
+	);
+
 helper context KMEHR!AddressType def : addressLine : String =
 	Sequence{self.street, self.housenumber, self.postboxnumber}
 		->reject(s | s.oclIsUndefined() or s = '')
