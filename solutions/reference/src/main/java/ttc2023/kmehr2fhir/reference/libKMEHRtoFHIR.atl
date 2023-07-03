@@ -180,10 +180,6 @@ helper context KMEHR!CDDAYPERIOD def : toEventTiming : FHIR!EventTimingEnum =
 		thisModule.dayPeriodMap.get(self.value)
 	endif;
 
---- Returns the message sender or OclUndefined.
-helper context OclAny def : msgSender : KMEHR!HcpartyType =
-	OclUndefined;
-
 --- Returns the transaction author or OclUndefined.
 helper context KMEHR!TransactionType def : txAuthor : KMEHR!HcpartyType =
 	self.author.txAuthor;

@@ -110,7 +110,7 @@ rule SumEHRTransactionWithAuthor extends SumEHRTransaction {
 			author <- Sequence{authRef}
 		),
 		authRef : FHIR!Reference (
-			reference <- thisModule.FhirString(refPrefix + s.msgSender.uuid)
+			reference <- thisModule.FhirString(refPrefix + s.txAuthor.uuid)
 		)
 }
 		
