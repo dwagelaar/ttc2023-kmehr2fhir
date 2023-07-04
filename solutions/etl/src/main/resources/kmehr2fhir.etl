@@ -226,17 +226,18 @@ rule SumEHRTransaction
   }
 
   // SumEHRTransactionWithCustodian
-  if (s.custodianItem().isDefined()) {
+  var i = s.custodianItem();
+  if (i.isDefined()) {
     var refPrefix = 'Other/';
-    if (i.hcpartyContent.isOrganization()) {
+    if (i.hcpartyContent().isOrganization()) {
       refPrefix = 'Organization/';
-    } else if (i.hcpartyContent.isPractitioner()) {
+    } else if (i.hcpartyContent().isPractitioner()) {
       refPrefix = 'Practitioner/';
     }
 
     var gmdRef = new FHIR!Reference;
     t.custodian = gmdRef;
-    gmdRef.reference = FhirString(refPrefix + i.hcpartyContent.uuid());  
+    gmdRef.reference = FhirString(refPrefix + i.hcpartyContent().uuid());
   }
 }
 
@@ -317,6 +318,7 @@ rule PatientContact
 
   t.relationship.addAll(i.contactPersonRelationships()
     .equivalents('PatientContactRelationship')
+    .flatten()
     .select(e|e.isKindOf(FHIR!CodeableConcept))
   );
 
@@ -752,7 +754,7 @@ operation KMEHR!TelecomType contactPointUse() {
 
 @cached
 operation KMEHR!TransactionType custodianItem(): KMEHR!ItemType {
-  return s.item.selectFirst(i | i.cd.exists(cd | cd.value = 'gmdmanager'));
+  return self.item.selectFirst(i | i.cd.exists(cd | cd.value = 'gmdmanager'));
 }
 
 // Codings
