@@ -37,6 +37,9 @@ public class Transformation {
 			inputModel.setModelFile(inputFile.getPath());
 			inputModel.load();
 
+			// See https://github.com/eclipse/epsilon/issues/45
+			outputModel.setCachingEnabled(false);
+
 			EtlModule etl = new EtlModule();
 			try {
 				etl.parse(Transformation.class.getResource("/kmehr2fhir.etl"));
