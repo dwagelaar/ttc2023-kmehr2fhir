@@ -77,12 +77,21 @@ public class TransformationTest {
 
 	@ParameterizedTest
 	@MethodSource("inputFilesWithFHIRTests")
-	public void runAndCompare(File fKmehr, @TempDir File tmpDir) throws Exception {
-		final File fFhir = new File(tmpDir, "output.fhir");
+	public void runAndCompare(File fKmehr) throws Exception {
+		final File fFhir = new File(fKmehr.getName().replace(".kmehr", ".fhir"));
+
 		final ResourceSet rsFhir = new ResourceSetImpl();
 		Resource rFhir = rsFhir.createResource(URI.createFileURI(fFhir.getCanonicalPath()));
-		new Transformation(fKmehr, rFhir).run();
+
+		final ResourceSet rsTrace = new ResourceSetImpl();
+		final File fTrace = new File(fFhir.getName() + ".trace");
+		Resource rTrace = rsTrace.createResource(URI.createFileURI(fTrace.getCanonicalPath()));
+
+		final Transformation transformation = new Transformation(fKmehr, rFhir);
+		transformation.setTraceResource(rTrace);
+		transformation.run();
 		rFhir.save(null);
+		rTrace.save(null);
 
 		final File fExpectedFhir = new File("src/test/resources/" + fKmehr.getName().replace(".kmehr", ".fhir"));
 		assertEquivalentFhirModels(fExpectedFhir, fFhir);

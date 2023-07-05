@@ -1,0 +1,34 @@
+@namespace(uri="http://github.com/agarciadom/ttc2023-kmehr-to-fhir/trace", prefix="tr")
+package trace;
+
+class Trace {
+	val TransformationRule[*] rules;
+    val SourceObject[*] sources;
+    val TargetObject[*] targets;
+}
+
+class TransformationRule {
+	attr String name;
+	attr String location;
+	attr boolean lazy;
+    ref Transformation[*]#rule transformations;
+}
+
+class Transformation {
+	ref TransformationRule#transformations rule;
+	ref TargetObject[*]#rule targets;
+}
+
+class SourceObject {
+	val SourceObject[*] children;
+
+	ref EObject source;
+    val Transformation[*] transformations;
+}
+
+class TargetObject {
+    val TargetObject[*] children;
+
+	ref EObject target;
+	ref Transformation#targets rule;
+}
