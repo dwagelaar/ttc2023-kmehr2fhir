@@ -1,0 +1,18 @@
+[% import 'utils.eol'; %]
+digraph G {
+  target[[%=target.style()%],fillcolor="coral"];
+
+[% if (target.transformation.isDefined()) { var tx = target.transformation; %]
+  tx -> target 
+  tx[[%=tx.rule.style()%]]
+  [% for (tgt in tx.targets.excluding(target)) { var tgtId = loopCount; -%]
+    tx -> tgt[%=tgtId%];
+    tgt[%=tgtId%][[%=tgt.style()%]];
+  [% } %]
+
+  source -> tx;
+  source[[%=tx.eContainer.style()%]];
+
+[% } %]
+
+}
