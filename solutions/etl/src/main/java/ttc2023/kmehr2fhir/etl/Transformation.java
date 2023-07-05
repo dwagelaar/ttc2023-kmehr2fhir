@@ -1,7 +1,6 @@
 package ttc2023.kmehr2fhir.etl;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.resource.Resource;

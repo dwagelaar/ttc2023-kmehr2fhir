@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.hl7.emf.fhir.util.FhirResourceFactoryImpl;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -64,6 +65,7 @@ public class TransformationTest {
 		extRegistry.put("fhir", new FhirResourceFactoryImpl());
 	}
 
+	@Disabled // we can get these results via the usual benchmark framework
 	@ParameterizedTest
 	@MethodSource("inputFilesWithoutFHIRTests")
 	public void onlyRun(File fKmehr, @TempDir File tmpDir) throws Exception {

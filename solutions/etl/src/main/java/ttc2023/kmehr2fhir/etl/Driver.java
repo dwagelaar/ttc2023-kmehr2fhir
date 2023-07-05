@@ -9,10 +9,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.hl7.emf.fhir.FhirPackage;
 import org.hl7.emf.fhir.util.FhirResourceFactoryImpl;
 
-import be.fgov.ehealth.standards.kmehr.schema.kmehr.KmehrPackage;
 import be.fgov.ehealth.standards.kmehr.schema.kmehr.util.KmehrResourceFactoryImpl;
 
 /**
@@ -79,11 +77,8 @@ public class Driver {
 		repository = new ResourceSetImpl();
 		repository.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
 		repository.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
-		repository.getResourceFactoryRegistry().getExtensionToFactoryMap().put("kmehr",
-				new KmehrResourceFactoryImpl());
+		repository.getResourceFactoryRegistry().getExtensionToFactoryMap().put("kmehr", new KmehrResourceFactoryImpl());
 		repository.getResourceFactoryRegistry().getExtensionToFactoryMap().put("fhir", new FhirResourceFactoryImpl());
-		repository.getPackageRegistry().put(KmehrPackage.eINSTANCE.getNsURI(), KmehrPackage.eINSTANCE);
-		repository.getPackageRegistry().put(FhirPackage.eINSTANCE.getNsURI(), FhirPackage.eINSTANCE);
 
 		stopwatch = System.nanoTime() - stopwatch;
 		report(BenchmarkPhase.Initialization);
