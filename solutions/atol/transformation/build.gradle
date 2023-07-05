@@ -44,8 +44,7 @@ dependencies {
     implementation "org.eclipse.xtend:org.eclipse.xtend.lib:2.31.0"
     implementation "org.eclipse.emf:org.eclipse.emf.ecore:+"
 
-    implementation 'fr.eseo.atol:fr.eseo.atol.gen:1.0.2'
-    implementation 'fr.eseo.aof:fr.eseo.aof.extensions:1.0.1'
+    implementation 'fr.eseo.atol:fr.eseo.atol.gen:1.1.0'
 
     implementation 'io.github.atlresearch:emfmodelfuzzer:0.1'
 
