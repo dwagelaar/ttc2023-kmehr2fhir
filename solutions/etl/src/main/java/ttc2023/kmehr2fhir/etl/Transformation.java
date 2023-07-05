@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -19,6 +20,7 @@ import org.hl7.emf.fhir.FhirPackage;
 
 import be.fgov.ehealth.standards.kmehr.schema.kmehr.KmehrPackage;
 import be.fgov.ehealth.standards.kmehr.schema.kmehr.util.KmehrResourceFactoryImpl;
+import ttc2023.kmehr2fhir.trace.ModelObject;
 import ttc2023.kmehr2fhir.trace.SourceObject;
 import ttc2023.kmehr2fhir.trace.TargetObject;
 import ttc2023.kmehr2fhir.trace.Trace;
@@ -114,6 +116,9 @@ public class Transformation {
 				it.remove();
 			}
 		}
+
+		// Sort the list of transformation rules by name
+		ECollections.sort(trace.getRules(), (a, b) -> a.getName().compareTo(b.getName()));
 	}
 
 	private <T> boolean trimTree(T node, Function<T, Iterator<T>> childrenRule, Function<T, Boolean> discardRule) {
@@ -147,8 +152,7 @@ public class Transformation {
 	private void addTargetToTrace(EObject eob, EList<TargetObject> targetList,
 			Map<EObject, ttc2023.kmehr2fhir.trace.Transformation> targetToTX) {
 		TargetObject target = TraceFactory.eINSTANCE.createTargetObject();
-		target.setEClassName(eob.eClass().getName());
-		target.setUriFragment(eob.eResource().getURIFragment(eob));
+		setObjectInfo(eob, target);
 		targetList.add(target);
 
 		var modelTX = targetToTX.remove(eob);
@@ -166,8 +170,7 @@ public class Transformation {
 			Trace trace, Map<String, TransformationRule> nameToRule,
 			Map<EObject, ttc2023.kmehr2fhir.trace.Transformation> targetToTX) {
 		SourceObject src = TraceFactory.eINSTANCE.createSourceObject();
-		src.setEClassName(eob.eClass().getName());
-		src.setUriFragment(eob.eResource().getURIFragment(eob));
+		setObjectInfo(eob, src);
 		targetList.add(src);
 
 		for (var etlTX : transformationTrace.getTransformations(eob)) {
@@ -199,6 +202,12 @@ public class Transformation {
 			addSourceToTrace(child, src.getChildren(), transformationTrace,
 				trace, nameToRule, targetToTX);
 		}
+	}
+
+	private void setObjectInfo(EObject eob, ModelObject mob) {
+		mob.setEPackageURI(eob.eClass().getEPackage().getNsURI());
+		mob.setEClassName(eob.eClass().getName());
+		mob.setUriFragment(eob.eResource().getURIFragment(eob));
 	}
 
 }

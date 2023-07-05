@@ -24,6 +24,7 @@ class Transformation {
 }
 
 abstract class ModelObject {
+	attr String ePackageURI;
     attr String eClassName;
     attr String uriFragment;
 } 

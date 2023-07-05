@@ -17,6 +17,8 @@ import ttc2023.kmehr2fhir.trace.TracePackage;
  * The following features are implemented:
  * </p>
  * <ul>
+ * <li>{@link ttc2023.kmehr2fhir.trace.impl.ModelObjectImpl#getEPackageURI
+ * <em>EPackage URI</em>}</li>
  * <li>{@link ttc2023.kmehr2fhir.trace.impl.ModelObjectImpl#getEClassName
  * <em>EClass Name</em>}</li>
  * <li>{@link ttc2023.kmehr2fhir.trace.impl.ModelObjectImpl#getUriFragment
@@ -26,6 +28,26 @@ import ttc2023.kmehr2fhir.trace.TracePackage;
  * @generated
  */
 public abstract class ModelObjectImpl extends MinimalEObjectImpl.Container implements ModelObject {
+	/**
+	 * The default value of the '{@link #getEPackageURI() <em>EPackage URI</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @see #getEPackageURI()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String EPACKAGE_URI_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getEPackageURI() <em>EPackage URI</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @see #getEPackageURI()
+	 * @generated
+	 * @ordered
+	 */
+	protected String ePackageURI = EPACKAGE_URI_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getEClassName() <em>EClass Name</em>}'
 	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -91,6 +113,30 @@ public abstract class ModelObjectImpl extends MinimalEObjectImpl.Container imple
 	 * @generated
 	 */
 	@Override
+	public String getEPackageURI() {
+		return ePackageURI;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setEPackageURI(String newEPackageURI) {
+		String oldEPackageURI = ePackageURI;
+		ePackageURI = newEPackageURI;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TracePackage.MODEL_OBJECT__EPACKAGE_URI,
+					oldEPackageURI, ePackageURI));
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public String getEClassName() {
 		return eClassName;
 	}
@@ -141,6 +187,8 @@ public abstract class ModelObjectImpl extends MinimalEObjectImpl.Container imple
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+		case TracePackage.MODEL_OBJECT__EPACKAGE_URI:
+			return getEPackageURI();
 		case TracePackage.MODEL_OBJECT__ECLASS_NAME:
 			return getEClassName();
 		case TracePackage.MODEL_OBJECT__URI_FRAGMENT:
@@ -157,6 +205,9 @@ public abstract class ModelObjectImpl extends MinimalEObjectImpl.Container imple
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+		case TracePackage.MODEL_OBJECT__EPACKAGE_URI:
+			setEPackageURI((String) newValue);
+			return;
 		case TracePackage.MODEL_OBJECT__ECLASS_NAME:
 			setEClassName((String) newValue);
 			return;
@@ -175,6 +226,9 @@ public abstract class ModelObjectImpl extends MinimalEObjectImpl.Container imple
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+		case TracePackage.MODEL_OBJECT__EPACKAGE_URI:
+			setEPackageURI(EPACKAGE_URI_EDEFAULT);
+			return;
 		case TracePackage.MODEL_OBJECT__ECLASS_NAME:
 			setEClassName(ECLASS_NAME_EDEFAULT);
 			return;
@@ -193,6 +247,8 @@ public abstract class ModelObjectImpl extends MinimalEObjectImpl.Container imple
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+		case TracePackage.MODEL_OBJECT__EPACKAGE_URI:
+			return EPACKAGE_URI_EDEFAULT == null ? ePackageURI != null : !EPACKAGE_URI_EDEFAULT.equals(ePackageURI);
 		case TracePackage.MODEL_OBJECT__ECLASS_NAME:
 			return ECLASS_NAME_EDEFAULT == null ? eClassName != null : !ECLASS_NAME_EDEFAULT.equals(eClassName);
 		case TracePackage.MODEL_OBJECT__URI_FRAGMENT:
@@ -212,7 +268,9 @@ public abstract class ModelObjectImpl extends MinimalEObjectImpl.Container imple
 			return super.toString();
 
 		StringBuilder result = new StringBuilder(super.toString());
-		result.append(" (eClassName: ");
+		result.append(" (ePackageURI: ");
+		result.append(ePackageURI);
+		result.append(", eClassName: ");
 		result.append(eClassName);
 		result.append(", uriFragment: ");
 		result.append(uriFragment);

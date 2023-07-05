@@ -252,13 +252,22 @@ public interface TracePackage extends EPackage {
 	int MODEL_OBJECT = 3;
 
 	/**
+	 * The feature id for the '<em><b>EPackage URI</b></em>' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_OBJECT__EPACKAGE_URI = 0;
+
+	/**
 	 * The feature id for the '<em><b>EClass Name</b></em>' attribute. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_OBJECT__ECLASS_NAME = 0;
+	int MODEL_OBJECT__ECLASS_NAME = 1;
 
 	/**
 	 * The feature id for the '<em><b>Uri Fragment</b></em>' attribute. <!--
@@ -267,7 +276,7 @@ public interface TracePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_OBJECT__URI_FRAGMENT = 1;
+	int MODEL_OBJECT__URI_FRAGMENT = 2;
 
 	/**
 	 * The number of structural features of the '<em>Model Object</em>' class. <!--
@@ -276,7 +285,7 @@ public interface TracePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_OBJECT_FEATURE_COUNT = 2;
+	int MODEL_OBJECT_FEATURE_COUNT = 3;
 
 	/**
 	 * The number of operations of the '<em>Model Object</em>' class. <!--
@@ -297,6 +306,15 @@ public interface TracePackage extends EPackage {
 	 * @generated
 	 */
 	int SOURCE_OBJECT = 4;
+
+	/**
+	 * The feature id for the '<em><b>EPackage URI</b></em>' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int SOURCE_OBJECT__EPACKAGE_URI = MODEL_OBJECT__EPACKAGE_URI;
 
 	/**
 	 * The feature id for the '<em><b>EClass Name</b></em>' attribute. <!--
@@ -362,6 +380,15 @@ public interface TracePackage extends EPackage {
 	 * @generated
 	 */
 	int TARGET_OBJECT = 5;
+
+	/**
+	 * The feature id for the '<em><b>EPackage URI</b></em>' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TARGET_OBJECT__EPACKAGE_URI = MODEL_OBJECT__EPACKAGE_URI;
 
 	/**
 	 * The feature id for the '<em><b>EClass Name</b></em>' attribute. <!--
@@ -593,6 +620,18 @@ public interface TracePackage extends EPackage {
 	 * @generated
 	 */
 	EClass getModelObject();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link ttc2023.kmehr2fhir.trace.ModelObject#getEPackageURI <em>EPackage
+	 * URI</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>EPackage URI</em>'.
+	 * @see ttc2023.kmehr2fhir.trace.ModelObject#getEPackageURI()
+	 * @see #getModelObject()
+	 * @generated
+	 */
+	EAttribute getModelObject_EPackageURI();
 
 	/**
 	 * Returns the meta object for the attribute
@@ -847,6 +886,14 @@ public interface TracePackage extends EPackage {
 		 * @generated
 		 */
 		EClass MODEL_OBJECT = eINSTANCE.getModelObject();
+
+		/**
+		 * The meta object literal for the '<em><b>EPackage URI</b></em>' attribute
+		 * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute MODEL_OBJECT__EPACKAGE_URI = eINSTANCE.getModelObject_EPackageURI();
 
 		/**
 		 * The meta object literal for the '<em><b>EClass Name</b></em>' attribute

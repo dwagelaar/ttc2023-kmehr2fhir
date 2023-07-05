@@ -289,7 +289,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getModelObject_EClassName() {
+	public EAttribute getModelObject_EPackageURI() {
 		return (EAttribute) modelObjectEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -299,8 +299,18 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getModelObject_UriFragment() {
+	public EAttribute getModelObject_EClassName() {
 		return (EAttribute) modelObjectEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getModelObject_UriFragment() {
+		return (EAttribute) modelObjectEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -411,6 +421,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 		createEReference(transformationEClass, TRANSFORMATION__TARGETS);
 
 		modelObjectEClass = createEClass(MODEL_OBJECT);
+		createEAttribute(modelObjectEClass, MODEL_OBJECT__EPACKAGE_URI);
 		createEAttribute(modelObjectEClass, MODEL_OBJECT__ECLASS_NAME);
 		createEAttribute(modelObjectEClass, MODEL_OBJECT__URI_FRAGMENT);
 
@@ -498,6 +509,9 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 
 		initEClass(modelObjectEClass, ModelObject.class, "ModelObject", IS_ABSTRACT, !IS_INTERFACE,
 				IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getModelObject_EPackageURI(), ecorePackage.getEString(), "ePackageURI", null, 0, 1,
+				ModelObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+				!IS_DERIVED, IS_ORDERED);
 		initEAttribute(getModelObject_EClassName(), ecorePackage.getEString(), "eClassName", null, 0, 1,
 				ModelObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 				!IS_DERIVED, IS_ORDERED);

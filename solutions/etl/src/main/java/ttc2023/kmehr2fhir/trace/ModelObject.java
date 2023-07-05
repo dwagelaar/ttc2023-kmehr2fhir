@@ -12,6 +12,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ * <li>{@link ttc2023.kmehr2fhir.trace.ModelObject#getEPackageURI <em>EPackage
+ * URI</em>}</li>
  * <li>{@link ttc2023.kmehr2fhir.trace.ModelObject#getEClassName <em>EClass
  * Name</em>}</li>
  * <li>{@link ttc2023.kmehr2fhir.trace.ModelObject#getUriFragment <em>Uri
@@ -23,6 +25,29 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface ModelObject extends EObject {
+	/**
+	 * Returns the value of the '<em><b>EPackage URI</b></em>' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>EPackage URI</em>' attribute.
+	 * @see #setEPackageURI(String)
+	 * @see ttc2023.kmehr2fhir.trace.TracePackage#getModelObject_EPackageURI()
+	 * @model
+	 * @generated
+	 */
+	String getEPackageURI();
+
+	/**
+	 * Sets the value of the
+	 * '{@link ttc2023.kmehr2fhir.trace.ModelObject#getEPackageURI <em>EPackage
+	 * URI</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>EPackage URI</em>' attribute.
+	 * @see #getEPackageURI()
+	 * @generated
+	 */
+	void setEPackageURI(String value);
+
 	/**
 	 * Returns the value of the '<em><b>EClass Name</b></em>' attribute. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
