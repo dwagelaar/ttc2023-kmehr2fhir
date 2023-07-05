@@ -87,6 +87,8 @@ public class Transformation {
 	private void generateTrace(Resource rInput, TransformationTrace transformationTrace, Resource rOutput) {
 		Trace trace = TraceFactory.eINSTANCE.createTrace();
 		traceResource.getContents().add(trace);
+		trace.setSourceModelUri(rInput.getURI().toString());
+		trace.setTargetModelUri(rOutput.getURI().toString());
 
 		Map<String, TransformationRule> nameToRule = new HashMap<>();
 		Map<EObject, ttc2023.kmehr2fhir.trace.Transformation> targetToTX = new IdentityHashMap<>();
@@ -132,7 +134,7 @@ public class Transformation {
 	private boolean trimTargets(TargetObject node) {
 		return trimTree(node,
 			(n) -> n.getChildren().iterator(),
-			(n) -> n.getRule() == null
+			(n) -> n.getTransformation() == null
 		);
 	}
 
@@ -145,12 +147,13 @@ public class Transformation {
 	private void addTargetToTrace(EObject eob, EList<TargetObject> targetList,
 			Map<EObject, ttc2023.kmehr2fhir.trace.Transformation> targetToTX) {
 		TargetObject target = TraceFactory.eINSTANCE.createTargetObject();
-		target.setTarget(eob);
+		target.setEClassName(eob.eClass().getName());
+		target.setUriFragment(eob.eResource().getURIFragment(eob));
 		targetList.add(target);
 
-		var modelRule = targetToTX.remove(eob);
-		if (modelRule != null) {
-			target.setRule(modelRule);
+		var modelTX = targetToTX.remove(eob);
+		if (modelTX != null) {
+			target.setTransformation(modelTX);
 		}
 
 		for (EObject child : eob.eContents()) {
@@ -163,7 +166,8 @@ public class Transformation {
 			Trace trace, Map<String, TransformationRule> nameToRule,
 			Map<EObject, ttc2023.kmehr2fhir.trace.Transformation> targetToTX) {
 		SourceObject src = TraceFactory.eINSTANCE.createSourceObject();
-		src.setSource(eob);
+		src.setEClassName(eob.eClass().getName());
+		src.setUriFragment(eob.eResource().getURIFragment(eob));
 		targetList.add(src);
 
 		for (var etlTX : transformationTrace.getTransformations(eob)) {

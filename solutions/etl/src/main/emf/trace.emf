@@ -3,6 +3,10 @@ package trace;
 
 class Trace {
 	val TransformationRule[*] rules;
+
+    attr String sourceModelUri;
+    attr String targetModelUri;
+
     val SourceObject[*] sources;
     val TargetObject[*] targets;
 }
@@ -16,19 +20,20 @@ class TransformationRule {
 
 class Transformation {
 	ref TransformationRule#transformations rule;
-	ref TargetObject[*]#rule targets;
+	ref TargetObject[*]#transformation targets;
 }
 
-class SourceObject {
-	val SourceObject[*] children;
+abstract class ModelObject {
+    attr String eClassName;
+    attr String uriFragment;
+} 
 
-	ref EObject source;
+class SourceObject extends ModelObject {
+	val SourceObject[*] children;
     val Transformation[*] transformations;
 }
 
-class TargetObject {
+class TargetObject extends ModelObject {
     val TargetObject[*] children;
-
-	ref EObject target;
-	ref Transformation#targets rule;
+	ref Transformation#targets transformation;
 }

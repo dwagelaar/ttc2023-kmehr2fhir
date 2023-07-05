@@ -6,6 +6,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 
+import ttc2023.kmehr2fhir.trace.ModelObject;
 import ttc2023.kmehr2fhir.trace.SourceObject;
 import ttc2023.kmehr2fhir.trace.TargetObject;
 import ttc2023.kmehr2fhir.trace.Trace;
@@ -89,9 +90,18 @@ public class TraceSwitch<T> extends Switch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
+		case TracePackage.MODEL_OBJECT: {
+			ModelObject modelObject = (ModelObject) theEObject;
+			T result = caseModelObject(modelObject);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
 		case TracePackage.SOURCE_OBJECT: {
 			SourceObject sourceObject = (SourceObject) theEObject;
 			T result = caseSourceObject(sourceObject);
+			if (result == null)
+				result = caseModelObject(sourceObject);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -99,6 +109,8 @@ public class TraceSwitch<T> extends Switch<T> {
 		case TracePackage.TARGET_OBJECT: {
 			TargetObject targetObject = (TargetObject) theEObject;
 			T result = caseTargetObject(targetObject);
+			if (result == null)
+				result = caseModelObject(targetObject);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -152,6 +164,21 @@ public class TraceSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseTransformation(Transformation object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model
+	 * Object</em>'. <!-- begin-user-doc --> This implementation returns null;
+	 * returning a non-null result will terminate the switch. <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model
+	 *         Object</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseModelObject(ModelObject object) {
 		return null;
 	}
 

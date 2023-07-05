@@ -5,6 +5,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Trace">
     <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
         eType="#//TransformationRule" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceModelUri" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetModelUri" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="sources" upperBound="-1"
         eType="#//SourceObject" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="targets" upperBound="-1"
@@ -21,20 +23,22 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="rule" eType="#//TransformationRule"
         eOpposite="#//TransformationRule/transformations"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="targets" upperBound="-1"
-        eType="#//TargetObject" eOpposite="#//TargetObject/rule"/>
+        eType="#//TargetObject" eOpposite="#//TargetObject/transformation"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SourceObject">
+  <eClassifiers xsi:type="ecore:EClass" name="ModelObject" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="eClassName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uriFragment" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SourceObject" eSuperTypes="#//ModelObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
         eType="#//SourceObject" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="transformations" upperBound="-1"
         eType="#//Transformation" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TargetObject">
+  <eClassifiers xsi:type="ecore:EClass" name="TargetObject" eSuperTypes="#//ModelObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
         eType="#//TargetObject" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="rule" eType="#//Transformation"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transformation" eType="#//Transformation"
         eOpposite="#//Transformation/targets"/>
   </eClassifiers>
 </ecore:EPackage>

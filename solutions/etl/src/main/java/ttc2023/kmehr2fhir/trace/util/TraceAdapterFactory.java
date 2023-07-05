@@ -7,6 +7,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 
+import ttc2023.kmehr2fhir.trace.ModelObject;
 import ttc2023.kmehr2fhir.trace.SourceObject;
 import ttc2023.kmehr2fhir.trace.TargetObject;
 import ttc2023.kmehr2fhir.trace.Trace;
@@ -85,6 +86,11 @@ public class TraceAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
+		public Adapter caseModelObject(ModelObject object) {
+			return createModelObjectAdapter();
+		}
+
+		@Override
 		public Adapter caseSourceObject(SourceObject object) {
 			return createSourceObjectAdapter();
 		}
@@ -155,6 +161,21 @@ public class TraceAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTransformationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link ttc2023.kmehr2fhir.trace.ModelObject <em>Model Object</em>}'. <!--
+	 * begin-user-doc --> This default implementation returns null so that we can
+	 * easily ignore cases; it's useful to ignore a case when inheritance will catch
+	 * all the cases anyway. <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see ttc2023.kmehr2fhir.trace.ModelObject
+	 * @generated
+	 */
+	public Adapter createModelObjectAdapter() {
 		return null;
 	}
 

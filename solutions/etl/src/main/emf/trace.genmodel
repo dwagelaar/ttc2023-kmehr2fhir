@@ -10,6 +10,8 @@
       generateExampleClass="false" ecorePackage="trace.ecore#/">
     <genClasses ecoreClass="trace.ecore#//Trace">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference trace.ecore#//Trace/rules"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute trace.ecore#//Trace/sourceModelUri"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute trace.ecore#//Trace/targetModelUri"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference trace.ecore#//Trace/sources"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference trace.ecore#//Trace/targets"/>
     </genClasses>
@@ -23,15 +25,17 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference trace.ecore#//Transformation/rule"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference trace.ecore#//Transformation/targets"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="trace.ecore#//ModelObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute trace.ecore#//ModelObject/eClassName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute trace.ecore#//ModelObject/uriFragment"/>
+    </genClasses>
     <genClasses ecoreClass="trace.ecore#//SourceObject">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference trace.ecore#//SourceObject/children"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference trace.ecore#//SourceObject/source"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference trace.ecore#//SourceObject/transformations"/>
     </genClasses>
     <genClasses ecoreClass="trace.ecore#//TargetObject">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference trace.ecore#//TargetObject/children"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference trace.ecore#//TargetObject/target"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference trace.ecore#//TargetObject/rule"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference trace.ecore#//TargetObject/transformation"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

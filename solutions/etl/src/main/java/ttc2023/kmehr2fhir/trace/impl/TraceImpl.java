@@ -4,10 +4,12 @@ package ttc2023.kmehr2fhir.trace.impl;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -27,6 +29,10 @@ import ttc2023.kmehr2fhir.trace.TransformationRule;
  * <ul>
  * <li>{@link ttc2023.kmehr2fhir.trace.impl.TraceImpl#getRules
  * <em>Rules</em>}</li>
+ * <li>{@link ttc2023.kmehr2fhir.trace.impl.TraceImpl#getSourceModelUri
+ * <em>Source Model Uri</em>}</li>
+ * <li>{@link ttc2023.kmehr2fhir.trace.impl.TraceImpl#getTargetModelUri
+ * <em>Target Model Uri</em>}</li>
  * <li>{@link ttc2023.kmehr2fhir.trace.impl.TraceImpl#getSources
  * <em>Sources</em>}</li>
  * <li>{@link ttc2023.kmehr2fhir.trace.impl.TraceImpl#getTargets
@@ -45,6 +51,46 @@ public class TraceImpl extends MinimalEObjectImpl.Container implements Trace {
 	 * @ordered
 	 */
 	protected EList<TransformationRule> rules;
+
+	/**
+	 * The default value of the '{@link #getSourceModelUri() <em>Source Model
+	 * Uri</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @see #getSourceModelUri()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String SOURCE_MODEL_URI_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getSourceModelUri() <em>Source Model
+	 * Uri</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @see #getSourceModelUri()
+	 * @generated
+	 * @ordered
+	 */
+	protected String sourceModelUri = SOURCE_MODEL_URI_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getTargetModelUri() <em>Target Model
+	 * Uri</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @see #getTargetModelUri()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String TARGET_MODEL_URI_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getTargetModelUri() <em>Target Model
+	 * Uri</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @see #getTargetModelUri()
+	 * @generated
+	 * @ordered
+	 */
+	protected String targetModelUri = TARGET_MODEL_URI_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getSources() <em>Sources</em>}' containment
@@ -105,6 +151,54 @@ public class TraceImpl extends MinimalEObjectImpl.Container implements Trace {
 	 * @generated
 	 */
 	@Override
+	public String getSourceModelUri() {
+		return sourceModelUri;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setSourceModelUri(String newSourceModelUri) {
+		String oldSourceModelUri = sourceModelUri;
+		sourceModelUri = newSourceModelUri;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TracePackage.TRACE__SOURCE_MODEL_URI,
+					oldSourceModelUri, sourceModelUri));
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public String getTargetModelUri() {
+		return targetModelUri;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setTargetModelUri(String newTargetModelUri) {
+		String oldTargetModelUri = targetModelUri;
+		targetModelUri = newTargetModelUri;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TracePackage.TRACE__TARGET_MODEL_URI,
+					oldTargetModelUri, targetModelUri));
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EList<SourceObject> getSources() {
 		if (sources == null) {
 			sources = new EObjectContainmentEList<>(SourceObject.class, this, TracePackage.TRACE__SOURCES);
@@ -153,6 +247,10 @@ public class TraceImpl extends MinimalEObjectImpl.Container implements Trace {
 		switch (featureID) {
 		case TracePackage.TRACE__RULES:
 			return getRules();
+		case TracePackage.TRACE__SOURCE_MODEL_URI:
+			return getSourceModelUri();
+		case TracePackage.TRACE__TARGET_MODEL_URI:
+			return getTargetModelUri();
 		case TracePackage.TRACE__SOURCES:
 			return getSources();
 		case TracePackage.TRACE__TARGETS:
@@ -173,6 +271,12 @@ public class TraceImpl extends MinimalEObjectImpl.Container implements Trace {
 		case TracePackage.TRACE__RULES:
 			getRules().clear();
 			getRules().addAll((Collection<? extends TransformationRule>) newValue);
+			return;
+		case TracePackage.TRACE__SOURCE_MODEL_URI:
+			setSourceModelUri((String) newValue);
+			return;
+		case TracePackage.TRACE__TARGET_MODEL_URI:
+			setTargetModelUri((String) newValue);
 			return;
 		case TracePackage.TRACE__SOURCES:
 			getSources().clear();
@@ -197,6 +301,12 @@ public class TraceImpl extends MinimalEObjectImpl.Container implements Trace {
 		case TracePackage.TRACE__RULES:
 			getRules().clear();
 			return;
+		case TracePackage.TRACE__SOURCE_MODEL_URI:
+			setSourceModelUri(SOURCE_MODEL_URI_EDEFAULT);
+			return;
+		case TracePackage.TRACE__TARGET_MODEL_URI:
+			setTargetModelUri(TARGET_MODEL_URI_EDEFAULT);
+			return;
 		case TracePackage.TRACE__SOURCES:
 			getSources().clear();
 			return;
@@ -217,12 +327,37 @@ public class TraceImpl extends MinimalEObjectImpl.Container implements Trace {
 		switch (featureID) {
 		case TracePackage.TRACE__RULES:
 			return rules != null && !rules.isEmpty();
+		case TracePackage.TRACE__SOURCE_MODEL_URI:
+			return SOURCE_MODEL_URI_EDEFAULT == null ? sourceModelUri != null
+					: !SOURCE_MODEL_URI_EDEFAULT.equals(sourceModelUri);
+		case TracePackage.TRACE__TARGET_MODEL_URI:
+			return TARGET_MODEL_URI_EDEFAULT == null ? targetModelUri != null
+					: !TARGET_MODEL_URI_EDEFAULT.equals(targetModelUri);
 		case TracePackage.TRACE__SOURCES:
 			return sources != null && !sources.isEmpty();
 		case TracePackage.TRACE__TARGETS:
 			return targets != null && !targets.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy())
+			return super.toString();
+
+		StringBuilder result = new StringBuilder(super.toString());
+		result.append(" (sourceModelUri: ");
+		result.append(sourceModelUri);
+		result.append(", targetModelUri: ");
+		result.append(targetModelUri);
+		result.append(')');
+		return result.toString();
 	}
 
 } // TraceImpl

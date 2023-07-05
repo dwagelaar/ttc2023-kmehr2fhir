@@ -4,14 +4,10 @@ package ttc2023.kmehr2fhir.trace.impl;
 
 import java.util.Collection;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -28,15 +24,13 @@ import ttc2023.kmehr2fhir.trace.Transformation;
  * <ul>
  * <li>{@link ttc2023.kmehr2fhir.trace.impl.SourceObjectImpl#getChildren
  * <em>Children</em>}</li>
- * <li>{@link ttc2023.kmehr2fhir.trace.impl.SourceObjectImpl#getSource
- * <em>Source</em>}</li>
  * <li>{@link ttc2023.kmehr2fhir.trace.impl.SourceObjectImpl#getTransformations
  * <em>Transformations</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class SourceObjectImpl extends MinimalEObjectImpl.Container implements SourceObject {
+public class SourceObjectImpl extends ModelObjectImpl implements SourceObject {
 	/**
 	 * The cached value of the '{@link #getChildren() <em>Children</em>}'
 	 * containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -46,16 +40,6 @@ public class SourceObjectImpl extends MinimalEObjectImpl.Container implements So
 	 * @ordered
 	 */
 	protected EList<SourceObject> children;
-
-	/**
-	 * The cached value of the '{@link #getSource() <em>Source</em>}' reference.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
-	 * @see #getSource()
-	 * @generated
-	 * @ordered
-	 */
-	protected EObject source;
 
 	/**
 	 * The cached value of the '{@link #getTransformations()
@@ -107,48 +91,6 @@ public class SourceObjectImpl extends MinimalEObjectImpl.Container implements So
 	 * @generated
 	 */
 	@Override
-	public EObject getSource() {
-		if (source != null && source.eIsProxy()) {
-			InternalEObject oldSource = (InternalEObject) source;
-			source = eResolveProxy(oldSource);
-			if (source != oldSource) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TracePackage.SOURCE_OBJECT__SOURCE,
-							oldSource, source));
-			}
-		}
-		return source;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	public EObject basicGetSource() {
-		return source;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public void setSource(EObject newSource) {
-		EObject oldSource = source;
-		source = newSource;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TracePackage.SOURCE_OBJECT__SOURCE, oldSource,
-					source));
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
 	public EList<Transformation> getTransformations() {
 		if (transformations == null) {
 			transformations = new EObjectContainmentEList<>(Transformation.class, this,
@@ -183,10 +125,6 @@ public class SourceObjectImpl extends MinimalEObjectImpl.Container implements So
 		switch (featureID) {
 		case TracePackage.SOURCE_OBJECT__CHILDREN:
 			return getChildren();
-		case TracePackage.SOURCE_OBJECT__SOURCE:
-			if (resolve)
-				return getSource();
-			return basicGetSource();
 		case TracePackage.SOURCE_OBJECT__TRANSFORMATIONS:
 			return getTransformations();
 		}
@@ -205,9 +143,6 @@ public class SourceObjectImpl extends MinimalEObjectImpl.Container implements So
 		case TracePackage.SOURCE_OBJECT__CHILDREN:
 			getChildren().clear();
 			getChildren().addAll((Collection<? extends SourceObject>) newValue);
-			return;
-		case TracePackage.SOURCE_OBJECT__SOURCE:
-			setSource((EObject) newValue);
 			return;
 		case TracePackage.SOURCE_OBJECT__TRANSFORMATIONS:
 			getTransformations().clear();
@@ -228,9 +163,6 @@ public class SourceObjectImpl extends MinimalEObjectImpl.Container implements So
 		case TracePackage.SOURCE_OBJECT__CHILDREN:
 			getChildren().clear();
 			return;
-		case TracePackage.SOURCE_OBJECT__SOURCE:
-			setSource((EObject) null);
-			return;
 		case TracePackage.SOURCE_OBJECT__TRANSFORMATIONS:
 			getTransformations().clear();
 			return;
@@ -248,8 +180,6 @@ public class SourceObjectImpl extends MinimalEObjectImpl.Container implements So
 		switch (featureID) {
 		case TracePackage.SOURCE_OBJECT__CHILDREN:
 			return children != null && !children.isEmpty();
-		case TracePackage.SOURCE_OBJECT__SOURCE:
-			return source != null;
 		case TracePackage.SOURCE_OBJECT__TRANSFORMATIONS:
 			return transformations != null && !transformations.isEmpty();
 		}

@@ -14,6 +14,10 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  * <li>{@link ttc2023.kmehr2fhir.trace.Trace#getRules <em>Rules</em>}</li>
+ * <li>{@link ttc2023.kmehr2fhir.trace.Trace#getSourceModelUri <em>Source Model
+ * Uri</em>}</li>
+ * <li>{@link ttc2023.kmehr2fhir.trace.Trace#getTargetModelUri <em>Target Model
+ * Uri</em>}</li>
  * <li>{@link ttc2023.kmehr2fhir.trace.Trace#getSources <em>Sources</em>}</li>
  * <li>{@link ttc2023.kmehr2fhir.trace.Trace#getTargets <em>Targets</em>}</li>
  * </ul>
@@ -35,6 +39,52 @@ public interface Trace extends EObject {
 	 * @generated
 	 */
 	EList<TransformationRule> getRules();
+
+	/**
+	 * Returns the value of the '<em><b>Source Model Uri</b></em>' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Source Model Uri</em>' attribute.
+	 * @see #setSourceModelUri(String)
+	 * @see ttc2023.kmehr2fhir.trace.TracePackage#getTrace_SourceModelUri()
+	 * @model
+	 * @generated
+	 */
+	String getSourceModelUri();
+
+	/**
+	 * Sets the value of the
+	 * '{@link ttc2023.kmehr2fhir.trace.Trace#getSourceModelUri <em>Source Model
+	 * Uri</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Source Model Uri</em>' attribute.
+	 * @see #getSourceModelUri()
+	 * @generated
+	 */
+	void setSourceModelUri(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Target Model Uri</b></em>' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Target Model Uri</em>' attribute.
+	 * @see #setTargetModelUri(String)
+	 * @see ttc2023.kmehr2fhir.trace.TracePackage#getTrace_TargetModelUri()
+	 * @model
+	 * @generated
+	 */
+	String getTargetModelUri();
+
+	/**
+	 * Sets the value of the
+	 * '{@link ttc2023.kmehr2fhir.trace.Trace#getTargetModelUri <em>Target Model
+	 * Uri</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Target Model Uri</em>' attribute.
+	 * @see #getTargetModelUri()
+	 * @generated
+	 */
+	void setTargetModelUri(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Sources</b></em>' containment reference

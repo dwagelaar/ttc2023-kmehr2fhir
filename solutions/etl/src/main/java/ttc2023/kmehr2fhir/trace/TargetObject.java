@@ -3,7 +3,6 @@
 package ttc2023.kmehr2fhir.trace;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Target
@@ -15,16 +14,15 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  * <li>{@link ttc2023.kmehr2fhir.trace.TargetObject#getChildren
  * <em>Children</em>}</li>
- * <li>{@link ttc2023.kmehr2fhir.trace.TargetObject#getTarget
- * <em>Target</em>}</li>
- * <li>{@link ttc2023.kmehr2fhir.trace.TargetObject#getRule <em>Rule</em>}</li>
+ * <li>{@link ttc2023.kmehr2fhir.trace.TargetObject#getTransformation
+ * <em>Transformation</em>}</li>
  * </ul>
  *
  * @see ttc2023.kmehr2fhir.trace.TracePackage#getTargetObject()
  * @model
  * @generated
  */
-public interface TargetObject extends EObject {
+public interface TargetObject extends ModelObject {
 	/**
 	 * Returns the value of the '<em><b>Children</b></em>' containment reference
 	 * list. The list contents are of type
@@ -39,50 +37,30 @@ public interface TargetObject extends EObject {
 	EList<TargetObject> getChildren();
 
 	/**
-	 * Returns the value of the '<em><b>Target</b></em>' reference. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
-	 *
-	 * @return the value of the '<em>Target</em>' reference.
-	 * @see #setTarget(EObject)
-	 * @see ttc2023.kmehr2fhir.trace.TracePackage#getTargetObject_Target()
-	 * @model
-	 * @generated
-	 */
-	EObject getTarget();
-
-	/**
-	 * Sets the value of the '{@link ttc2023.kmehr2fhir.trace.TargetObject#getTarget
-	 * <em>Target</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
-	 * @param value the new value of the '<em>Target</em>' reference.
-	 * @see #getTarget()
-	 * @generated
-	 */
-	void setTarget(EObject value);
-
-	/**
-	 * Returns the value of the '<em><b>Rule</b></em>' reference. It is
+	 * Returns the value of the '<em><b>Transformation</b></em>' reference. It is
 	 * bidirectional and its opposite is
 	 * '{@link ttc2023.kmehr2fhir.trace.Transformation#getTargets
 	 * <em>Targets</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
-	 * @return the value of the '<em>Rule</em>' reference.
-	 * @see #setRule(Transformation)
-	 * @see ttc2023.kmehr2fhir.trace.TracePackage#getTargetObject_Rule()
+	 * @return the value of the '<em>Transformation</em>' reference.
+	 * @see #setTransformation(Transformation)
+	 * @see ttc2023.kmehr2fhir.trace.TracePackage#getTargetObject_Transformation()
 	 * @see ttc2023.kmehr2fhir.trace.Transformation#getTargets
 	 * @model opposite="targets"
 	 * @generated
 	 */
-	Transformation getRule();
+	Transformation getTransformation();
 
 	/**
-	 * Sets the value of the '{@link ttc2023.kmehr2fhir.trace.TargetObject#getRule
-	 * <em>Rule</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * Sets the value of the
+	 * '{@link ttc2023.kmehr2fhir.trace.TargetObject#getTransformation
+	 * <em>Transformation</em>}' reference. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 *
-	 * @param value the new value of the '<em>Rule</em>' reference.
-	 * @see #getRule()
+	 * @param value the new value of the '<em>Transformation</em>' reference.
+	 * @see #getTransformation()
 	 * @generated
 	 */
-	void setRule(Transformation value);
+	void setTransformation(Transformation value);
 
 } // TargetObject

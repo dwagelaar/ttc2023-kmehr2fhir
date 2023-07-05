@@ -73,13 +73,31 @@ public interface TracePackage extends EPackage {
 	int TRACE__RULES = 0;
 
 	/**
+	 * The feature id for the '<em><b>Source Model Uri</b></em>' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TRACE__SOURCE_MODEL_URI = 1;
+
+	/**
+	 * The feature id for the '<em><b>Target Model Uri</b></em>' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TRACE__TARGET_MODEL_URI = 2;
+
+	/**
 	 * The feature id for the '<em><b>Sources</b></em>' containment reference list.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered
 	 */
-	int TRACE__SOURCES = 1;
+	int TRACE__SOURCES = 3;
 
 	/**
 	 * The feature id for the '<em><b>Targets</b></em>' containment reference list.
@@ -88,7 +106,7 @@ public interface TracePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRACE__TARGETS = 2;
+	int TRACE__TARGETS = 4;
 
 	/**
 	 * The number of structural features of the '<em>Trace</em>' class. <!--
@@ -97,7 +115,7 @@ public interface TracePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRACE_FEATURE_COUNT = 3;
+	int TRACE_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>Trace</em>' class. <!-- begin-user-doc
@@ -224,6 +242,53 @@ public interface TracePackage extends EPackage {
 
 	/**
 	 * The meta object id for the
+	 * '{@link ttc2023.kmehr2fhir.trace.impl.ModelObjectImpl <em>Model Object</em>}'
+	 * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @see ttc2023.kmehr2fhir.trace.impl.ModelObjectImpl
+	 * @see ttc2023.kmehr2fhir.trace.impl.TracePackageImpl#getModelObject()
+	 * @generated
+	 */
+	int MODEL_OBJECT = 3;
+
+	/**
+	 * The feature id for the '<em><b>EClass Name</b></em>' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_OBJECT__ECLASS_NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Uri Fragment</b></em>' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_OBJECT__URI_FRAGMENT = 1;
+
+	/**
+	 * The number of structural features of the '<em>Model Object</em>' class. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_OBJECT_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Model Object</em>' class. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_OBJECT_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the
 	 * '{@link ttc2023.kmehr2fhir.trace.impl.SourceObjectImpl <em>Source
 	 * Object</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
@@ -231,7 +296,25 @@ public interface TracePackage extends EPackage {
 	 * @see ttc2023.kmehr2fhir.trace.impl.TracePackageImpl#getSourceObject()
 	 * @generated
 	 */
-	int SOURCE_OBJECT = 3;
+	int SOURCE_OBJECT = 4;
+
+	/**
+	 * The feature id for the '<em><b>EClass Name</b></em>' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int SOURCE_OBJECT__ECLASS_NAME = MODEL_OBJECT__ECLASS_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Uri Fragment</b></em>' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int SOURCE_OBJECT__URI_FRAGMENT = MODEL_OBJECT__URI_FRAGMENT;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -240,16 +323,7 @@ public interface TracePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_OBJECT__CHILDREN = 0;
-
-	/**
-	 * The feature id for the '<em><b>Source</b></em>' reference. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-	int SOURCE_OBJECT__SOURCE = 1;
+	int SOURCE_OBJECT__CHILDREN = MODEL_OBJECT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Transformations</b></em>' containment
@@ -258,7 +332,7 @@ public interface TracePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_OBJECT__TRANSFORMATIONS = 2;
+	int SOURCE_OBJECT__TRANSFORMATIONS = MODEL_OBJECT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Source Object</em>' class. <!--
@@ -267,7 +341,7 @@ public interface TracePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_OBJECT_FEATURE_COUNT = 3;
+	int SOURCE_OBJECT_FEATURE_COUNT = MODEL_OBJECT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Source Object</em>' class. <!--
@@ -276,7 +350,7 @@ public interface TracePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_OBJECT_OPERATION_COUNT = 0;
+	int SOURCE_OBJECT_OPERATION_COUNT = MODEL_OBJECT_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the
@@ -287,7 +361,25 @@ public interface TracePackage extends EPackage {
 	 * @see ttc2023.kmehr2fhir.trace.impl.TracePackageImpl#getTargetObject()
 	 * @generated
 	 */
-	int TARGET_OBJECT = 4;
+	int TARGET_OBJECT = 5;
+
+	/**
+	 * The feature id for the '<em><b>EClass Name</b></em>' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TARGET_OBJECT__ECLASS_NAME = MODEL_OBJECT__ECLASS_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Uri Fragment</b></em>' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TARGET_OBJECT__URI_FRAGMENT = MODEL_OBJECT__URI_FRAGMENT;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -296,25 +388,16 @@ public interface TracePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TARGET_OBJECT__CHILDREN = 0;
+	int TARGET_OBJECT__CHILDREN = MODEL_OBJECT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Target</b></em>' reference. <!--
+	 * The feature id for the '<em><b>Transformation</b></em>' reference. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered
 	 */
-	int TARGET_OBJECT__TARGET = 1;
-
-	/**
-	 * The feature id for the '<em><b>Rule</b></em>' reference. <!-- begin-user-doc
-	 * --> <!-- end-user-doc -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-	int TARGET_OBJECT__RULE = 2;
+	int TARGET_OBJECT__TRANSFORMATION = MODEL_OBJECT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Target Object</em>' class. <!--
@@ -323,7 +406,7 @@ public interface TracePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TARGET_OBJECT_FEATURE_COUNT = 3;
+	int TARGET_OBJECT_FEATURE_COUNT = MODEL_OBJECT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Target Object</em>' class. <!--
@@ -332,7 +415,7 @@ public interface TracePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TARGET_OBJECT_OPERATION_COUNT = 0;
+	int TARGET_OBJECT_OPERATION_COUNT = MODEL_OBJECT_OPERATION_COUNT + 0;
 
 	/**
 	 * Returns the meta object for class '{@link ttc2023.kmehr2fhir.trace.Trace
@@ -355,6 +438,30 @@ public interface TracePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTrace_Rules();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link ttc2023.kmehr2fhir.trace.Trace#getSourceModelUri <em>Source Model
+	 * Uri</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Source Model Uri</em>'.
+	 * @see ttc2023.kmehr2fhir.trace.Trace#getSourceModelUri()
+	 * @see #getTrace()
+	 * @generated
+	 */
+	EAttribute getTrace_SourceModelUri();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link ttc2023.kmehr2fhir.trace.Trace#getTargetModelUri <em>Target Model
+	 * Uri</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Target Model Uri</em>'.
+	 * @see ttc2023.kmehr2fhir.trace.Trace#getTargetModelUri()
+	 * @see #getTrace()
+	 * @generated
+	 */
+	EAttribute getTrace_TargetModelUri();
 
 	/**
 	 * Returns the meta object for the containment reference list
@@ -478,6 +585,41 @@ public interface TracePackage extends EPackage {
 
 	/**
 	 * Returns the meta object for class
+	 * '{@link ttc2023.kmehr2fhir.trace.ModelObject <em>Model Object</em>}'. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Model Object</em>'.
+	 * @see ttc2023.kmehr2fhir.trace.ModelObject
+	 * @generated
+	 */
+	EClass getModelObject();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link ttc2023.kmehr2fhir.trace.ModelObject#getEClassName <em>EClass
+	 * Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>EClass Name</em>'.
+	 * @see ttc2023.kmehr2fhir.trace.ModelObject#getEClassName()
+	 * @see #getModelObject()
+	 * @generated
+	 */
+	EAttribute getModelObject_EClassName();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link ttc2023.kmehr2fhir.trace.ModelObject#getUriFragment <em>Uri
+	 * Fragment</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Uri Fragment</em>'.
+	 * @see ttc2023.kmehr2fhir.trace.ModelObject#getUriFragment()
+	 * @see #getModelObject()
+	 * @generated
+	 */
+	EAttribute getModelObject_UriFragment();
+
+	/**
+	 * Returns the meta object for class
 	 * '{@link ttc2023.kmehr2fhir.trace.SourceObject <em>Source Object</em>}'. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 *
@@ -499,18 +641,6 @@ public interface TracePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getSourceObject_Children();
-
-	/**
-	 * Returns the meta object for the reference
-	 * '{@link ttc2023.kmehr2fhir.trace.SourceObject#getSource <em>Source</em>}'.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
-	 * @return the meta object for the reference '<em>Source</em>'.
-	 * @see ttc2023.kmehr2fhir.trace.SourceObject#getSource()
-	 * @see #getSourceObject()
-	 * @generated
-	 */
-	EReference getSourceObject_Source();
 
 	/**
 	 * Returns the meta object for the containment reference list
@@ -551,27 +681,15 @@ public interface TracePackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the reference
-	 * '{@link ttc2023.kmehr2fhir.trace.TargetObject#getTarget <em>Target</em>}'.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * '{@link ttc2023.kmehr2fhir.trace.TargetObject#getTransformation
+	 * <em>Transformation</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
-	 * @return the meta object for the reference '<em>Target</em>'.
-	 * @see ttc2023.kmehr2fhir.trace.TargetObject#getTarget()
+	 * @return the meta object for the reference '<em>Transformation</em>'.
+	 * @see ttc2023.kmehr2fhir.trace.TargetObject#getTransformation()
 	 * @see #getTargetObject()
 	 * @generated
 	 */
-	EReference getTargetObject_Target();
-
-	/**
-	 * Returns the meta object for the reference
-	 * '{@link ttc2023.kmehr2fhir.trace.TargetObject#getRule <em>Rule</em>}'. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
-	 *
-	 * @return the meta object for the reference '<em>Rule</em>'.
-	 * @see ttc2023.kmehr2fhir.trace.TargetObject#getRule()
-	 * @see #getTargetObject()
-	 * @generated
-	 */
-	EReference getTargetObject_Rule();
+	EReference getTargetObject_Transformation();
 
 	/**
 	 * Returns the factory that creates the instances of the model. <!--
@@ -614,6 +732,22 @@ public interface TracePackage extends EPackage {
 		 * @generated
 		 */
 		EReference TRACE__RULES = eINSTANCE.getTrace_Rules();
+
+		/**
+		 * The meta object literal for the '<em><b>Source Model Uri</b></em>' attribute
+		 * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute TRACE__SOURCE_MODEL_URI = eINSTANCE.getTrace_SourceModelUri();
+
+		/**
+		 * The meta object literal for the '<em><b>Target Model Uri</b></em>' attribute
+		 * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute TRACE__TARGET_MODEL_URI = eINSTANCE.getTrace_TargetModelUri();
 
 		/**
 		 * The meta object literal for the '<em><b>Sources</b></em>' containment
@@ -705,6 +839,33 @@ public interface TracePackage extends EPackage {
 
 		/**
 		 * The meta object literal for the
+		 * '{@link ttc2023.kmehr2fhir.trace.impl.ModelObjectImpl <em>Model Object</em>}'
+		 * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+		 *
+		 * @see ttc2023.kmehr2fhir.trace.impl.ModelObjectImpl
+		 * @see ttc2023.kmehr2fhir.trace.impl.TracePackageImpl#getModelObject()
+		 * @generated
+		 */
+		EClass MODEL_OBJECT = eINSTANCE.getModelObject();
+
+		/**
+		 * The meta object literal for the '<em><b>EClass Name</b></em>' attribute
+		 * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute MODEL_OBJECT__ECLASS_NAME = eINSTANCE.getModelObject_EClassName();
+
+		/**
+		 * The meta object literal for the '<em><b>Uri Fragment</b></em>' attribute
+		 * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute MODEL_OBJECT__URI_FRAGMENT = eINSTANCE.getModelObject_UriFragment();
+
+		/**
+		 * The meta object literal for the
 		 * '{@link ttc2023.kmehr2fhir.trace.impl.SourceObjectImpl <em>Source
 		 * Object</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
 		 *
@@ -721,14 +882,6 @@ public interface TracePackage extends EPackage {
 		 * @generated
 		 */
 		EReference SOURCE_OBJECT__CHILDREN = eINSTANCE.getSourceObject_Children();
-
-		/**
-		 * The meta object literal for the '<em><b>Source</b></em>' reference feature.
-		 * <!-- begin-user-doc --> <!-- end-user-doc -->
-		 *
-		 * @generated
-		 */
-		EReference SOURCE_OBJECT__SOURCE = eINSTANCE.getSourceObject_Source();
 
 		/**
 		 * The meta object literal for the '<em><b>Transformations</b></em>' containment
@@ -758,20 +911,12 @@ public interface TracePackage extends EPackage {
 		EReference TARGET_OBJECT__CHILDREN = eINSTANCE.getTargetObject_Children();
 
 		/**
-		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
-		 * <!-- begin-user-doc --> <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>Transformation</b></em>' reference
+		 * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
 		 *
 		 * @generated
 		 */
-		EReference TARGET_OBJECT__TARGET = eINSTANCE.getTargetObject_Target();
-
-		/**
-		 * The meta object literal for the '<em><b>Rule</b></em>' reference feature.
-		 * <!-- begin-user-doc --> <!-- end-user-doc -->
-		 *
-		 * @generated
-		 */
-		EReference TARGET_OBJECT__RULE = eINSTANCE.getTargetObject_Rule();
+		EReference TARGET_OBJECT__TRANSFORMATION = eINSTANCE.getTargetObject_Transformation();
 
 	}
 

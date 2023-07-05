@@ -8,6 +8,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import ttc2023.kmehr2fhir.trace.ModelObject;
 import ttc2023.kmehr2fhir.trace.SourceObject;
 import ttc2023.kmehr2fhir.trace.TargetObject;
 import ttc2023.kmehr2fhir.trace.Trace;
@@ -43,6 +44,13 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * @generated
 	 */
 	private EClass transformationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass modelObjectEClass = null;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -151,8 +159,28 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * @generated
 	 */
 	@Override
+	public EAttribute getTrace_SourceModelUri() {
+		return (EAttribute) traceEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getTrace_TargetModelUri() {
+		return (EAttribute) traceEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EReference getTrace_Sources() {
-		return (EReference) traceEClass.getEStructuralFeatures().get(1);
+		return (EReference) traceEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -162,7 +190,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 */
 	@Override
 	public EReference getTrace_Targets() {
-		return (EReference) traceEClass.getEStructuralFeatures().get(2);
+		return (EReference) traceEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -251,6 +279,36 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * @generated
 	 */
 	@Override
+	public EClass getModelObject() {
+		return modelObjectEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getModelObject_EClassName() {
+		return (EAttribute) modelObjectEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getModelObject_UriFragment() {
+		return (EAttribute) modelObjectEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EClass getSourceObject() {
 		return sourceObjectEClass;
 	}
@@ -271,18 +329,8 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getSourceObject_Source() {
-		return (EReference) sourceObjectEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
 	public EReference getSourceObject_Transformations() {
-		return (EReference) sourceObjectEClass.getEStructuralFeatures().get(2);
+		return (EReference) sourceObjectEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -311,18 +359,8 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getTargetObject_Target() {
+	public EReference getTargetObject_Transformation() {
 		return (EReference) targetObjectEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public EReference getTargetObject_Rule() {
-		return (EReference) targetObjectEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -357,6 +395,8 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 		// Create classes and their features
 		traceEClass = createEClass(TRACE);
 		createEReference(traceEClass, TRACE__RULES);
+		createEAttribute(traceEClass, TRACE__SOURCE_MODEL_URI);
+		createEAttribute(traceEClass, TRACE__TARGET_MODEL_URI);
 		createEReference(traceEClass, TRACE__SOURCES);
 		createEReference(traceEClass, TRACE__TARGETS);
 
@@ -370,15 +410,17 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 		createEReference(transformationEClass, TRANSFORMATION__RULE);
 		createEReference(transformationEClass, TRANSFORMATION__TARGETS);
 
+		modelObjectEClass = createEClass(MODEL_OBJECT);
+		createEAttribute(modelObjectEClass, MODEL_OBJECT__ECLASS_NAME);
+		createEAttribute(modelObjectEClass, MODEL_OBJECT__URI_FRAGMENT);
+
 		sourceObjectEClass = createEClass(SOURCE_OBJECT);
 		createEReference(sourceObjectEClass, SOURCE_OBJECT__CHILDREN);
-		createEReference(sourceObjectEClass, SOURCE_OBJECT__SOURCE);
 		createEReference(sourceObjectEClass, SOURCE_OBJECT__TRANSFORMATIONS);
 
 		targetObjectEClass = createEClass(TARGET_OBJECT);
 		createEReference(targetObjectEClass, TARGET_OBJECT__CHILDREN);
-		createEReference(targetObjectEClass, TARGET_OBJECT__TARGET);
-		createEReference(targetObjectEClass, TARGET_OBJECT__RULE);
+		createEReference(targetObjectEClass, TARGET_OBJECT__TRANSFORMATION);
 	}
 
 	/**
@@ -410,12 +452,18 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		sourceObjectEClass.getESuperTypes().add(this.getModelObject());
+		targetObjectEClass.getESuperTypes().add(this.getModelObject());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(traceEClass, Trace.class, "Trace", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTrace_Rules(), this.getTransformationRule(), null, "rules", null, 0, -1, Trace.class,
 				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
 				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTrace_SourceModelUri(), ecorePackage.getEString(), "sourceModelUri", null, 0, 1, Trace.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTrace_TargetModelUri(), ecorePackage.getEString(), "targetModelUri", null, 0, 1, Trace.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTrace_Sources(), this.getSourceObject(), null, "sources", null, 0, -1, Trace.class,
 				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
 				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -444,17 +492,23 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 				this.getTransformationRule_Transformations(), "rule", null, 0, 1, Transformation.class, !IS_TRANSIENT,
 				!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
 				IS_ORDERED);
-		initEReference(getTransformation_Targets(), this.getTargetObject(), this.getTargetObject_Rule(), "targets",
-				null, 0, -1, Transformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+		initEReference(getTransformation_Targets(), this.getTargetObject(), this.getTargetObject_Transformation(),
+				"targets", null, 0, -1, Transformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
 				IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(modelObjectEClass, ModelObject.class, "ModelObject", IS_ABSTRACT, !IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getModelObject_EClassName(), ecorePackage.getEString(), "eClassName", null, 0, 1,
+				ModelObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+				!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelObject_UriFragment(), ecorePackage.getEString(), "uriFragment", null, 0, 1,
+				ModelObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+				!IS_DERIVED, IS_ORDERED);
 
 		initEClass(sourceObjectEClass, SourceObject.class, "SourceObject", !IS_ABSTRACT, !IS_INTERFACE,
 				IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSourceObject_Children(), this.getSourceObject(), null, "children", null, 0, -1,
 				SourceObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getSourceObject_Source(), ecorePackage.getEObject(), null, "source", null, 0, 1,
-				SourceObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
 				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSourceObject_Transformations(), this.getTransformation(), null, "transformations", null, 0,
 				-1, SourceObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
@@ -465,12 +519,9 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 		initEReference(getTargetObject_Children(), this.getTargetObject(), null, "children", null, 0, -1,
 				TargetObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTargetObject_Target(), ecorePackage.getEObject(), null, "target", null, 0, 1,
-				TargetObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTargetObject_Rule(), this.getTransformation(), this.getTransformation_Targets(), "rule", null,
-				0, 1, TargetObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTargetObject_Transformation(), this.getTransformation(), this.getTransformation_Targets(),
+				"transformation", null, 0, 1, TargetObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+				!IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

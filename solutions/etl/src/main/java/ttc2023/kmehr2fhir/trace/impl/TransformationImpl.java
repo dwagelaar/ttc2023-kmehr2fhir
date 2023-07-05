@@ -152,7 +152,7 @@ public class TransformationImpl extends MinimalEObjectImpl.Container implements 
 	public EList<TargetObject> getTargets() {
 		if (targets == null) {
 			targets = new EObjectWithInverseResolvingEList<>(TargetObject.class, this,
-					TracePackage.TRANSFORMATION__TARGETS, TracePackage.TARGET_OBJECT__RULE);
+					TracePackage.TRANSFORMATION__TARGETS, TracePackage.TARGET_OBJECT__TRANSFORMATION);
 		}
 		return targets;
 	}
