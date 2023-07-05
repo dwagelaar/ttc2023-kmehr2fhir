@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -16,7 +17,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.hl7.emf.fhir.FhirPackage;
 import org.hl7.emf.fhir.util.FhirResourceFactoryImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.io.TempDir;
@@ -82,13 +82,17 @@ public class TransformationTest {
 		new Transformation(fKmehr, rFhir).run();
 		rFhir.save(null);
 
+		final File fExpectedFhir = new File("src/test/resources/" + fKmehr.getName().replace(".kmehr", ".fhir"));
+		assertEquivalentFhirModels(fExpectedFhir, fFhir);
+	}
+
+	private void assertEquivalentFhirModels(final File fExpectedFhir, final File fFhir) throws IOException {
 		// create a configured DiffRowGenerator
 		DiffRowGenerator generator = DiffRowGenerator.create()
 				.showInlineDiffs(false)
 				.build();
 
 		// compute the differences for two test texts.
-		final File fExpectedFhir = new File("src/test/resources/" + fKmehr.getName().replace(".kmehr", ".fhir"));
 		List<DiffRow> rows = generator.generateDiffRows(
 				Files.readAllLines(fExpectedFhir.toPath()),
 				Files.readAllLines(fFhir.toPath()));
