@@ -11,8 +11,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.hl7.emf.fhir.FhirPackage;
 import org.hl7.emf.fhir.util.FhirResourceFactoryImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.io.TempDir;
@@ -64,14 +68,19 @@ public class TransformationTest {
 	@MethodSource("inputFilesWithoutFHIRTests")
 	public void onlyRun(File fKmehr, @TempDir File tmpDir) throws Exception {
 		final File fFhir = new File(tmpDir, "output.fhir");
-		new Transformation(fKmehr, fFhir).run();
+		final ResourceSet rsFhir = new ResourceSetImpl();
+		Resource rFhir = rsFhir.createResource(URI.createFileURI(fFhir.getCanonicalPath()));
+		new Transformation(fKmehr, rFhir).run();
 	}
 
 	@ParameterizedTest
 	@MethodSource("inputFilesWithFHIRTests")
 	public void runAndCompare(File fKmehr, @TempDir File tmpDir) throws Exception {
 		final File fFhir = new File(tmpDir, "output.fhir");
-		new Transformation(fKmehr, fFhir).run();
+		final ResourceSet rsFhir = new ResourceSetImpl();
+		Resource rFhir = rsFhir.createResource(URI.createFileURI(fFhir.getCanonicalPath()));
+		new Transformation(fKmehr, rFhir).run();
+		rFhir.save(null);
 
 		// create a configured DiffRowGenerator
 		DiffRowGenerator generator = DiffRowGenerator.create()
