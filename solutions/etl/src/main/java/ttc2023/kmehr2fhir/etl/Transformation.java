@@ -178,7 +178,7 @@ public class Transformation {
 			var modelRule = nameToRule.computeIfAbsent(etlRule.getName(), (name) -> {
 				var newRule = TraceFactory.eINSTANCE.createTransformationRule();
 				newRule.setName(name);
-				newRule.setLocation(etlRule.getUri().toString());
+				newRule.setLocation(etlRule.getUri().toString() + "@" + etlRule.getRegion());
 				try {
 					newRule.setLazy(etlRule.isLazy(null));
 				} catch (EolRuntimeException e) {
