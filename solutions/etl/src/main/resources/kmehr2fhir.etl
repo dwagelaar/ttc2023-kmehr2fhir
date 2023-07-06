@@ -148,29 +148,27 @@ rule Folder
 
   var inputElements = Sequence { s.`transaction`, s.patient };
 
+  inputElements.addAll(s.`transaction`.collect(tr | tr.txAuthor()));
+
   inputElements.addAll(s.`transaction`
-    .collect(tr | tr.item.collect(i | i.hcpartyContent())).flatten());
+    .collect(tr | tr.item.collect(i | i.hcpartyContent())));
 
   inputElements.addAll(s.`transaction`
       .collect(tr | tr.item.select(i | i.isMedication())
-          .collect(i | Sequence { i.posology, i }))
-      .flatten());
+          .collect(i | Sequence { i.posology, i })));
 
   inputElements.addAll(s.`transaction`
-    .collect(tr | tr.item.select(i | i.isAllergy() or i.isIntolerance()))
-    .flatten());
+    .collect(tr | tr.item.select(i | i.isAllergy() or i.isIntolerance())));
   inputElements.addAll(s.`transaction`
-    .collect(tr | tr.item.select(i | i.isActiveProblem()))
-    .flatten());
+    .collect(tr | tr.item.select(i | i.isActiveProblem())));
   inputElements.addAll(s.`transaction`
-    .collect(tr | tr.item.select(i | i.isVaccine()))
-    .flatten());
+    .collect(tr | tr.item.select(i | i.isVaccine())));
   inputElements.addAll(s.`transaction`
-    .collect(tr | tr.item.select(i | i.isInactiveProblem()))
-    .flatten());
+    .collect(tr | tr.item.select(i | i.isInactiveProblem())));
 
   t.entry.addAll(inputElements
-    .collect(i | i.equivalents()).flatten()
+    .flatten()
+    .collect(i | i.equivalents('CompositionBundleEntry', 'PatientBundleEntry', 'OrganizationBundleEntry', 'PractitionerBundleEntry', 'MedicationBundleEntry', 'PosologyBundleEntry', 'AllergyIntoleranceBundleEntry', 'ConditionBundleEntry', 'ImmunizationBundleEntry')).flatten()
     .select(e | e.isKindOf(FHIR!BundleEntry)));
 }
 
@@ -330,7 +328,8 @@ rule Organization
   transform s: KMEHR!HcpartyType
   to t: FHIR!Organization, oid: FHIR!Id, nihii: FHIR!Identifier, riziv: FHIR!Reference
 {
-  guard: s.isOrganization()
+  // Extended upon original ATL guard to avoid stray root objects in target trace
+  guard: s.isOrganization() and s.closure(e|e.eContainer).none(e|e.isKindOf(KMEHR!HeaderType))
 
   t.id = oid;
   t.identifier = Sequence { nihii };
@@ -349,6 +348,9 @@ rule Practitioner
   transform s: KMEHR!HcpartyType
   to t: FHIR!Practitioner, pid: FHIR!Id, nihii: FHIR!Identifier, riziv: FHIR!Reference, humanName: FHIR!HumanName
 {
+  // Extended upon original ATL guard to avoid stray root objects in target trace
+  guard: s.isPractitioner() and s.closure(e|e.eContainer).none(e|e.isKindOf(KMEHR!HeaderType))
+
   t.id = pid;
   t.identifier = Sequence { nihii };
   t.active = FhirBoolean(true);
@@ -809,6 +811,7 @@ rule BundleEntry
   fullUrl.value = 'urn:uuid:' + s.uuid();
 }
 
+@lazy
 rule CompositionBundleEntry
   transform s: KMEHR!TransactionType
   to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
@@ -818,6 +821,7 @@ rule CompositionBundleEntry
   rc.composition ::= s;
 }
 
+@lazy
 rule PatientBundleEntry
   transform s: KMEHR!PersonType
   to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
@@ -826,6 +830,7 @@ rule PatientBundleEntry
   rc.patient = s.equivalents('Patient').selectFirst(e|e.isKindOf(FHIR!Patient));
 }
 
+@lazy
 rule OrganizationBundleEntry
   transform s: KMEHR!HcpartyType
   to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
@@ -835,6 +840,7 @@ rule OrganizationBundleEntry
   rc.organization = s.equivalents().selectFirst(e|e.isKindOf(FHIR!Organization));
 }
 
+@lazy
 rule PractitionerBundleEntry
   transform s: KMEHR!HcpartyType
   to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
@@ -845,6 +851,7 @@ rule PractitionerBundleEntry
   rc.practitioner = s.equivalents().selectFirst(e|e.isKindOf(FHIR!Practitioner));
 }
 
+@lazy
 rule MedicationBundleEntry
   transform s: KMEHR!ItemType
   to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
@@ -854,6 +861,7 @@ rule MedicationBundleEntry
   rc.medication = s.equivalents().selectFirst(e|e.isKindOf(FHIR!Medication));
 }
 
+@lazy
 rule PosologyBundleEntry
   transform s: KMEHR!PosologyType
   to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
@@ -862,6 +870,7 @@ rule PosologyBundleEntry
   rc.medicationStatement = s.equivalents().selectFirst(e|e.isKindOf(FHIR!MedicationStatement));
 }
 
+@lazy
 rule AllergyIntoleranceBundleEntry
   transform s: KMEHR!ItemType
   to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
@@ -871,6 +880,7 @@ rule AllergyIntoleranceBundleEntry
   rc.allergyIntolerance = s.equivalents().selectFirst(e|e.isKindOf(FHIR!AllergyIntolerance));
 }
 
+@lazy
 rule ConditionBundleEntry
   transform s: KMEHR!ItemType
   to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer
@@ -880,6 +890,7 @@ rule ConditionBundleEntry
   rc.condition = s.equivalents().selectFirst(e|e.isKindOf(FHIR!Condition));
 }
 
+@lazy
 rule ImmunizationBundleEntry
   transform s: KMEHR!ItemType
   to be: FHIR!BundleEntry, fullUrl: FHIR!Uri, rc: FHIR!ResourceContainer

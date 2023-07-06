@@ -93,7 +93,7 @@ public class TransformationTest {
 		rFhir.save(null);
 		rTrace.save(null);
 
-		final File fExpectedFhir = new File("src/test/resources/" + fKmehr.getName().replace(".kmehr", ".fhir"));
+		final File fExpectedFhir = new File(fKmehr.getPath().replace(".kmehr", ".fhir"));
 		assertEquivalentFhirModels(fExpectedFhir, fFhir);
 	}
 
