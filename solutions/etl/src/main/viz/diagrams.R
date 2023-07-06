@@ -27,7 +27,7 @@ execution_times <- (
 memory_usages <- (
   data %>% filter(MetricName=='Memory used (b)')
   %>% group_by(PhaseName, Tool, ModelSize)
-  %>% summarise(average_mbs=mean(MetricValue)/(2**20))
+  %>% summarise(average_mbs=mean(MetricValue)/2**20)
 )
 
 for (phase in phases) {
@@ -46,7 +46,7 @@ for (phase in phases) {
   ggsave(paste0(basedir, '/runtime-', phase, '.pdf'))
   
   (ggplot(data=mem_usage, aes(x=ModelSize, y=average_mbs, color=Tool))
-    + geom_line() + geom_label(aes(label=format(average_mbs, digits=2)), fill='white')
+    + geom_line() + geom_label(aes(label=format(average_mbs, digits=4)), fill='white')
     + labs(x="Model size", y='Memory usage (MiB)')
     + scale_x_log10(expand=c(0.1, 0.1))
     + scale_y_log10()
