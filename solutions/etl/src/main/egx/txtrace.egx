@@ -28,7 +28,7 @@ rule SourceObject2Graphviz
     },
     "focus" = sob,
     "source" = sob,
-    "trace" = Trace.all.first
+    "trace" = trace::Trace.all.first
   }
 }
 
@@ -43,6 +43,6 @@ rule TargetObject2Graphviz
     "format" = "graphviz-circo",
     "focus" = tob,
     "target" = tob,
-    "trace" = Trace.all.first
+    "trace" = trace::Trace.all.first
   }
 }
