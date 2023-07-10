@@ -180,10 +180,6 @@ helper context KMEHR!CDDAYPERIOD def : toEventTiming : FHIR!EventTimingEnum =
 		thisModule.dayPeriodMap.get(self.value)
 	endif;
 
---- Returns the message sender or OclUndefined.
-helper context OclAny def : msgSender : KMEHR!HcpartyType =
-	OclUndefined;
-
 --- Returns the transaction author or OclUndefined.
 helper context KMEHR!TransactionType def : txAuthor : KMEHR!HcpartyType =
 	self.author.txAuthor;
@@ -214,6 +210,15 @@ helper context KMEHR!HcpartyType def : isPractitioner : Boolean =
 --- Returns 'true' if self represents an practitioner.
 helper context KMEHR!CDHCPARTY def : isPractitioner : Boolean =
 	not self.value.oclIsUndefined() and self.value.startsWith('pers');
+
+--- Returns 'true' if self is contained in the KMEHR Header.
+helper context OclAny def : isHeaderContent : Boolean =
+	not self.oclIsUndefined() and
+	(
+		let container : OclAny = self.refImmediateComposite() in
+		container.oclIsKindOf(KMEHR!HeaderType) or
+		container.isHeaderContent
+	);
 
 helper context KMEHR!AddressType def : addressLine : String =
 	Sequence{self.street, self.housenumber, self.postboxnumber}

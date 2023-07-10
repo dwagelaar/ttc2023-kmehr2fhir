@@ -1,0 +1,2894 @@
+-- @atlcompiler emftvm
+-- @nsURI KMEHR=http://www.ehealth.fgov.be/standards/kmehr/schema/v1
+-- @nsURI FHIR=http://hl7.org/fhir
+-- @lib libKMEHRtoFHIR=/kmehr-to-fhir/transformations/libKMEHRtoFHIR.atl
+module KMEHRtoFHIR;
+create OUT : FHIR from IN : KMEHR;
+
+-- known typing issue with date/time types
+uses libKMEHRtoFHIR;
+
+--helper context KMEHR!FolderType def: transaction : KMEHR!TransactionType =
+--	self.transaction->any(s |
+--		s.cd->exists(cd |
+--			cd.value = 'sumehr'
+--		)
+--	);
+helper context KMEHR!TransactionType -- @type kmehr!TransactionType
+def: tfolder : KMEHR!FolderType -- @type kmehr!FolderType
+=
+	self -- @type kmehr!TransactionType
+	.refImmediateComposite() -- @type OclType
+	.oclAsType(KMEHR!FolderType -- @type kmehr!FolderType
+	) -- @type kmehr!FolderType
+	;
+
+helper context KMEHR!TransactionType -- @type kmehr!TransactionType
+def: gmdmanager : KMEHR!ItemType -- @type kmehr!ItemType
+=
+	self -- @type kmehr!TransactionType
+	.item -- @type Collection(kmehr!ItemType)
+	->any(i |
+		i -- @type kmehr!ItemType
+		.cd -- @type Collection(cd!CDITEM)
+		->exists(cd |
+			cd -- @type cd!CDITEM
+			.value -- @type String
+			--147
+			= 'gmdmanager' -- @type String
+			-- @type Boolean
+			
+		) -- @type Boolean
+		
+	) -- @type kmehr!ItemType
+	;
+
+helper context KMEHR!PersonType -- @type kmehr!PersonType
+def: pfolder : KMEHR!FolderType -- @type kmehr!FolderType
+=
+	let parent : INFER!TYPE -- @type OclType
+	= self -- @type kmehr!PersonType
+	.refImmediateComposite() -- @type OclType
+	in
+	if parent -- @type OclType
+	.oclIsKindOf(KMEHR!FolderType -- @type kmehr!FolderType
+	) -- @type Boolean
+	then
+		parent -- @type OclType
+		.oclAsType(KMEHR!FolderType -- @type kmehr!FolderType
+		) -- @type kmehr!FolderType
+		
+	else
+		OclUndefined -- @type OclType
+		
+	endif -- @type kmehr!FolderType
+	-- @type kmehr!FolderType
+	;
+
+helper context KMEHR!ContentType -- @type kmehr!ContentType
+def: cparentItem : KMEHR!ItemType -- @type kmehr!ItemType
+=
+	let parent : INFER!TYPE -- @type OclType
+	= self -- @type kmehr!ContentType
+	.refImmediateComposite() -- @type OclType
+	in
+	if parent -- @type OclType
+	.oclIsKindOf(KMEHR!ItemType -- @type kmehr!ItemType
+	) -- @type Boolean
+	then
+		parent -- @type OclType
+		.oclAsType(KMEHR!ItemType -- @type kmehr!ItemType
+		) -- @type kmehr!ItemType
+		
+	else
+		OclUndefined -- @type OclType
+		
+	endif -- @type kmehr!ItemType
+	-- @type kmehr!ItemType
+	;
+
+helper context KMEHR!PersonType -- @type kmehr!PersonType
+def: parentContent : KMEHR!ContentType -- @type kmehr!ContentType
+=
+	let parent : INFER!TYPE -- @type OclType
+	= self -- @type kmehr!PersonType
+	.refImmediateComposite() -- @type OclType
+	in
+	if parent -- @type OclType
+	.oclIsKindOf(KMEHR!ContentType -- @type kmehr!ContentType
+	) -- @type Boolean
+	then
+		parent -- @type OclType
+		.oclAsType(KMEHR!ContentType -- @type kmehr!ContentType
+		) -- @type kmehr!ContentType
+		
+	else
+		OclUndefined -- @type OclType
+		
+	endif -- @type kmehr!ContentType
+	-- @type kmehr!ContentType
+	;
+
+helper context KMEHR!PosologyType -- @type kmehr!PosologyType
+def: parentItem : KMEHR!ItemType -- @type kmehr!ItemType
+=
+	let parent : INFER!TYPE -- @type OclType
+	= self -- @type kmehr!PosologyType
+	.refImmediateComposite() -- @type OclType
+	in
+	if parent -- @type OclType
+	.oclIsKindOf(KMEHR!ItemType -- @type kmehr!ItemType
+	) -- @type Boolean
+	then
+		parent -- @type OclType
+		.oclAsType(KMEHR!ItemType -- @type kmehr!ItemType
+		) -- @type kmehr!ItemType
+		
+	else
+		OclUndefined -- @type OclType
+		
+	endif -- @type kmehr!ItemType
+	-- @type kmehr!ItemType
+	;
+
+helper context KMEHR!ItemType -- @type kmehr!ItemType
+def: parentTransaction : KMEHR!TransactionType -- @type kmehr!TransactionType
+=
+	let parent : INFER!TYPE -- @type OclType
+	= self -- @type kmehr!ItemType
+	.refImmediateComposite() -- @type OclType
+	in
+	if parent -- @type OclType
+	.oclIsKindOf(KMEHR!TransactionType -- @type kmehr!TransactionType
+	) -- @type Boolean
+	then
+		parent -- @type OclType
+		.oclAsType(KMEHR!TransactionType -- @type kmehr!TransactionType
+		) -- @type kmehr!TransactionType
+		
+	else
+		OclUndefined -- @type OclType
+		
+	endif -- @type kmehr!TransactionType
+	-- @type kmehr!TransactionType
+	;
+
+helper context KMEHR!TransactionType -- @type kmehr!TransactionType
+def: parentFolder : KMEHR!FolderType -- @type kmehr!FolderType
+=
+	let parent : INFER!TYPE -- @type OclType
+	= self -- @type kmehr!TransactionType
+	.refImmediateComposite() -- @type OclType
+	in
+	if parent -- @type OclType
+	.oclIsKindOf(KMEHR!FolderType -- @type kmehr!FolderType
+	) -- @type Boolean
+	then
+		parent -- @type OclType
+		.oclAsType(KMEHR!FolderType -- @type kmehr!FolderType
+		) -- @type kmehr!FolderType
+		
+	else
+		OclUndefined -- @type OclType
+		
+	endif -- @type kmehr!FolderType
+	-- @type kmehr!FolderType
+	;
+
+unique lazy rule PatientContactRelationship {
+	from
+		s : KMEHR!CDITEM -- @type cd!CDITEM
+		
+	to
+		t : FHIR!CodeableConcept -- @type fhir!CodeableConcept
+		 (
+			coding <- coding -- @type fhir!Coding
+			
+		),
+		coding : FHIR!Coding -- @type fhir!Coding
+		 (
+			system <- roleCode -- @type fhir!Uri
+			,
+			code <- code -- @type fhir!Code
+			
+		),
+		roleCode : FHIR!Uri -- @type fhir!Uri
+		 (
+			value <- 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' -- @type String
+			
+		),
+		code : FHIR!Code -- @type fhir!Code
+		 (
+			value <- thisModule.relationshipMap -- @type Map(String,String)
+			.get(s -- @type cd!CDITEM
+			.value -- @type String
+			--85
+			) -- @type String
+			
+		)
+}
+
+unique lazy rule AdministrativeGender {
+	from
+		s : KMEHR!SexType -- @type kmehr!SexType
+		(
+			not s -- @type kmehr!SexType
+			.cd -- @type cd!CDSEX
+			.oclIsUndefined() -- @type Boolean
+			-- @type Boolean
+			and not s -- @type kmehr!SexType
+			.cd -- @type cd!CDSEX
+			.value132 -- @type OclType
+			.oclIsUndefined() -- @type Boolean
+			-- @type Boolean
+			-- @type Boolean
+			
+		)
+	to
+		t : FHIR!AdministrativeGender -- @type fhir!AdministrativeGender
+		 (
+			-- known typing issue: s.cd.value is an enum, but genderMap is a Map(String, String)
+			-- AdministrativeGender
+			value <- thisModule.genderMap -- @type Map(String,String)
+			.get(s -- @type kmehr!SexType
+			.cd -- @type cd!CDSEX
+			.value132 -- @type OclType
+			.oclAsType(String -- @type OclType
+			) -- @type String
+			-- for typing, considering ATOL represents enum literals as Strings
+			) -- @type String
+			-- inlined toGender helper
+			-- inlined toGender helper
+			
+		)
+}
+
+unique lazy abstract rule CompositionSection {
+	from
+		s : KMEHR!TransactionType -- @type kmehr!TransactionType
+		
+	to
+		t : FHIR!CompositionSection -- @type fhir!CompositionSection
+		 (
+			code <- cc -- @type fhir!CodeableConcept
+			
+		),
+		cc : FHIR!CodeableConcept -- @type fhir!CodeableConcept
+		 (
+			coding <- coding -- @type fhir!Coding
+			
+		),
+		coding : FHIR!Coding -- @type fhir!Coding
+		 (
+			system <- loinc -- @type fhir!Uri
+			,
+			code <- code -- @type fhir!Code
+			
+		),
+		loinc : FHIR!Uri -- @type fhir!Uri
+		 (
+			value <- 'http://loinc.org' -- @type String
+			
+		),
+		code : FHIR!Code -- @type fhir!Code
+		
+}
+
+unique lazy rule MedicationSection extends CompositionSection {
+	from
+		s : KMEHR!TransactionType -- @type kmehr!TransactionType
+		
+	to
+		t : FHIR!CompositionSection -- @type fhir!CompositionSection
+		 (
+			title <- thisModule._FhirString('Medication' -- @type String
+			) -- @couldNotType
+			,
+			entry <- s -- @type kmehr!TransactionType
+			.item -- @type Collection(kmehr!ItemType)
+			->select(i |
+				i -- @type kmehr!ItemType
+				.isMedication -- @type Boolean
+				
+			) -- @type Collection(kmehr!ItemType)
+			->collect(i |
+				thisModule.CompositionSectionEntry(i -- @type kmehr!ItemType
+				) -- @type TupleType(t : fhir!Reference)
+				.t -- @type fhir!Reference
+				
+			) -- @type Collection(fhir!Reference)
+			
+		),
+		coding : FHIR!Coding -- @type fhir!Coding
+		 (
+			display <- thisModule._FhirString('History of Medication use Narrative' -- @type String
+			) -- @couldNotType
+			
+		),
+		code : FHIR!Code -- @type fhir!Code
+		 (
+			value <- '10160-0' -- @type String
+			
+		)
+}
+
+unique lazy rule AllergyIntoleranceSection extends CompositionSection {
+	from
+		s : KMEHR!TransactionType -- @type kmehr!TransactionType
+		
+	to
+		t : FHIR!CompositionSection -- @type fhir!CompositionSection
+		 (
+			title <- thisModule._FhirString('Allergies and Intolerances' -- @type String
+			) -- @couldNotType
+			,
+			entry <- s -- @type kmehr!TransactionType
+			.item -- @type Collection(kmehr!ItemType)
+			->select(i |
+				i -- @type kmehr!ItemType
+				.isAllergy -- @type Boolean
+				or i -- @type kmehr!ItemType
+				.isIntolerance -- @type Boolean
+				-- @type Boolean
+				
+			) -- @type Collection(kmehr!ItemType)
+			->collect(i |
+				thisModule.CompositionSectionEntry(i -- @type kmehr!ItemType
+				) -- @type TupleType(t : fhir!Reference)
+				.t -- @type fhir!Reference
+				
+			) -- @type Collection(fhir!Reference)
+			
+		),
+		coding : FHIR!Coding -- @type fhir!Coding
+		 (
+			display <- thisModule._FhirString('Allergies and adverse reactions Document' -- @type String
+			) -- @couldNotType
+			
+		),
+		code : FHIR!Code -- @type fhir!Code
+		 (
+			value <- '48765-2' -- @type String
+			
+		)
+}
+
+unique lazy rule ActiveProblemSection extends CompositionSection {
+	from
+		s : KMEHR!TransactionType -- @type kmehr!TransactionType
+		
+	to
+		t : FHIR!CompositionSection -- @type fhir!CompositionSection
+		 (
+			title <- thisModule._FhirString('Active Problems' -- @type String
+			) -- @couldNotType
+			,
+			entry <- s -- @type kmehr!TransactionType
+			.item -- @type Collection(kmehr!ItemType)
+			->select(i |
+				i -- @type kmehr!ItemType
+				.isActiveProblem -- @type Boolean
+				
+			) -- @type Collection(kmehr!ItemType)
+			->collect(i |
+				thisModule.CompositionSectionEntry(i -- @type kmehr!ItemType
+				) -- @type TupleType(t : fhir!Reference)
+				.t -- @type fhir!Reference
+				
+			) -- @type Collection(fhir!Reference)
+			
+		),
+		coding : FHIR!Coding -- @type fhir!Coding
+		 (
+			display <- thisModule._FhirString('Problem list Reported' -- @type String
+			) -- @couldNotType
+			
+		),
+		code : FHIR!Code -- @type fhir!Code
+		 (
+			value <- '11450-4' -- @type String
+			
+		)
+}
+
+unique lazy rule ImmunizationSection extends CompositionSection {
+	from
+		s : KMEHR!TransactionType -- @type kmehr!TransactionType
+		
+	to
+		t : FHIR!CompositionSection -- @type fhir!CompositionSection
+		 (
+			title <- thisModule._FhirString('Immunizations' -- @type String
+			) -- @couldNotType
+			,
+			entry <- s -- @type kmehr!TransactionType
+			.item -- @type Collection(kmehr!ItemType)
+			->select(i |
+				i -- @type kmehr!ItemType
+				.isVaccine -- @type Boolean
+				
+			) -- @type Collection(kmehr!ItemType)
+			->collect(i |
+				thisModule.CompositionSectionEntry(i -- @type kmehr!ItemType
+				) -- @type TupleType(t : fhir!Reference)
+				.t -- @type fhir!Reference
+				
+			) -- @type Collection(fhir!Reference)
+			
+		),
+		coding : FHIR!Coding -- @type fhir!Coding
+		 (
+			display <- thisModule._FhirString('History of Immunization Narrative' -- @type String
+			) -- @couldNotType
+			
+		),
+		code : FHIR!Code -- @type fhir!Code
+		 (
+			value <- '11369-6' -- @type String
+			
+		)
+}
+
+unique lazy rule HistorySection extends CompositionSection {
+	from
+		s : KMEHR!TransactionType -- @type kmehr!TransactionType
+		
+	to
+		t : FHIR!CompositionSection -- @type fhir!CompositionSection
+		 (
+			title <- thisModule._FhirString('History of Past Illness' -- @type String
+			) -- @couldNotType
+			,
+			entry <- s -- @type kmehr!TransactionType
+			.item -- @type Collection(kmehr!ItemType)
+			->select(i |
+				i -- @type kmehr!ItemType
+				.isInactiveProblem -- @type Boolean
+				
+			) -- @type Collection(kmehr!ItemType)
+			->collect(i |
+				thisModule.CompositionSectionEntry(i -- @type kmehr!ItemType
+				) -- @type TupleType(t : fhir!Reference)
+				.t -- @type fhir!Reference
+				
+			) -- @type Collection(fhir!Reference)
+			
+		),
+		coding : FHIR!Coding -- @type fhir!Coding
+		 (
+			display <- thisModule._FhirString('Hx of Past illness' -- @type String
+			) -- @couldNotType
+			
+		),
+		code : FHIR!Code -- @type fhir!Code
+		 (
+			value <- '11348-0' -- @type String
+			
+		)
+}
+
+unique lazy rule CompositionSectionEntry {
+	from
+		s : KMEHR!ItemType -- @type kmehr!ItemType
+		
+	to
+		t : FHIR!Reference -- @type fhir!Reference
+		 (
+			reference <- thisModule.FhirString(s -- @type kmehr!ItemType
+			.refPrefix -- @type String
+			+ s -- @type kmehr!ItemType
+			.uuid -- @type String
+			-- @type String
+			) -- @couldNotType
+			
+		)
+}
+
+unique lazy rule FhirDate {
+	from
+		s : KMEHR!DateType -- @type kmehr!DateType
+		(
+			not s -- @type kmehr!DateType
+			.date -- @couldNotType
+			.oclIsUndefined() -- @type OclType
+			-- @type OclType
+			
+		)
+	to
+		t : FHIR!Date -- @type fhir!Date
+		 (
+			value <- s -- @type kmehr!DateType
+			.date -- @couldNotType
+			
+		)
+}
+
+unique lazy rule FhirDateTime {
+	from
+		s : KMEHR!MomentType -- @type kmehr!MomentType
+		(
+			not s -- @type kmehr!MomentType
+			.date -- @couldNotType
+			.oclIsUndefined() -- @type OclType
+			-- @type OclType
+			
+		)
+	to
+		t : FHIR!DateTime -- @type fhir!DateTime
+		 (
+			value <- s -- @type kmehr!MomentType
+			.date -- @couldNotType
+			
+		)
+}
+
+unique lazy rule RecordDateTime {
+	from
+		s : KMEHR!ItemType -- @type kmehr!ItemType
+		(
+			not s -- @type kmehr!ItemType
+			.recorddatetime -- @couldNotType
+			.oclIsUndefined() -- @type OclType
+			-- @type OclType
+			
+		)
+	to
+		t : FHIR!DateTime -- @type fhir!DateTime
+		 (
+			value <- s -- @type kmehr!ItemType
+			.recorddatetime -- @couldNotType
+			
+		)
+} --lazy rule FhirString {
+--	from
+--		s : String
+--	to
+--		t : FHIR!"String" (
+--			value <- s
+--		)
+--}
+--helper def: FhirString(s : String) : String = s;
+--lazy rule FhirString {
+--	from
+--		s : String
+--	to
+--		t : FHIR!"String" (
+--			value <- s
+--		)
+--}
+--helper def: FhirString(s : String) : String = s;
+lazy rule FhirBoolean {
+	from
+		s : Boolean -- @type OclType
+		
+	to
+		t : FHIR!"Boolean" -- @type fhir!Boolean
+		 (
+			value <- s -- @type Boolean
+			
+		)
+} --helper def: FhirBoolean(s : Boolean) : Boolean = s;
+--helper def: FhirBoolean(s : Boolean) : Boolean = s;
+lazy rule FhirPositiveInt {
+	from
+		s : Integer -- @type OclType
+		
+	to
+		t : FHIR!PositiveInt -- @type fhir!PositiveInt
+		 (
+			-- known typing issue: toBigInteger is native
+			value <- thisModule.toBigInteger(s -- @type Integer
+			) -- @couldNotType
+			
+		)
+}
+
+lazy rule FhirDecimal {
+	from
+		s : OclAny -- @type OclType
+		
+	to
+		t : FHIR!Decimal -- @type fhir!Decimal
+		 (
+			value <- s -- @type OclType
+			
+		)
+}
+
+unique lazy abstract rule BundleEntry {
+	from
+		s : OclAny -- @type OclType
+		
+	to
+		be : FHIR!BundleEntry -- @type fhir!BundleEntry
+		 (
+			fullUrl <- fullUrl -- @type fhir!Uri
+			,
+			resource <- rc -- @type fhir!ResourceContainer
+			
+		),
+		fullUrl : FHIR!Uri -- @type fhir!Uri
+		 (
+			value <- 'urn:uuid:' -- @type String
+			+ s -- @type OclType
+			.uuid -- @type String
+			-- @type String
+			
+		),
+		rc : FHIR!ResourceContainer -- @type fhir!ResourceContainer
+		
+}
+
+unique lazy rule CompositionBundleEntry extends BundleEntry {
+	from
+		s : KMEHR!TransactionType -- @type kmehr!TransactionType
+		(
+			s -- @type kmehr!TransactionType
+			.cd -- @type Collection(cd!CDTRANSACTION)
+			->exists(cd |
+				cd -- @type cd!CDTRANSACTION
+				.value -- @type String
+				--147
+				= 'sumehr' -- @type String
+				-- @type Boolean
+				
+			) -- @type Boolean
+			
+		)
+	to
+		be : FHIR!BundleEntry -- @type fhir!BundleEntry
+		,
+		rc : FHIR!ResourceContainer -- @type fhir!ResourceContainer
+		 (
+			composition <- -- possible rules for TransactionType: SumEHRTransaction, SumEHRTransactionWithAuthor, SumEHRTransactionWithCustodian, SumEHRTransactionWithAuthorAndCustodian
+			s -- @type kmehr!TransactionType
+			.RESOLVE.oclAsType(FHIR!Composition)
+		)
+}
+
+unique lazy rule PatientBundleEntry extends BundleEntry {
+	from
+		s : KMEHR!PersonType -- @type kmehr!PersonType
+		
+	to
+		be : FHIR!BundleEntry -- @type fhir!BundleEntry
+		,
+		rc : FHIR!ResourceContainer -- @type fhir!ResourceContainer
+		 (
+			patient <- -- possible rules for PersonType: Patient, PatientContact
+			s -- @type kmehr!PersonType
+			.RESOLVE.oclAsType(FHIR!Patient)
+		)
+}
+
+unique lazy rule OrganizationBundleEntry extends BundleEntry {
+	from
+		s : KMEHR!HcpartyType -- @type kmehr!HcpartyType
+		(
+			s -- @type kmehr!HcpartyType
+			.isOrganization -- @type Boolean
+			
+		)
+	to
+		be : FHIR!BundleEntry -- @type fhir!BundleEntry
+		,
+		rc : FHIR!ResourceContainer -- @type fhir!ResourceContainer
+		 (
+			organization <- -- possible rules for HcpartyType: Organization, Practitioner
+			s -- @type kmehr!HcpartyType
+			.RESOLVE.oclAsType(FHIR!Organization)
+		)
+}
+
+unique lazy rule PractitionerBundleEntry extends BundleEntry {
+	from
+		s : KMEHR!HcpartyType -- @type kmehr!HcpartyType
+		(
+			s -- @type kmehr!HcpartyType
+			.isPractitioner -- @type Boolean
+			
+		)
+	to
+		be : FHIR!BundleEntry -- @type fhir!BundleEntry
+		,
+		rc : FHIR!ResourceContainer -- @type fhir!ResourceContainer
+		 (
+			practitioner <- -- possible rules for HcpartyType: Organization, Practitioner
+			s -- @type kmehr!HcpartyType
+			.RESOLVE.oclAsType(FHIR!Practitioner)
+		)
+}
+
+unique lazy rule PosologyBundleEntry extends BundleEntry {
+	from
+		s : KMEHR!PosologyType -- @type kmehr!PosologyType
+		
+	to
+		be : FHIR!BundleEntry -- @type fhir!BundleEntry
+		,
+		rc : FHIR!ResourceContainer -- @type fhir!ResourceContainer
+		 (
+			medicationStatement <- -- possible rules for PosologyType: Posology, PosologyWithUnitAndTakes
+			s -- @type kmehr!PosologyType
+			.RESOLVE.oclAsType(FHIR!MedicationStatement)
+		)
+}
+
+unique lazy rule MedicationBundleEntry extends BundleEntry {
+	from
+		s : KMEHR!ItemType -- @type kmehr!ItemType
+		(
+			s -- @type kmehr!ItemType
+			.isMedication -- @type Boolean
+			
+		)
+	to
+		be : FHIR!BundleEntry -- @type fhir!BundleEntry
+		,
+		rc : FHIR!ResourceContainer -- @type fhir!ResourceContainer
+		 (
+			medication <- -- possible rules for ItemType: Medication, AllergyOrIntolerance, AllergyOrIntoleranceWithCode, Problem, ProblemWithCode, Vaccine
+			s -- @type kmehr!ItemType
+			.RESOLVE.oclAsType(FHIR!Medication)
+		)
+}
+
+unique lazy rule AllergyIntoleranceBundleEntry extends BundleEntry {
+	from
+		s : KMEHR!ItemType -- @type kmehr!ItemType
+		(
+			s -- @type kmehr!ItemType
+			.isAllergy -- @type Boolean
+			or s -- @type kmehr!ItemType
+			.isIntolerance -- @type Boolean
+			-- @type Boolean
+			
+		)
+	to
+		be : FHIR!BundleEntry -- @type fhir!BundleEntry
+		,
+		rc : FHIR!ResourceContainer -- @type fhir!ResourceContainer
+		 (
+			allergyIntolerance <- -- possible rules for ItemType: Medication, AllergyOrIntolerance, AllergyOrIntoleranceWithCode, Problem, ProblemWithCode, Vaccine
+			s -- @type kmehr!ItemType
+			.RESOLVE.oclAsType(FHIR!AllergyIntolerance)
+		)
+}
+
+unique lazy rule ConditionBundleEntry extends BundleEntry {
+	from
+		s : KMEHR!ItemType -- @type kmehr!ItemType
+		(
+			s -- @type kmehr!ItemType
+			.isActiveProblem -- @type Boolean
+			or s -- @type kmehr!ItemType
+			.isInactiveProblem -- @type Boolean
+			-- @type Boolean
+			
+		)
+	to
+		be : FHIR!BundleEntry -- @type fhir!BundleEntry
+		,
+		rc : FHIR!ResourceContainer -- @type fhir!ResourceContainer
+		 (
+			condition <- -- possible rules for ItemType: Medication, AllergyOrIntolerance, AllergyOrIntoleranceWithCode, Problem, ProblemWithCode, Vaccine
+			s -- @type kmehr!ItemType
+			.RESOLVE.oclAsType(FHIR!Condition)
+		)
+}
+
+unique lazy rule ImmunizationBundleEntry extends BundleEntry {
+	from
+		s : KMEHR!ItemType -- @type kmehr!ItemType
+		(
+			s -- @type kmehr!ItemType
+			.isVaccine -- @type Boolean
+			
+		)
+	to
+		be : FHIR!BundleEntry -- @type fhir!BundleEntry
+		,
+		rc : FHIR!ResourceContainer -- @type fhir!ResourceContainer
+		 (
+			immunization <- -- possible rules for ItemType: Medication, AllergyOrIntolerance, AllergyOrIntoleranceWithCode, Problem, ProblemWithCode, Vaccine
+			s -- @type kmehr!ItemType
+			.RESOLVE.oclAsType(FHIR!Immunization)
+		)
+}
+
+unique lazy rule CNKCode {
+	from
+		s : KMEHR!MedicinalProductType -- @type kmehr!MedicinalProductType
+		
+	to
+		t : FHIR!Coding -- @type fhir!Coding
+		 (
+			system <- cnk -- @type fhir!Uri
+			,
+			code <- code -- @type fhir!Code
+			,
+			display <- thisModule.FhirString(s -- @type kmehr!MedicinalProductType
+			.intendedname -- @type String
+			->reject(e |
+				e -- @type String
+				.oclIsUndefined() -- @type Boolean
+				
+			) -- @type Collection(String)
+			.trim() -- @type OclType
+			.replaceAll('(\t|\n| )+' -- @type String
+			, ' ' -- @type String
+			) -- @type OclType
+			) -- @couldNotType
+			-- inlined normalize()
+			-- inlined normalize()
+			
+		),
+		cnk : FHIR!Uri -- @type fhir!Uri
+		 (
+			value <- 'https://www.ehealth.fgov.be/standards/fhir/medication/NamingSystem/cnk-codes' -- @type String
+			
+		),
+		code : FHIR!Code -- @type fhir!Code
+		 (
+			value <- s -- @type kmehr!MedicinalProductType
+			.intendedCNKCode -- @type String
+			
+		)
+}
+
+unique lazy rule EventTiming {
+	from
+		s : KMEHR!DayperiodType -- @type kmehr!DayperiodType
+		
+	to
+		t : FHIR!EventTiming -- @type fhir!EventTiming
+		 (
+			-- EventTiming
+			value <- s -- @type kmehr!DayperiodType
+			.cd -- @type cd!CDDAYPERIOD
+			.toEventTiming -- @type String
+			
+		)
+}
+
+unique lazy rule CodeableConcept {
+	from
+		coding : FHIR!Coding -- @type fhir!Coding
+		
+	to
+		type : FHIR!CodeableConcept -- @type fhir!CodeableConcept
+		 (
+			coding <- coding -- @type fhir!Coding
+			
+		)
+}
+
+lazy rule Coding {
+	from
+		s : TupleType(system : String -- @type OclType
+		, code : String -- @type OclType
+		) -- @type OclType
+		
+	to
+		coding : FHIR!Coding -- @type fhir!Coding
+		 (
+			system <- cs -- @type fhir!Uri
+			,
+			code <- cd -- @type fhir!Code
+			
+		),
+		cs : FHIR!Uri -- @type fhir!Uri
+		 (
+			value <- s -- @type TupleType(system : String, code : String)
+			.system -- @type String
+			->reject(e |
+				e -- @type String
+				.oclIsUndefined() -- @type Boolean
+				
+			) -- @type Collection(String)
+			.trim() -- @type OclType
+			
+		),
+		cd : FHIR!Code -- @type fhir!Code
+		 (
+			value <- s -- @type TupleType(system : String, code : String)
+			.code -- @type String
+			->reject(e |
+				e -- @type String
+				.oclIsUndefined() -- @type Boolean
+				
+			) -- @type Collection(String)
+			.trim() -- @type OclType
+			
+		)
+}
+
+lazy rule CodingWithDisplay {
+	from
+		s : TupleType(system : String -- @type OclType
+		, code : String -- @type OclType
+		, display : String -- @type OclType
+		) -- @type OclType
+		--		system : String,
+		--		code : String,
+		--		display : String
+		--		system : String,
+		--		code : String,
+		--		display : String
+		
+	--		system : String,
+	--		code : String,
+	--		display : String
+	--		system : String,
+	--		code : String,
+	--		display : String
+	to
+		coding : FHIR!Coding -- @type fhir!Coding
+		 (
+			system <- cs -- @type fhir!Uri
+			,
+			code <- cd -- @type fhir!Code
+			,
+			display <- thisModule.FhirString(s -- @type TupleType(system : String, code : String, display : String)
+			.display -- @type String
+			->reject(e |
+				e -- @type String
+				.oclIsUndefined() -- @type Boolean
+				
+			) -- @type Collection(String)
+			.trim() -- @type OclType
+			) -- @couldNotType
+			
+		),
+		cs : FHIR!Uri -- @type fhir!Uri
+		 (
+			value <- s -- @type TupleType(system : String, code : String, display : String)
+			.system -- @type String
+			->reject(e |
+				e -- @type String
+				.oclIsUndefined() -- @type Boolean
+				
+			) -- @type Collection(String)
+			.trim() -- @type OclType
+			
+		),
+		cd : FHIR!Code -- @type fhir!Code
+		 (
+			value <- s -- @type TupleType(system : String, code : String, display : String)
+			.code -- @type String
+			->reject(e |
+				e -- @type String
+				.oclIsUndefined() -- @type Boolean
+				
+			) -- @type Collection(String)
+			.trim() -- @type OclType
+			
+		)
+}
+
+unique lazy rule CompositionIdentifier {
+	from
+		s : KMEHR!TransactionType -- @type kmehr!TransactionType
+		
+	to
+		ips : FHIR!Identifier -- @type fhir!Identifier
+		 (
+			system <- ipsUri -- @type fhir!Uri
+			,
+			value <- thisModule.FhirString(s -- @type kmehr!TransactionType
+			.uuid -- @type String
+			) -- @couldNotType
+			
+		),
+		ipsUri : FHIR!Uri -- @type fhir!Uri
+		 (
+			value <- 'urn:oid:2.16.724.4.8.10.200.10' -- @type String
+			-- International Patient Summary (IPS)
+			-- International Patient Summary (IPS)
+			
+		)
+}
+
+helper context OclAny def: RESOLVE : OclAny =
+	if if self.oclIsKindOf(KMEHR!DocumentRoot) then
+		let cp : KMEHR!DocumentRoot = self.oclAsType(KMEHR!DocumentRoot) in
+		true
+	else
+		false
+	endif then
+		thisModule.DocumentRoot(self.oclAsType(KMEHR!DocumentRoot)).t
+	else
+		if if self.oclIsKindOf(KMEHR!FolderType) then
+			let cp : KMEHR!FolderType = self.oclAsType(KMEHR!FolderType) in
+			not cp -- @type kmehr!FolderType
+			.patient -- @type kmehr!PersonType
+			.oclIsUndefined() -- @type Boolean
+			-- @type Boolean
+			
+		else
+			false
+		endif then
+			thisModule.Folder(self.oclAsType(KMEHR!FolderType)).t
+		else
+			if if self.oclIsKindOf(KMEHR!TransactionType) then
+				let cp : KMEHR!TransactionType = self.oclAsType(KMEHR!TransactionType) in
+				true
+			else
+				false
+			endif then
+				if if self.oclIsKindOf(KMEHR!TransactionType) then
+					let cp : KMEHR!TransactionType = self.oclAsType(KMEHR!TransactionType) in
+					not cp -- @type kmehr!TransactionType
+					.txAuthor -- @type kmehr!HcpartyType
+					.oclIsUndefined() -- @type Boolean
+					-- @type Boolean
+					and cp -- @type kmehr!TransactionType
+					.gmdmanager -- @type kmehr!ItemType
+					.oclIsUndefined() -- @type Boolean
+					-- @type Boolean
+					
+				else
+					false
+				endif then
+					thisModule.SumEHRTransactionWithAuthor(self.oclAsType(KMEHR!TransactionType)).t
+				else
+					if if self.oclIsKindOf(KMEHR!TransactionType) then
+						let cp : KMEHR!TransactionType = self.oclAsType(KMEHR!TransactionType) in
+						cp -- @type kmehr!TransactionType
+						.txAuthor -- @type kmehr!HcpartyType
+						.oclIsUndefined() -- @type Boolean
+						and not cp -- @type kmehr!TransactionType
+						.gmdmanager -- @type kmehr!ItemType
+						.oclIsUndefined() -- @type Boolean
+						-- @type Boolean
+						-- @type Boolean
+						
+					else
+						false
+					endif then
+						thisModule.SumEHRTransactionWithCustodian(self.oclAsType(KMEHR!TransactionType)).t
+					else
+						if if self.oclIsKindOf(KMEHR!TransactionType) then
+							let cp : KMEHR!TransactionType = self.oclAsType(KMEHR!TransactionType) in
+							not cp -- @type kmehr!TransactionType
+							.txAuthor -- @type kmehr!HcpartyType
+							.oclIsUndefined() -- @type Boolean
+							-- @type Boolean
+							and not cp -- @type kmehr!TransactionType
+							.gmdmanager -- @type kmehr!ItemType
+							.oclIsUndefined() -- @type Boolean
+							-- @type Boolean
+							-- @type Boolean
+							
+						else
+							false
+						endif then
+							thisModule.SumEHRTransactionWithAuthorAndCustodian(self.oclAsType(KMEHR!TransactionType)).t
+						else
+							thisModule.SumEHRTransaction(self.oclAsType(KMEHR!TransactionType)).t
+						endif
+					endif
+				endif
+			else
+				if if self.oclIsKindOf(KMEHR!PersonType) then
+					let cp : KMEHR!PersonType = self.oclAsType(KMEHR!PersonType) in
+					not cp -- @type kmehr!PersonType
+					.pfolder -- @type kmehr!FolderType
+					.oclIsUndefined() -- @type Boolean
+					-- @type Boolean
+					
+				else
+					false
+				endif then
+					thisModule.Patient(self.oclAsType(KMEHR!PersonType)).t
+				else
+					if if self.oclIsKindOf(KMEHR!AddressType) then
+						let cp : KMEHR!AddressType = self.oclAsType(KMEHR!AddressType) in
+						true
+					else
+						false
+					endif then
+						thisModule.Address(self.oclAsType(KMEHR!AddressType)).t
+					else
+						if if self.oclIsKindOf(KMEHR!TelecomType) then
+							let cp : KMEHR!TelecomType = self.oclAsType(KMEHR!TelecomType) in
+							true
+						else
+							false
+						endif then
+							thisModule.Telecom(self.oclAsType(KMEHR!TelecomType)).t
+						else
+							if if self.oclIsKindOf(KMEHR!PersonType) then
+								let cp : KMEHR!PersonType = self.oclAsType(KMEHR!PersonType) in
+								if cp -- @type kmehr!PersonType
+								.parentContent -- @type kmehr!ContentType
+								.oclIsUndefined() -- @type Boolean
+								then
+									false -- @type Boolean
+									
+								else
+									cp -- @type kmehr!PersonType
+									.parentContent -- @type kmehr!ContentType
+									.cparentItem -- @type kmehr!ItemType
+									.isContactPerson -- @type Boolean
+									-- TODO: check if cparentItem is defined?
+									
+								endif -- @type Boolean
+								
+							else
+								false
+							endif then
+								thisModule.PatientContact(self.oclAsType(KMEHR!PersonType)).t
+							else
+								if if self.oclIsKindOf(KMEHR!HcpartyType) then
+									let cp : KMEHR!HcpartyType = self.oclAsType(KMEHR!HcpartyType) in
+									cp -- @type kmehr!HcpartyType
+									.isOrganization -- @type Boolean
+									
+								else
+									false
+								endif then
+									thisModule.Organization(self.oclAsType(KMEHR!HcpartyType)).t
+								else
+									if if self.oclIsKindOf(KMEHR!HcpartyType) then
+										let cp : KMEHR!HcpartyType = self.oclAsType(KMEHR!HcpartyType) in
+										cp -- @type kmehr!HcpartyType
+										.isPractitioner -- @type Boolean
+										
+									else
+										false
+									endif then
+										thisModule.Practitioner(self.oclAsType(KMEHR!HcpartyType)).t
+									else
+										if if self.oclIsKindOf(KMEHR!ItemType) then
+											let cp : KMEHR!ItemType = self.oclAsType(KMEHR!ItemType) in
+											cp -- @type kmehr!ItemType
+											.isMedication -- @type Boolean
+											
+										else
+											false
+										endif then
+											thisModule.Medication(self.oclAsType(KMEHR!ItemType)).t
+										else
+											if if self.oclIsKindOf(KMEHR!PosologyType) then
+												let cp : KMEHR!PosologyType = self.oclAsType(KMEHR!PosologyType) in
+												true
+											else
+												false
+											endif then
+												if if self.oclIsKindOf(KMEHR!PosologyType) then
+													let cp : KMEHR!PosologyType = self.oclAsType(KMEHR!PosologyType) in
+													not cp -- @type kmehr!PosologyType
+													.unit -- @type kmehr!AdministrationunitType
+													.oclIsUndefined() -- @type Boolean
+													-- @type Boolean
+													and not cp -- @type kmehr!PosologyType
+													.takes -- @type kmehr!TakesType
+													.oclIsUndefined() -- @type Boolean
+													-- @type Boolean
+													-- @type Boolean
+													
+												else
+													false
+												endif then
+													thisModule.PosologyWithUnitAndTakes(self.oclAsType(KMEHR!PosologyType)).t
+												else
+													thisModule.Posology(self.oclAsType(KMEHR!PosologyType)).t
+												endif
+											else
+												if if self.oclIsKindOf(KMEHR!ItemType) then
+													let cp : KMEHR!ItemType = self.oclAsType(KMEHR!ItemType) in
+													cp -- @type kmehr!ItemType
+													.isAllergy -- @type Boolean
+													or cp -- @type kmehr!ItemType
+													.isIntolerance -- @type Boolean
+													-- @type Boolean
+													
+												else
+													false
+												endif then
+													if if self.oclIsKindOf(KMEHR!ItemType) then
+														let cp : KMEHR!ItemType = self.oclAsType(KMEHR!ItemType) in
+														cp -- @type kmehr!ItemType
+														.codedContent -- @type Collection(cd!CDCONTENT)
+														->notEmpty() -- @type Boolean
+														
+													else
+														false
+													endif then
+														thisModule.AllergyOrIntoleranceWithCode(self.oclAsType(KMEHR!ItemType)).t
+													else
+														thisModule.AllergyOrIntolerance(self.oclAsType(KMEHR!ItemType)).t
+													endif
+												else
+													if if self.oclIsKindOf(KMEHR!ItemType) then
+														let cp : KMEHR!ItemType = self.oclAsType(KMEHR!ItemType) in
+														cp -- @type kmehr!ItemType
+														.isActiveProblem -- @type Boolean
+														or cp -- @type kmehr!ItemType
+														.isInactiveProblem -- @type Boolean
+														-- @type Boolean
+														
+													else
+														false
+													endif then
+														if if self.oclIsKindOf(KMEHR!ItemType) then
+															let cp : KMEHR!ItemType = self.oclAsType(KMEHR!ItemType) in
+															cp -- @type kmehr!ItemType
+															.codedContent -- @type Collection(cd!CDCONTENT)
+															->notEmpty() -- @type Boolean
+															
+														else
+															false
+														endif then
+															thisModule.ProblemWithCode(self.oclAsType(KMEHR!ItemType)).t
+														else
+															thisModule.Problem(self.oclAsType(KMEHR!ItemType)).t
+														endif
+													else
+														if if self.oclIsKindOf(KMEHR!ItemType) then
+															let cp : KMEHR!ItemType = self.oclAsType(KMEHR!ItemType) in
+															--			tx.item->includes(s) and
+															--			f.transaction->includes(tx) and
+															--			tx.item->includes(s) and
+															--			f.transaction->includes(tx) and
+															cp -- @type kmehr!ItemType
+															.isVaccine -- @type Boolean
+															
+														else
+															false
+														endif then
+															thisModule.Vaccine(self.oclAsType(KMEHR!ItemType)).t
+														else
+															self
+														endif
+													endif
+												endif
+											endif
+										endif
+									endif
+								endif
+							endif
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif;
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule DocumentRoot {
+	from
+		s : KMEHR!DocumentRoot -- @type kmehr!DocumentRoot
+		
+	to
+		t : FHIR!DocumentRoot -- @type fhir!DocumentRoot
+		 (
+			bundle <- -- possible rules for FolderType: Folder
+			s -- @type kmehr!DocumentRoot
+			.kmehrmessage -- @type Collection(kmehr!Kmehrmessage)
+			.folder -- @type Collection(kmehr!FolderType)
+			->any(f |
+				not f -- @type kmehr!FolderType
+				.patient -- @type kmehr!PersonType
+				.oclIsUndefined() -- @type Boolean
+				-- @type Boolean
+				
+			) -- @type kmehr!FolderType
+			.RESOLVE.oclAsType(FHIR!Bundle)
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule Folder {
+	from
+		s : KMEHR!FolderType -- @type kmehr!FolderType
+		
+	to
+		t : FHIR!Bundle -- @type fhir!Bundle
+		 (
+			type <- bt -- @type fhir!BundleType
+			,
+			-- known typing issue: different types in same collection (because no support for common supertype in ATLTypeInference yet)
+			entry <- thisModule.CompositionBundleEntry(s -- @type kmehr!FolderType
+			.transaction -- @type Collection(kmehr!TransactionType)
+			) -- @type TupleType(be : fhir!BundleEntry, rc : fhir!ResourceContainer)
+			.be -- @type fhir!BundleEntry
+			--.oclAsType(OclAny)
+			-->append(s.patient)
+			->concat(thisModule.PatientBundleEntry(s -- @type kmehr!FolderType
+			.patient -- @type kmehr!PersonType
+			) -- @type TupleType(be : fhir!BundleEntry, rc : fhir!ResourceContainer)
+			.be -- @type fhir!BundleEntry
+			--.oclAsType(OclAny)
+			) -- @type Collection(fhir!BundleEntry)
+			->concat(s -- @type kmehr!FolderType
+			.transaction -- @type Collection(kmehr!TransactionType)
+			->collect(tr |
+				tr -- @type kmehr!TransactionType
+				.txAuthor -- @type kmehr!HcpartyType
+				
+			) -- @type Collection(kmehr!HcpartyType)
+			->collect(e |
+				if e -- @type kmehr!HcpartyType
+				.isOrganization -- @type Boolean
+				then
+					thisModule.OrganizationBundleEntry(e -- @type kmehr!HcpartyType
+					) -- @type TupleType(be : fhir!BundleEntry, rc : fhir!ResourceContainer)
+					.be -- @type fhir!BundleEntry
+					
+				else
+					if e -- @type kmehr!HcpartyType
+					.isPractitioner -- @type Boolean
+					then
+						thisModule.PractitionerBundleEntry(e -- @type kmehr!HcpartyType
+						) -- @type TupleType(be : fhir!BundleEntry, rc : fhir!ResourceContainer)
+						.be -- @type fhir!BundleEntry
+						
+					else
+						OclUndefined -- @type OclType
+						
+					endif -- @type fhir!BundleEntry
+					
+				endif -- @type fhir!BundleEntry
+				
+			) -- @type Collection(fhir!BundleEntry)
+			--.oclAsType(OclAny)
+			) -- @type Collection(fhir!BundleEntry)
+			->concat(s -- @type kmehr!FolderType
+			.transaction -- @type Collection(kmehr!TransactionType)
+			->collect(tr |
+				tr -- @type kmehr!TransactionType
+				.item -- @type Collection(kmehr!ItemType)
+				->collect(i |
+					i -- @type kmehr!ItemType
+					.hcpartyContent -- @type kmehr!HcpartyType
+					
+				) -- @type Collection(kmehr!HcpartyType)
+				->collect(e |
+					if e -- @type kmehr!HcpartyType
+					.isOrganization -- @type Boolean
+					then
+						thisModule.OrganizationBundleEntry(e -- @type kmehr!HcpartyType
+						) -- @type TupleType(be : fhir!BundleEntry, rc : fhir!ResourceContainer)
+						.be -- @type fhir!BundleEntry
+						
+					else
+						if e -- @type kmehr!HcpartyType
+						.isPractitioner -- @type Boolean
+						then
+							thisModule.PractitionerBundleEntry(e -- @type kmehr!HcpartyType
+							) -- @type TupleType(be : fhir!BundleEntry, rc : fhir!ResourceContainer)
+							.be -- @type fhir!BundleEntry
+							
+						else
+							OclUndefined -- @type OclType
+							
+						endif -- @type fhir!BundleEntry
+						
+					endif -- @type fhir!BundleEntry
+					
+				) -- @type Collection(fhir!BundleEntry)
+				
+			) -- @type Collection(Collection(fhir!BundleEntry))
+			--.oclAsType(OclAny)
+			) -- @type Collection(fhir!BundleEntry)
+			->concat(s -- @type kmehr!FolderType
+			.transaction -- @type Collection(kmehr!TransactionType)
+			->collect(tr |
+				tr -- @type kmehr!TransactionType
+				.item -- @type Collection(kmehr!ItemType)
+				->select(i |
+					i -- @type kmehr!ItemType
+					.isMedication -- @type Boolean
+					
+				) -- @type Collection(kmehr!ItemType)
+				->collect(i |
+					thisModule.PosologyBundleEntry(i -- @type kmehr!ItemType
+					.posology -- @type kmehr!PosologyType
+					) -- @type TupleType(be : fhir!BundleEntry, rc : fhir!ResourceContainer)
+					.be -- @type fhir!BundleEntry
+					->append(thisModule.MedicationBundleEntry(i -- @type kmehr!ItemType
+					) -- @type TupleType(be : fhir!BundleEntry, rc : fhir!ResourceContainer)
+					.be -- @type fhir!BundleEntry
+					) -- @type Collection(fhir!BundleEntry)
+					
+				) -- @type Collection(Collection(fhir!BundleEntry))
+				
+			) -- @type Collection(Collection(Collection(fhir!BundleEntry)))
+			) -- @type Collection(fhir!BundleEntry)
+			->concat(s -- @type kmehr!FolderType
+			.transaction -- @type Collection(kmehr!TransactionType)
+			->collect(tr |
+				tr -- @type kmehr!TransactionType
+				.item -- @type Collection(kmehr!ItemType)
+				->select(i |
+					i -- @type kmehr!ItemType
+					.isAllergy -- @type Boolean
+					or i -- @type kmehr!ItemType
+					.isIntolerance -- @type Boolean
+					-- @type Boolean
+					
+				) -- @type Collection(kmehr!ItemType)
+				->collect(i |
+					thisModule.AllergyIntoleranceBundleEntry(i -- @type kmehr!ItemType
+					) -- @type TupleType(be : fhir!BundleEntry, rc : fhir!ResourceContainer)
+					.be -- @type fhir!BundleEntry
+					--.oclAsType(OclAny)
+					
+				) -- @type Collection(fhir!BundleEntry)
+				
+			) -- @type Collection(Collection(fhir!BundleEntry))
+			) -- @type Collection(fhir!BundleEntry)
+			->concat(s -- @type kmehr!FolderType
+			.transaction -- @type Collection(kmehr!TransactionType)
+			->collect(tr |
+				tr -- @type kmehr!TransactionType
+				.item -- @type Collection(kmehr!ItemType)
+				->select(i |
+					i -- @type kmehr!ItemType
+					.isActiveProblem -- @type Boolean
+					
+				) -- @type Collection(kmehr!ItemType)
+				->collect(i |
+					thisModule.ConditionBundleEntry(i -- @type kmehr!ItemType
+					) -- @type TupleType(be : fhir!BundleEntry, rc : fhir!ResourceContainer)
+					.be -- @type fhir!BundleEntry
+					
+				) -- @type Collection(fhir!BundleEntry)
+				--.oclAsType(OclAny)
+				
+			) -- @type Collection(Collection(fhir!BundleEntry))
+			) -- @type Collection(fhir!BundleEntry)
+			->concat(s -- @type kmehr!FolderType
+			.transaction -- @type Collection(kmehr!TransactionType)
+			->collect(tr |
+				tr -- @type kmehr!TransactionType
+				.item -- @type Collection(kmehr!ItemType)
+				->select(i |
+					i -- @type kmehr!ItemType
+					.isVaccine -- @type Boolean
+					
+				) -- @type Collection(kmehr!ItemType)
+				->collect(i |
+					thisModule.ImmunizationBundleEntry(i -- @type kmehr!ItemType
+					) -- @type TupleType(be : fhir!BundleEntry, rc : fhir!ResourceContainer)
+					.be -- @type fhir!BundleEntry
+					
+				) -- @type Collection(fhir!BundleEntry)
+				--.oclAsType(OclAny)
+				
+			) -- @type Collection(Collection(fhir!BundleEntry))
+			) -- @type Collection(fhir!BundleEntry)
+			->concat(s -- @type kmehr!FolderType
+			.transaction -- @type Collection(kmehr!TransactionType)
+			->collect(tr |
+				tr -- @type kmehr!TransactionType
+				.item -- @type Collection(kmehr!ItemType)
+				->select(i |
+					i -- @type kmehr!ItemType
+					.isInactiveProblem -- @type Boolean
+					
+				) -- @type Collection(kmehr!ItemType)
+				->collect(i |
+					thisModule.ConditionBundleEntry(i -- @type kmehr!ItemType
+					) -- @type TupleType(be : fhir!BundleEntry, rc : fhir!ResourceContainer)
+					.be -- @type fhir!BundleEntry
+					
+				) -- @type Collection(fhir!BundleEntry)
+				--.oclAsType(OclAny)
+				
+			) -- @type Collection(Collection(fhir!BundleEntry))
+			--)->collect(e | thisModule.BundleEntry(e).be.oclAsType(OclAny)
+			) -- @type Collection(fhir!BundleEntry)
+			->reject(e |
+				e -- @type fhir!BundleEntry
+				.oclIsUndefined() -- @type Boolean
+				
+			) -- @type Collection(fhir!BundleEntry)
+			
+		),
+		bt : FHIR!BundleType -- @type fhir!BundleType
+		 (
+			--BundleType_value
+			value <- Sequence { #document -- @type OclAny
+			} -- @type Collection(OclAny)
+			
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule SumEHRTransaction {
+	from
+		--	    f : KMEHR!FolderType
+		s : KMEHR!TransactionType -- @type kmehr!TransactionType
+		--		(
+		--			f.transaction->includes(s) and
+		--			s.cd->exists(cd | cd.value = 'sumehr')
+		--		)
+		--		(
+		--			f.transaction->includes(s) and
+		--			s.cd->exists(cd | cd.value = 'sumehr')
+		--		)
+		
+	--		(
+	--			f.transaction->includes(s) and
+	--			s.cd->exists(cd | cd.value = 'sumehr')
+	--		)
+	--		(
+	--			f.transaction->includes(s) and
+	--			s.cd->exists(cd | cd.value = 'sumehr')
+	--		)
+	to
+		t : FHIR!Composition -- @type fhir!Composition
+		mapsTo s (
+			id <- cid -- @type fhir!Id
+			,
+			identifier <- thisModule.CompositionIdentifier(s -- @type kmehr!TransactionType
+			) -- @type TupleType(ips : fhir!Identifier, ipsUri : fhir!Uri)
+			.ips -- @type fhir!Identifier
+			,
+			type <- thisModule.CodeableConcept(thisModule.CodingWithDisplay(Tuple {system = 'http://loinc.org' -- @type String
+			, code = '60591-5' -- @type String
+			, display = 'Patient summary Document' -- @type String
+			} -- @type TupleType(system : String, code : String, display : String)
+			) -- @type TupleType(coding : fhir!Coding, cs : fhir!Uri, cd : fhir!Code)
+			.coding -- @type fhir!Coding
+			) -- @type TupleType(type : fhir!CodeableConcept)
+			.type -- @type fhir!CodeableConcept
+			,
+			subject <- patRef -- @type fhir!Reference
+			,
+			status <- cStatus -- @type fhir!CompositionStatus
+			,
+			date <- dateTime -- @type fhir!DateTime
+			,
+			section <- Sequence {thisModule.MedicationSection(s -- @type kmehr!TransactionType
+			) -- @type TupleType(t : fhir!CompositionSection, coding : fhir!Coding, code : fhir!Code)
+			.t -- @type fhir!CompositionSection
+			, thisModule.AllergyIntoleranceSection(s -- @type kmehr!TransactionType
+			) -- @type TupleType(t : fhir!CompositionSection, coding : fhir!Coding, code : fhir!Code)
+			.t -- @type fhir!CompositionSection
+			, thisModule.ActiveProblemSection(s -- @type kmehr!TransactionType
+			) -- @type TupleType(t : fhir!CompositionSection, coding : fhir!Coding, code : fhir!Code)
+			.t -- @type fhir!CompositionSection
+			, thisModule.ImmunizationSection(s -- @type kmehr!TransactionType
+			) -- @type TupleType(t : fhir!CompositionSection, coding : fhir!Coding, code : fhir!Code)
+			.t -- @type fhir!CompositionSection
+			, thisModule.HistorySection(s -- @type kmehr!TransactionType
+			) -- @type TupleType(t : fhir!CompositionSection, coding : fhir!Coding, code : fhir!Code)
+			.t -- @type fhir!CompositionSection
+			} -- @type Collection(fhir!CompositionSection)
+			
+		),
+		cid : FHIR!Id -- @type fhir!Id
+		 (
+			value <- s -- @type kmehr!TransactionType
+			.uuid -- @type String
+			
+		),
+		patRef : FHIR!Reference -- @type fhir!Reference
+		 (
+			reference <- thisModule.FhirString('Patient/' -- @type String
+			+ s -- @type kmehr!TransactionType
+			.tfolder -- @type kmehr!FolderType
+			.patient -- @type kmehr!PersonType
+			.uuid -- @type String
+			-- @type String
+			) -- @couldNotType
+			
+		),
+		cStatus : FHIR!CompositionStatus -- @type fhir!CompositionStatus
+		 (
+			--CompositionStatus
+			value <- if s -- @type kmehr!TransactionType
+			.iscomplete -- @type Boolean
+			then
+				if s -- @type kmehr!TransactionType
+				.isvalidated -- @type Boolean
+				then
+					#final -- @type OclAny
+					
+				else
+					#preliminary -- @type OclAny
+					
+				endif -- @type OclAny
+				
+			else
+				#partial -- @type OclAny
+				
+			endif -- @type OclAny
+			
+		),
+		dateTime : FHIR!DateTime -- @type fhir!DateTime
+		 (
+			-- known typing issue: createDateTime is native
+			--value <- thisModule.createDateTime(s.date.toXMLFormat() + 'T' + s.time.toXMLFormat())
+			value <- thisModule.createDateTime(s -- @type kmehr!TransactionType
+			.date -- @couldNotType
+			, s -- @type kmehr!TransactionType
+			.time -- @couldNotType
+			) -- @couldNotType
+			
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule SumEHRTransactionWithAuthor extends SumEHRTransaction {
+	from
+		--	    f : KMEHR!FolderType
+		s : KMEHR!TransactionType -- @type kmehr!TransactionType
+		
+	--	using {
+	--		refPrefix : String =
+	--			if s.txAuthor.isOrganization then
+	--				'Organization/'
+	--			else if s.txAuthor.isPractitioner then
+	--				'Practitioner/'
+	--			else
+	--				'Other/'
+	--			endif endif;
+	--	}
+	--	using {
+	--		refPrefix : String =
+	--			if s.txAuthor.isOrganization then
+	--				'Organization/'
+	--			else if s.txAuthor.isPractitioner then
+	--				'Practitioner/'
+	--			else
+	--				'Other/'
+	--			endif endif;
+	--	}
+	to
+		t : FHIR!Composition -- @type fhir!Composition
+		mapsTo s (
+			author <- authRef -- @type fhir!Reference
+			
+		),
+		authRef : FHIR!Reference -- @type fhir!Reference
+		 (
+			reference <- thisModule.FhirString(--					refPrefix
+			--					refPrefix
+			if s -- @type kmehr!TransactionType
+			.txAuthor -- @type kmehr!HcpartyType
+			.isOrganization -- @type Boolean
+			then
+				'Organization/' -- @type String
+				
+			else
+				if s -- @type kmehr!TransactionType
+				.txAuthor -- @type kmehr!HcpartyType
+				.isPractitioner -- @type Boolean
+				then
+					'Practitioner/' -- @type String
+					
+				else
+					'Other/' -- @type String
+					
+				endif -- @type String
+				
+			endif -- @type String
+			+ s -- @type kmehr!TransactionType
+			.msgSender -- @type String
+			.oclAsType(OclAny -- @type OclType
+			) -- @type OclType
+			.uuid -- @type String
+			-- @type String
+			) -- @couldNotType
+			
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule SumEHRTransactionWithCustodian extends SumEHRTransaction {
+	from
+		--	    f : KMEHR!FolderType,
+		s : KMEHR!TransactionType -- @type kmehr!TransactionType
+		--		i : KMEHR!ItemType (
+		--			s.item->includes(i) and
+		--			i.cd->exists(cd | cd.value = 'gmdmanager')
+		--		)
+		--		i : KMEHR!ItemType (
+		--			s.item->includes(i) and
+		--			i.cd->exists(cd | cd.value = 'gmdmanager')
+		--		)
+		
+	--	using {
+	--		refPrefix : String =
+	--			if s.gmdmanager.hcpartyContent.isOrganization then
+	--				'Organization/'
+	--			else if s.gmdmanager.hcpartyContent.isPractitioner then
+	--				'Practitioner/'
+	--			else
+	--				'Other/'
+	--			endif endif;
+	--	}
+	--	using {
+	--		refPrefix : String =
+	--			if s.gmdmanager.hcpartyContent.isOrganization then
+	--				'Organization/'
+	--			else if s.gmdmanager.hcpartyContent.isPractitioner then
+	--				'Practitioner/'
+	--			else
+	--				'Other/'
+	--			endif endif;
+	--	}
+	to
+		t : FHIR!Composition -- @type fhir!Composition
+		mapsTo s (
+			custodian <- gmdRef -- @type fhir!Reference
+			
+		),
+		gmdRef : FHIR!Reference -- @type fhir!Reference
+		 (
+			reference <- thisModule.FhirString(--				refPrefix +
+			--				refPrefix +
+			if s -- @type kmehr!TransactionType
+			.gmdmanager -- @type kmehr!ItemType
+			.hcpartyContent -- @type kmehr!HcpartyType
+			.isOrganization -- @type Boolean
+			then
+				'Organization/' -- @type String
+				
+			else
+				if s -- @type kmehr!TransactionType
+				.gmdmanager -- @type kmehr!ItemType
+				.hcpartyContent -- @type kmehr!HcpartyType
+				.isPractitioner -- @type Boolean
+				then
+					'Practitioner/' -- @type String
+					
+				else
+					'Other/' -- @type String
+					
+				endif -- @type String
+				
+			endif -- @type String
+			+ s -- @type kmehr!TransactionType
+			.gmdmanager -- @type kmehr!ItemType
+			.hcpartyContent -- @type kmehr!HcpartyType
+			.uuid -- @type String
+			-- @type String
+			) -- @couldNotType
+			
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule SumEHRTransactionWithAuthorAndCustodian extends SumEHRTransaction {
+	from
+		--	    f : KMEHR!FolderType,
+		s : KMEHR!TransactionType -- @type kmehr!TransactionType
+		--		i : KMEHR!ItemType
+		--		i : KMEHR!ItemType
+		
+	to
+		t : FHIR!Composition -- @type fhir!Composition
+		mapsTo s (
+			author <- authRef -- @type fhir!Reference
+			,
+			custodian <- gmdRef -- @type fhir!Reference
+			
+		),
+		authRef : FHIR!Reference -- @type fhir!Reference
+		 (
+			reference <- thisModule.FhirString(--					refPrefix
+			--					refPrefix
+			if s -- @type kmehr!TransactionType
+			.txAuthor -- @type kmehr!HcpartyType
+			.isOrganization -- @type Boolean
+			then
+				'Organization/' -- @type String
+				
+			else
+				if s -- @type kmehr!TransactionType
+				.txAuthor -- @type kmehr!HcpartyType
+				.isPractitioner -- @type Boolean
+				then
+					'Practitioner/' -- @type String
+					
+				else
+					'Other/' -- @type String
+					
+				endif -- @type String
+				
+			endif -- @type String
+			+ s -- @type kmehr!TransactionType
+			.msgSender -- @type String
+			.oclAsType(OclAny -- @type OclType
+			) -- @type OclType
+			.uuid -- @type String
+			-- @type String
+			) -- @couldNotType
+			
+		),
+		gmdRef : FHIR!Reference -- @type fhir!Reference
+		 (
+			reference <- thisModule.FhirString(--				refPrefix +
+			--				refPrefix +
+			if s -- @type kmehr!TransactionType
+			.gmdmanager -- @type kmehr!ItemType
+			.hcpartyContent -- @type kmehr!HcpartyType
+			.isOrganization -- @type Boolean
+			then
+				'Organization/' -- @type String
+				
+			else
+				if s -- @type kmehr!TransactionType
+				.gmdmanager -- @type kmehr!ItemType
+				.hcpartyContent -- @type kmehr!HcpartyType
+				.isPractitioner -- @type Boolean
+				then
+					'Practitioner/' -- @type String
+					
+				else
+					'Other/' -- @type String
+					
+				endif -- @type String
+				
+			endif -- @type String
+			+ s -- @type kmehr!TransactionType
+			.gmdmanager -- @type kmehr!ItemType
+			.hcpartyContent -- @type kmehr!HcpartyType
+			.uuid -- @type String
+			-- @type String
+			) -- @couldNotType
+			
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule Patient {
+	from
+		--	    f : KMEHR!FolderType,
+		s : KMEHR!PersonType -- @type kmehr!PersonType
+		--		(
+		--			f.patient = s
+		--		)
+		--		(
+		--			f.patient = s
+		--		)
+		
+	to
+		t : FHIR!Patient -- @type fhir!Patient
+		mapsTo s (
+			id <- pid -- @type fhir!Id
+			,
+			active <- thisModule.FhirBoolean(true -- @type Boolean
+			) -- @type TupleType(t : fhir!Boolean)
+			.t -- @type fhir!Boolean
+			,
+			name <- humanName -- @type fhir!HumanName
+			,
+			gender <- thisModule.AdministrativeGender(s -- @type kmehr!PersonType
+			.sex -- @type kmehr!SexType
+			) -- @type TupleType(t : fhir!AdministrativeGender)
+			.t -- @type fhir!AdministrativeGender
+			,
+			birthDate <- thisModule.FhirDate(s -- @type kmehr!PersonType
+			.birthdate -- @type kmehr!DateType
+			) -- @type TupleType(t : fhir!Date)
+			.t -- @type fhir!Date
+			,
+			address <- s -- @type kmehr!PersonType
+			.address -- @type Collection(kmehr!AddressType)
+			->collect(e |
+				-- possible rules for AddressType: Address
+				e.RESOLVE.oclAsType(FHIR!Address)
+			),
+			telecom <- s -- @type kmehr!PersonType
+			.telecom -- @type Collection(kmehr!TelecomType)
+			->collect(e |
+				-- possible rules for TelecomType: Telecom
+				e.RESOLVE.oclAsType(FHIR!ContactPoint)
+			),
+			contact <- s -- @type kmehr!PersonType
+			.pfolder -- @type kmehr!FolderType
+			.transaction -- @type Collection(kmehr!TransactionType)
+			->collect(tx |
+				tx -- @type kmehr!TransactionType
+				.item -- @type Collection(kmehr!ItemType)
+				->select(i |
+					i -- @type kmehr!ItemType
+					.isContactPerson -- @type Boolean
+					
+				) -- @type Collection(kmehr!ItemType)
+				->collect(i |
+					i -- @type kmehr!ItemType
+					.content -- @type Collection(kmehr!ContentType)
+					->collect(c |
+						c -- @type kmehr!ContentType
+						.person -- @type kmehr!PersonType
+						
+					) -- @type Collection(kmehr!PersonType)
+					
+				) -- @type Collection(Collection(kmehr!PersonType))
+				
+			) -- @type Collection(Collection(Collection(kmehr!PersonType)))
+			-->flatten()
+			->collect(e |
+				-- possible rules for PersonType: Patient, PatientContact
+				e.RESOLVE.oclAsType(FHIR!PatientContact)
+			) -->flatten()
+			
+		),
+		pid : FHIR!Id -- @type fhir!Id
+		 (
+			value <- s -- @type kmehr!PersonType
+			.uuid -- @type String
+			
+		),
+		humanName : FHIR!HumanName -- @type fhir!HumanName
+		 (
+			family <- thisModule.FhirString(s -- @type kmehr!PersonType
+			.familyname -- @type String
+			) -- @couldNotType
+			,
+			given <- s -- @type kmehr!PersonType
+			.firstname -- @type Collection(String)
+			->collect(fn |
+				thisModule._FhirString(fn -- @type String
+				) -- @couldNotType
+				.oclAsType(FHIR!"String" -- @type fhir!String
+				) -- @type fhir!String
+				
+			) -- @type Collection(fhir!String)
+			
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule Address {
+	from
+		s : KMEHR!AddressType -- @type kmehr!AddressType
+		
+	to
+		t : FHIR!Address -- @type fhir!Address
+		 (
+			line <- thisModule.FhirString(s -- @type kmehr!AddressType
+			.addressLine -- @type String
+			) -- @couldNotType
+			,
+			postalCode <- thisModule.FhirString(s -- @type kmehr!AddressType
+			.zip -- @type String
+			) -- @couldNotType
+			,
+			city <- thisModule.FhirString(s -- @type kmehr!AddressType
+			.city -- @type String
+			) -- @couldNotType
+			,
+			country <- thisModule.FhirString(s -- @type kmehr!AddressType
+			.countryString -- @type String
+			) -- @couldNotType
+			
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule Telecom {
+	from
+		s : KMEHR!TelecomType -- @type kmehr!TelecomType
+		
+	to
+		t : FHIR!ContactPoint -- @type fhir!ContactPoint
+		 (
+			system <- system -- @type fhir!ContactPointSystem
+			,
+			value <- thisModule.FhirString(s -- @type kmehr!TelecomType
+			.telecomnumber -- @type String
+			.trim() -- @type String
+			) -- @couldNotType
+			,
+			use <- use -- @type fhir!ContactPointUse
+			
+		),
+		system : FHIR!ContactPointSystem -- @type fhir!ContactPointSystem
+		 (
+			-- ContactPointSystem
+			value <- s -- @type kmehr!TelecomType
+			.system -- @type String
+			
+		),
+		use : FHIR!ContactPointUse -- @type fhir!ContactPointUse
+		 (
+			-- ContactPointUse
+			value <- s -- @type kmehr!TelecomType
+			.contactPointUse -- @type String
+			
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule PatientContact {
+	from
+		--		i : KMEHR!ItemType,
+		--	    c : KMEHR!ContentType,
+		s : KMEHR!PersonType -- @type kmehr!PersonType
+		--		(
+		--			i.content->includes(c) and
+		--			c.person = s and
+		--			i.isContactPerson
+		--		)
+		--		(
+		--			i.content->includes(c) and
+		--			c.person = s and
+		--			i.isContactPerson
+		--		)
+		
+	to
+		t : FHIR!PatientContact -- @type fhir!PatientContact
+		mapsTo s (
+			name <- humanName -- @type fhir!HumanName
+			,
+			gender <- thisModule.AdministrativeGender(s -- @type kmehr!PersonType
+			.sex -- @type kmehr!SexType
+			) -- @type TupleType(t : fhir!AdministrativeGender)
+			.t -- @type fhir!AdministrativeGender
+			,
+			-- address <- s.address->firstOrOclUndefined(),
+			address <- -- possible rules for AddressType: Address
+			s -- @type kmehr!PersonType
+			.address -- @type Collection(kmehr!AddressType)
+			->first() -- @type kmehr!AddressType
+			.RESOLVE.oclAsType(FHIR!Address),
+			telecom <- s -- @type kmehr!PersonType
+			.telecom -- @type Collection(kmehr!TelecomType)
+			->collect(e |
+				-- possible rules for TelecomType: Telecom
+				e.RESOLVE.oclAsType(FHIR!ContactPoint)
+			),
+			relationship <- s -- @type kmehr!PersonType
+			.parentContent -- @type kmehr!ContentType
+			.cparentItem -- @type kmehr!ItemType
+			.contactPersonRelationships -- @type Collection(cd!CDITEM)
+			->collect(cd |
+				thisModule.PatientContactRelationship(cd -- @type cd!CDITEM
+				) -- @type TupleType(t : fhir!CodeableConcept, coding : fhir!Coding, roleCode : fhir!Uri, code : fhir!Code)
+				.t -- @type fhir!CodeableConcept
+				
+			) -- @type Collection(fhir!CodeableConcept)
+			
+		),
+		humanName : FHIR!HumanName -- @type fhir!HumanName
+		 (
+			family <- thisModule.FhirString(s -- @type kmehr!PersonType
+			.familyname -- @type String
+			) -- @couldNotType
+			,
+			given <- s -- @type kmehr!PersonType
+			.firstname -- @type Collection(String)
+			->collect(fn |
+				thisModule._FhirString(fn -- @type String
+				) -- @couldNotType
+				.oclAsType(FHIR!"String" -- @type fhir!String
+				) -- @type fhir!String
+				
+			) -- @type Collection(fhir!String)
+			
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule Organization {
+	from
+		s : KMEHR!HcpartyType -- @type kmehr!HcpartyType
+		
+	to
+		t : FHIR!Organization -- @type fhir!Organization
+		 (
+			id <- oid -- @type fhir!Id
+			,
+			identifier <- nihii -- @type fhir!Identifier
+			,
+			active <- thisModule.FhirBoolean(true -- @type Boolean
+			) -- @type TupleType(t : fhir!Boolean)
+			.t -- @type fhir!Boolean
+			,
+			name <- thisModule.FhirString(s -- @type kmehr!HcpartyType
+			.name -- @type String
+			) -- @couldNotType
+			
+		),
+		oid : FHIR!Id -- @type fhir!Id
+		 (
+			value <- s -- @type kmehr!HcpartyType
+			.uuid -- @type String
+			
+		),
+		nihii : FHIR!Identifier -- @type fhir!Identifier
+		 (
+			assigner <- riziv -- @type fhir!Reference
+			,
+			-- value <- thisModule.FhirString(s.id->collect(id | id.value)->firstOrOclUndefined())
+			value <- thisModule.FhirString(s -- @type kmehr!HcpartyType
+			.id -- @type Collection(id!IDHCPARTY)
+			->collect(id |
+				id -- @type id!IDHCPARTY
+				.value -- @type String
+				--165
+				
+			) -- @type Collection(String)
+			->first() -- @type String
+			) -- @couldNotType
+			
+		),
+		riziv : FHIR!Reference -- @type fhir!Reference
+		 (
+			display <- thisModule._FhirString('NIHII' -- @type String
+			) -- @couldNotType
+			
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule Practitioner {
+	from
+		s : KMEHR!HcpartyType -- @type kmehr!HcpartyType
+		
+	to
+		t : FHIR!Practitioner -- @type fhir!Practitioner
+		 (
+			id <- pid -- @type fhir!Id
+			,
+			identifier <- nihii -- @type fhir!Identifier
+			,
+			active <- thisModule.FhirBoolean(true -- @type Boolean
+			) -- @type TupleType(t : fhir!Boolean)
+			.t -- @type fhir!Boolean
+			,
+			name <- humanName -- @type fhir!HumanName
+			
+		),
+		pid : FHIR!Id -- @type fhir!Id
+		 (
+			value <- s -- @type kmehr!HcpartyType
+			.uuid -- @type String
+			
+		),
+		nihii : FHIR!Identifier -- @type fhir!Identifier
+		 (
+			assigner <- riziv -- @type fhir!Reference
+			,
+			-- value <- thisModule.FhirString(s.id->collect(id | id.value)->firstOrOclUndefined())
+			value <- thisModule.FhirString(s -- @type kmehr!HcpartyType
+			.id -- @type Collection(id!IDHCPARTY)
+			->collect(id |
+				id -- @type id!IDHCPARTY
+				.value -- @type String
+				--165
+				
+			) -- @type Collection(String)
+			->first() -- @type String
+			) -- @couldNotType
+			
+		),
+		riziv : FHIR!Reference -- @type fhir!Reference
+		 (
+			display <- thisModule._FhirString('NIHII' -- @type String
+			) -- @couldNotType
+			
+		),
+		humanName : FHIR!HumanName -- @type fhir!HumanName
+		 (
+			family <- thisModule.FhirString(s -- @type kmehr!HcpartyType
+			.familyname -- @type String
+			) -- @couldNotType
+			,
+			given <- thisModule.FhirString(s -- @type kmehr!HcpartyType
+			.firstname -- @type String
+			) -- @couldNotType
+			
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule Medication {
+	from
+		s : KMEHR!ItemType -- @type kmehr!ItemType
+		
+	to
+		t : FHIR!Medication -- @type fhir!Medication
+		 (
+			id <- mid -- @type fhir!Id
+			,
+			code <- medCodes -- @type fhir!CodeableConcept
+			,
+			status <- status -- @type fhir!MedicationStatusCodes
+			
+		),
+		mid : FHIR!Id -- @type fhir!Id
+		 (
+			value <- s -- @type kmehr!ItemType
+			.uuid -- @type String
+			
+		),
+		medCodes : FHIR!CodeableConcept -- @type fhir!CodeableConcept
+		 (
+			coding <- s -- @type kmehr!ItemType
+			.content -- @type Collection(kmehr!ContentType)
+			->reject(c |
+				c -- @type kmehr!ContentType
+				.medicinalproduct -- @type kmehr!MedicinalProductType
+				.oclIsUndefined() -- @type Boolean
+				
+			) -- @type Collection(kmehr!ContentType)
+			->collect(c |
+				thisModule.CNKCode(c -- @type kmehr!ContentType
+				.medicinalproduct -- @type kmehr!MedicinalProductType
+				) -- @type TupleType(t : fhir!Coding, cnk : fhir!Uri, code : fhir!Code)
+				.t -- @type fhir!Coding
+				
+			) -- @type Collection(fhir!Coding)
+			
+		),
+		status : FHIR!MedicationStatusCodes -- @type fhir!MedicationStatusCodes
+		 (
+			-- MedicationStatusCodes
+			value <- #active -- @type OclAny
+			
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule Posology {
+	from
+		--		f : KMEHR!FolderType,
+		--		tx : KMEHR!TransactionType,
+		--		i : KMEHR!ItemType,
+		s : KMEHR!PosologyType -- @type kmehr!PosologyType
+		--		(
+		--			i.posology = s and
+		--			tx.item->includes(i) and
+		--			f.transaction->includes(tx) and
+		--			i.isMedication
+		--		)
+		-- TODO: guard?
+		--	using {
+		--		i : KMEHR!ItemType = s.parentItem;
+		--		tx : KMEHR!TransactionType = i.parentTransaction;
+		--		f : KMEHR!FolderType = tx.parentFolder;
+		--	}
+		--		(
+		--			i.posology = s and
+		--			tx.item->includes(i) and
+		--			f.transaction->includes(tx) and
+		--			i.isMedication
+		--		)
+		-- TODO: guard?
+		--	using {
+		--		i : KMEHR!ItemType = s.parentItem;
+		--		tx : KMEHR!TransactionType = i.parentTransaction;
+		--		f : KMEHR!FolderType = tx.parentFolder;
+		--	}
+		
+	--		(
+	--			i.posology = s and
+	--			tx.item->includes(i) and
+	--			f.transaction->includes(tx) and
+	--			i.isMedication
+	--		)
+	-- TODO: guard?
+	--	using {
+	--		i : KMEHR!ItemType = s.parentItem;
+	--		tx : KMEHR!TransactionType = i.parentTransaction;
+	--		f : KMEHR!FolderType = tx.parentFolder;
+	--	}
+	--		(
+	--			i.posology = s and
+	--			tx.item->includes(i) and
+	--			f.transaction->includes(tx) and
+	--			i.isMedication
+	--		)
+	-- TODO: guard?
+	--	using {
+	--		i : KMEHR!ItemType = s.parentItem;
+	--		tx : KMEHR!TransactionType = i.parentTransaction;
+	--		f : KMEHR!FolderType = tx.parentFolder;
+	--	}
+	to
+		t : FHIR!MedicationStatement -- @type fhir!MedicationStatement
+		mapsTo s (
+			id <- msid -- @type fhir!Id
+			,
+			medication <- medCodRef -- @type fhir!CodeableReference
+			,
+			status <- msstatus -- @type fhir!MedicationStatementStatusCodes
+			,
+			subject <- subRef -- @type fhir!Reference
+			,
+			effectivePeriod <- effectivePeriod -- @type fhir!Period
+			,
+			dosage <- dosage -- @type fhir!Dosage
+			
+		),
+		msid : FHIR!Id -- @type fhir!Id
+		 (
+			value <- s -- @type kmehr!PosologyType
+			.uuid -- @type String
+			
+		),
+		medCodRef : FHIR!CodeableReference -- @type fhir!CodeableReference
+		 (
+			reference <- medRef -- @type fhir!Reference
+			
+		),
+		medRef : FHIR!Reference -- @type fhir!Reference
+		 (
+			reference <- thisModule.FhirString('Medication/' -- @type String
+			+ s -- @type kmehr!PosologyType
+			.parentItem -- @type kmehr!ItemType
+			.uuid -- @type String
+			-- @type String
+			) -- @couldNotType
+			
+		),
+		msstatus : FHIR!MedicationStatementStatusCodes -- @type fhir!MedicationStatementStatusCodes
+		 (
+			--MedicationStatementStatusCodes
+			value <- #recorded -- @type OclAny
+			
+		),
+		subRef : FHIR!Reference -- @type fhir!Reference
+		 (
+			reference <- thisModule.FhirString('Patient/' -- @type String
+			+ s -- @type kmehr!PosologyType
+			.parentItem -- @type kmehr!ItemType
+			.parentTransaction -- @type kmehr!TransactionType
+			.parentFolder -- @type kmehr!FolderType
+			.patient -- @type kmehr!PersonType
+			.uuid -- @type String
+			-- @type String
+			) -- @couldNotType
+			
+		),
+		effectivePeriod : FHIR!Period -- @type fhir!Period
+		 (
+			start <- thisModule.FhirDateTime(s -- @type kmehr!PosologyType
+			.parentItem -- @type kmehr!ItemType
+			.beginmoment -- @type kmehr!MomentType
+			) -- @type TupleType(t : fhir!DateTime)
+			.t -- @type fhir!DateTime
+			,
+			end <- thisModule.FhirDateTime(s -- @type kmehr!PosologyType
+			.parentItem -- @type kmehr!ItemType
+			.endmoment -- @type kmehr!MomentType
+			) -- @type TupleType(t : fhir!DateTime)
+			.t -- @type fhir!DateTime
+			
+		),
+		dosage : FHIR!Dosage -- @type fhir!Dosage
+		 (
+			timing <- timing -- @type fhir!Timing
+			
+		),
+		timing : FHIR!Timing -- @type fhir!Timing
+		 (
+			repeat <- repeat -- @type fhir!TimingRepeat
+			
+		),
+		repeat : FHIR!TimingRepeat -- @type fhir!TimingRepeat
+		 (
+			count <- thisModule.FhirPositiveInt(s -- @type kmehr!PosologyType
+			.parentItem -- @type kmehr!ItemType
+			.dayperiod1 -- @type OclType
+			->size() -- @type Integer
+			) -- @type TupleType(t : fhir!PositiveInt)
+			.t -- @type fhir!PositiveInt
+			,
+			periodUnit <- periodUnit -- @type fhir!UnitsOfTime
+			,
+			when <- s -- @type kmehr!PosologyType
+			.parentItem -- @type kmehr!ItemType
+			.dayperiod1 -- @type OclType
+			->collect(dp |
+				thisModule.EventTiming(dp -- @type OclType
+				) -- @type TupleType(t : fhir!EventTiming)
+				.t -- @type fhir!EventTiming
+				
+			) -- @type Collection(fhir!EventTiming)
+			
+		),
+		periodUnit : FHIR!UnitsOfTime -- @type fhir!UnitsOfTime
+		 (
+			-- UnitsOfTime
+			value <- #d -- @type OclAny
+			
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule PosologyWithUnitAndTakes extends Posology {
+	from
+		--		f : KMEHR!FolderType,
+		--		tx : KMEHR!TransactionType,
+		--		i : KMEHR!ItemType,
+		s : KMEHR!PosologyType -- @type kmehr!PosologyType
+		
+	to
+		t : FHIR!MedicationStatement -- @type fhir!MedicationStatement
+		mapsTo s,
+		doseAndRate : FHIR!DosageDoseAndRate -- @type fhir!DosageDoseAndRate
+		 (
+			type <- thisModule.CodeableConcept(thisModule.CodingWithDisplay(Tuple {system = 'http://terminology.hl7.org/CodeSystem/dose-rate-type' -- @type String
+			, code = 'ordered' -- @type String
+			, display = 'Ordered' -- @type String
+			} -- @type TupleType(system : String, code : String, display : String)
+			) -- @type TupleType(coding : fhir!Coding, cs : fhir!Uri, cd : fhir!Code)
+			.coding -- @type fhir!Coding
+			) -- @type TupleType(type : fhir!CodeableConcept)
+			.type -- @type fhir!CodeableConcept
+			,
+			doseQuantity <- doseQuantity -- @type fhir!Quantity
+			
+		),
+		dosage : FHIR!Dosage -- @type fhir!Dosage
+		 (
+			doseAndRate <- doseAndRate -- @type fhir!DosageDoseAndRate
+			
+		),
+		doseQuantity : FHIR!Quantity -- @type fhir!Quantity
+		 (
+			system <- qSys -- @type fhir!Uri
+			,
+			code <- qCode -- @type fhir!Code
+			,
+			unit <- thisModule.FhirString(s -- @type kmehr!PosologyType
+			.unit -- @type kmehr!AdministrationunitType
+			--6
+			.cd2 -- @type OclType
+			.toUnitsOfMeasureValue -- @type OclType
+			) -- @couldNotType
+			,
+			-- known typing issue: high is of "primitive" type Decimal
+			value <- thisModule.FhirDecimal(s -- @type kmehr!PosologyType
+			.takes -- @type kmehr!TakesType
+			.high1 -- @type OclType
+			) -- @type TupleType(t : fhir!Decimal)
+			.t -- @type fhir!Decimal
+			
+		),
+		qSys : FHIR!Uri -- @type fhir!Uri
+		 (
+			value <- 'http://unitsofmeasure.org' -- @type String
+			
+		),
+		qCode : FHIR!Code -- @type fhir!Code
+		 (
+			value <- '1' -- @type String
+			
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule AllergyOrIntolerance {
+	from
+		--		f : KMEHR!FolderType,
+		--		tx : KMEHR!TransactionType,
+		s : KMEHR!ItemType -- @type kmehr!ItemType
+		
+	--	using {
+	--		tx : KMEHR!TransactionType = s.parentTransaction;
+	--		f : KMEHR!FolderType = tx.parentFolder;
+	--	}
+	--	using {
+	--		tx : KMEHR!TransactionType = s.parentTransaction;
+	--		f : KMEHR!FolderType = tx.parentFolder;
+	--	}
+	to
+		t : FHIR!AllergyIntolerance -- @type fhir!AllergyIntolerance
+		mapsTo s (
+			id <- aid -- @type fhir!Id
+			,
+			clinicalStatus <- thisModule.CodeableConcept(thisModule.CodingWithDisplay(Tuple {system = 'http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical' -- @type String
+			, code = 'active' -- @type String
+			, display = 'Active' -- @type String
+			} -- @type TupleType(system : String, code : String, display : String)
+			) -- @type TupleType(coding : fhir!Coding, cs : fhir!Uri, cd : fhir!Code)
+			.coding -- @type fhir!Coding
+			) -- @type TupleType(type : fhir!CodeableConcept)
+			.type -- @type fhir!CodeableConcept
+			,
+			verificationStatus <- thisModule.CodeableConcept(thisModule.CodingWithDisplay(Tuple {system = 'http://terminology.hl7.org/CodeSystem/allergyintolerance-verification' -- @type String
+			, code = 'confirmed' -- @type String
+			, display = 'Confirmed' -- @type String
+			} -- @type TupleType(system : String, code : String, display : String)
+			) -- @type TupleType(coding : fhir!Coding, cs : fhir!Uri, cd : fhir!Code)
+			.coding -- @type fhir!Coding
+			) -- @type TupleType(type : fhir!CodeableConcept)
+			.type -- @type fhir!CodeableConcept
+			,
+			type <- thisModule.CodeableConcept(thisModule.CodingWithDisplay(Tuple {system = 'http://hl7.org/fhir/allergy-intolerance-type' -- @type String
+			, code = if s -- @type kmehr!ItemType
+			.isAllergy -- @type Boolean
+			->reject(e |
+				e -- @type Boolean
+				.oclIsUndefined() -- @type Boolean
+				
+			) -- @type Collection(Boolean)
+			then
+				'allergy' -- @type String
+				
+			else
+				'intolerance' -- @type String
+				
+			endif -- @type String
+			, display = if s -- @type kmehr!ItemType
+			.isAllergy -- @type Boolean
+			->reject(e |
+				e -- @type Boolean
+				.oclIsUndefined() -- @type Boolean
+				
+			) -- @type Collection(Boolean)
+			then
+				'Allergy' -- @type String
+				
+			else
+				'Intolerance' -- @type String
+				
+			endif -- @type String
+			} -- @type TupleType(system : String, code : String, display : String)
+			) -- @type TupleType(coding : fhir!Coding, cs : fhir!Uri, cd : fhir!Code)
+			.coding -- @type fhir!Coding
+			) -- @type TupleType(type : fhir!CodeableConcept)
+			.type -- @type fhir!CodeableConcept
+			,
+			criticality <- criticality -- @type fhir!AllergyIntoleranceCriticality
+			,
+			patient <- patRef -- @type fhir!Reference
+			,
+			onsetDateTime <- thisModule.FhirDateTime(s -- @type kmehr!ItemType
+			.beginmoment -- @type kmehr!MomentType
+			) -- @type TupleType(t : fhir!DateTime)
+			.t -- @type fhir!DateTime
+			,
+			recordedDate <- if s -- @type kmehr!ItemType
+			.recorddatetime -- @couldNotType
+			.oclIsUndefined() -- @type OclType
+			then
+				OclUndefined -- @type OclType
+				
+			else
+				thisModule.RecordDateTime(s -- @type kmehr!ItemType
+				) -- @type TupleType(t : fhir!DateTime)
+				.t -- @type fhir!DateTime
+				
+			endif -- @type fhir!DateTime
+			
+		),
+		aid : FHIR!Id -- @type fhir!Id
+		 (
+			value <- s -- @type kmehr!ItemType
+			.uuid -- @type String
+			
+		),
+		criticality : FHIR!AllergyIntoleranceCriticality -- @type fhir!AllergyIntoleranceCriticality
+		 (
+			-- AllergyIntoleranceCriticality
+			value <- #high -- @type OclAny
+			
+		),
+		patRef : FHIR!Reference -- @type fhir!Reference
+		 (
+			reference <- thisModule.FhirString('Patient/' -- @type String
+			+ s -- @type kmehr!ItemType
+			.parentTransaction -- @type kmehr!TransactionType
+			.parentFolder -- @type kmehr!FolderType
+			.patient -- @type kmehr!PersonType
+			.uuid -- @type String
+			-- @type String
+			) -- @couldNotType
+			
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule AllergyOrIntoleranceWithCode extends AllergyOrIntolerance {
+	from
+		s : KMEHR!ItemType -- @type kmehr!ItemType
+		
+	to
+		t : FHIR!AllergyIntolerance -- @type fhir!AllergyIntolerance
+		mapsTo s (
+			code <- cc -- @type fhir!CodeableConcept
+			
+		),
+		cc : FHIR!CodeableConcept -- @type fhir!CodeableConcept
+		 (
+			coding <- s -- @type kmehr!ItemType
+			.codedContent -- @type Collection(cd!CDCONTENT)
+			->collect(c |
+				if c -- @type cd!CDCONTENT
+				.dN -- @type String
+				.oclIsUndefined() -- @type Boolean
+				then
+					thisModule.Coding(Tuple {system = c -- @type cd!CDCONTENT
+					.codingSystem -- @type String
+					, code = c -- @type cd!CDCONTENT
+					.value -- @type String
+					--47
+					--47
+					} -- @type TupleType(system : String, code : String)
+					) -- @type TupleType(coding : fhir!Coding, cs : fhir!Uri, cd : fhir!Code)
+					.coding -- @type fhir!Coding
+					
+				else
+					thisModule.CodingWithDisplay(Tuple {system = c -- @type cd!CDCONTENT
+					.codingSystem -- @type String
+					, code = c -- @type cd!CDCONTENT
+					.value -- @type String
+					--47
+					--47
+					, display = c -- @type cd!CDCONTENT
+					.dN -- @type String
+					} -- @type TupleType(system : String, code : String, display : String)
+					) -- @type TupleType(coding : fhir!Coding, cs : fhir!Uri, cd : fhir!Code)
+					.coding -- @type fhir!Coding
+					
+				endif -- @type fhir!Coding
+				
+			) -- @type Collection(fhir!Coding)
+			
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule Problem {
+	from
+		--		f : KMEHR!FolderType,
+		--		tx : KMEHR!TransactionType,
+		s : KMEHR!ItemType -- @type kmehr!ItemType
+		
+	--	using {
+	--		tx : KMEHR!TransactionType = s.parentTransaction;
+	--		f : KMEHR!FolderType = tx.parentFolder;
+	--	}
+	--	using {
+	--		tx : KMEHR!TransactionType = s.parentTransaction;
+	--		f : KMEHR!FolderType = tx.parentFolder;
+	--	}
+	to
+		t : FHIR!Condition -- @type fhir!Condition
+		mapsTo s (
+			id <- cid -- @type fhir!Id
+			,
+			clinicalStatus <- thisModule.CodeableConcept(thisModule.CodingWithDisplay(Tuple {system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' -- @type String
+			, code = if s -- @type kmehr!ItemType
+			.isActiveProblem -- @type Boolean
+			then
+				'active' -- @type String
+				
+			else
+				'inactive' -- @type String
+				
+			endif -- @type String
+			, display = if s -- @type kmehr!ItemType
+			.isActiveProblem -- @type Boolean
+			then
+				'Active' -- @type String
+				
+			else
+				'Inactive' -- @type String
+				
+			endif -- @type String
+			} -- @type TupleType(system : String, code : String, display : String)
+			) -- @type TupleType(coding : fhir!Coding, cs : fhir!Uri, cd : fhir!Code)
+			.coding -- @type fhir!Coding
+			) -- @type TupleType(type : fhir!CodeableConcept)
+			.type -- @type fhir!CodeableConcept
+			,
+			verificationStatus <- thisModule.CodeableConcept(thisModule.CodingWithDisplay(Tuple {system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' -- @type String
+			, code = 'confirmed' -- @type String
+			, display = 'Confirmed' -- @type String
+			} -- @type TupleType(system : String, code : String, display : String)
+			) -- @type TupleType(coding : fhir!Coding, cs : fhir!Uri, cd : fhir!Code)
+			.coding -- @type fhir!Coding
+			) -- @type TupleType(type : fhir!CodeableConcept)
+			.type -- @type fhir!CodeableConcept
+			,
+			category <- thisModule.CodeableConcept(thisModule.CodingWithDisplay(Tuple {system = 'http://loinc.org' -- @type String
+			, code = '75326-9' -- @type String
+			, display = 'Problem' -- @type String
+			} -- @type TupleType(system : String, code : String, display : String)
+			) -- @type TupleType(coding : fhir!Coding, cs : fhir!Uri, cd : fhir!Code)
+			.coding -- @type fhir!Coding
+			) -- @type TupleType(type : fhir!CodeableConcept)
+			.type -- @type fhir!CodeableConcept
+			,
+			subject <- subRef -- @type fhir!Reference
+			,
+			onsetDateTime <- thisModule.FhirDateTime(s -- @type kmehr!ItemType
+			.beginmoment -- @type kmehr!MomentType
+			) -- @type TupleType(t : fhir!DateTime)
+			.t -- @type fhir!DateTime
+			,
+			abatementDateTime <- thisModule.FhirDateTime(s -- @type kmehr!ItemType
+			.endmoment -- @type kmehr!MomentType
+			) -- @type TupleType(t : fhir!DateTime)
+			.t -- @type fhir!DateTime
+			,
+			-- rule guard inlined here... TODO: should we do the same for other similar rules?
+			recordedDate <- if s -- @type kmehr!ItemType
+			.recorddatetime -- @couldNotType
+			.oclIsUndefined() -- @type OclType
+			then
+				OclUndefined -- @type OclType
+				
+			else
+				thisModule.RecordDateTime(s -- @type kmehr!ItemType
+				) -- @type TupleType(t : fhir!DateTime)
+				.t -- @type fhir!DateTime
+				
+			endif -- @type fhir!DateTime
+			
+		),
+		cid : FHIR!Id -- @type fhir!Id
+		 (
+			value <- s -- @type kmehr!ItemType
+			.uuid -- @type String
+			
+		),
+		subRef : FHIR!Reference -- @type fhir!Reference
+		 (
+			reference <- thisModule.FhirString('Patient/' -- @type String
+			+ s -- @type kmehr!ItemType
+			.parentTransaction -- @type kmehr!TransactionType
+			.parentFolder -- @type kmehr!FolderType
+			.patient -- @type kmehr!PersonType
+			.uuid -- @type String
+			-- @type String
+			) -- @couldNotType
+			
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule ProblemWithCode extends Problem {
+	from
+		s : KMEHR!ItemType -- @type kmehr!ItemType
+		
+	to
+		t : FHIR!Condition -- @type fhir!Condition
+		mapsTo s (
+			code <- cc -- @type fhir!CodeableConcept
+			
+		),
+		cc : FHIR!CodeableConcept -- @type fhir!CodeableConcept
+		 (
+			coding <- s -- @type kmehr!ItemType
+			.codedContent -- @type Collection(cd!CDCONTENT)
+			->collect(c |
+				if c -- @type cd!CDCONTENT
+				.dN -- @type String
+				.oclIsUndefined() -- @type Boolean
+				then
+					thisModule.Coding(Tuple {system = c -- @type cd!CDCONTENT
+					.codingSystem -- @type String
+					, code = c -- @type cd!CDCONTENT
+					.value -- @type String
+					--47
+					--47
+					} -- @type TupleType(system : String, code : String)
+					) -- @type TupleType(coding : fhir!Coding, cs : fhir!Uri, cd : fhir!Code)
+					.coding -- @type fhir!Coding
+					
+				else
+					thisModule.CodingWithDisplay(Tuple {system = c -- @type cd!CDCONTENT
+					.codingSystem -- @type String
+					, code = c -- @type cd!CDCONTENT
+					.value -- @type String
+					--47
+					--47
+					, display = c -- @type cd!CDCONTENT
+					.dN -- @type String
+					} -- @type TupleType(system : String, code : String, display : String)
+					) -- @type TupleType(coding : fhir!Coding, cs : fhir!Uri, cd : fhir!Code)
+					.coding -- @type fhir!Coding
+					
+				endif -- @type fhir!Coding
+				
+			) -- @type Collection(fhir!Coding)
+			
+		)
+}
+
+-- converted from standard rule by ATLStandard2UniqueLazyRules
+unique lazy rule Vaccine {
+	from
+		--		f : KMEHR!FolderType,
+		--		tx : KMEHR!TransactionType,
+		s : KMEHR!ItemType -- @type kmehr!ItemType
+		
+	--	using {
+	--		tx : KMEHR!TransactionType = s.parentTransaction;
+	--		f : KMEHR!FolderType = tx.parentFolder;
+	--	}
+	--	using {
+	--		tx : KMEHR!TransactionType = s.parentTransaction;
+	--		f : KMEHR!FolderType = tx.parentFolder;
+	--	}
+	to
+		t : FHIR!Immunization -- @type fhir!Immunization
+		mapsTo s (
+			id <- iid -- @type fhir!Id
+			,
+			vaccineCode <- vacCodes -- @type fhir!CodeableConcept
+			,
+			administeredProduct <- admProd -- @type fhir!CodeableReference
+			,
+			status <- status -- @type fhir!ImmunizationStatusCodes
+			,
+			patient <- patRef -- @type fhir!Reference
+			,
+			occurrenceDateTime <- thisModule.FhirDateTime(s -- @type kmehr!ItemType
+			.beginmoment -- @type kmehr!MomentType
+			) -- @type TupleType(t : fhir!DateTime)
+			.t -- @type fhir!DateTime
+			
+		),
+		iid : FHIR!Id -- @type fhir!Id
+		 (
+			value <- s -- @type kmehr!ItemType
+			.uuid -- @type String
+			
+		),
+		-- TODO https://www.ehealth.fgov.be/standards/fhir/vaccination/ValueSet-be-vs-vaccine-code.html
+		vacCodes : FHIR!CodeableConcept -- @type fhir!CodeableConcept
+		 (
+			coding <- s -- @type kmehr!ItemType
+			.vaccineIndication -- @type Collection(cd!CDCONTENT)
+			->collect(cd |
+				thisModule.Coding(Tuple {system = 'https://www.ehealth.fgov.be/standards/kmehr/en/tables/vaccine-indication-codes' -- @type String
+				, code = cd -- @type cd!CDCONTENT
+				.value -- @type String
+				--47
+				--47
+				} -- @type TupleType(system : String, code : String)
+				) -- @type TupleType(coding : fhir!Coding, cs : fhir!Uri, cd : fhir!Code)
+				.coding -- @type fhir!Coding
+				
+			) -- @type Collection(fhir!Coding)
+			
+		),
+		admProd : FHIR!CodeableReference -- @type fhir!CodeableReference
+		 (
+			concept <- admProdCodes -- @type fhir!CodeableConcept
+			
+		),
+		admProdCodes : FHIR!CodeableConcept -- @type fhir!CodeableConcept
+		 (
+			coding <- s -- @type kmehr!ItemType
+			.content -- @type Collection(kmehr!ContentType)
+			->reject(c |
+				c -- @type kmehr!ContentType
+				.medicinalproduct -- @type kmehr!MedicinalProductType
+				.oclIsUndefined() -- @type Boolean
+				
+			) -- @type Collection(kmehr!ContentType)
+			->collect(c |
+				thisModule.CNKCode(c -- @type kmehr!ContentType
+				.medicinalproduct -- @type kmehr!MedicinalProductType
+				) -- @type TupleType(t : fhir!Coding, cnk : fhir!Uri, code : fhir!Code)
+				.t -- @type fhir!Coding
+				
+			) -- @type Collection(fhir!Coding)
+			
+		),
+		status : FHIR!ImmunizationStatusCodes -- @type fhir!ImmunizationStatusCodes
+		 (
+			-- ImmunizationStatusCodes
+			value <- #completed -- @type OclAny
+			
+		),
+		patRef : FHIR!Reference -- @type fhir!Reference
+		 (
+			reference <- thisModule.FhirString('Patient/' -- @type String
+			+ s -- @type kmehr!ItemType
+			.parentTransaction -- @type kmehr!TransactionType
+			.parentFolder -- @type kmehr!FolderType
+			.patient -- @type kmehr!PersonType
+			.uuid -- @type String
+			-- @type String
+			) -- @couldNotType
+			
+		)
+}

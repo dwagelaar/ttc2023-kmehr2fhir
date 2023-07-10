@@ -110,7 +110,7 @@ rule SumEHRTransactionWithAuthor extends SumEHRTransaction {
 			author <- Sequence{authRef}
 		),
 		authRef : FHIR!Reference (
-			reference <- thisModule.FhirString(refPrefix + s.msgSender.uuid)
+			reference <- thisModule.FhirString(refPrefix + s.txAuthor.uuid)
 		)
 }
 		
@@ -237,7 +237,7 @@ rule PatientContact {
 rule Organization {
 	from
 		s : KMEHR!HcpartyType (
-			s.isOrganization
+			s.isOrganization and not s.isHeaderContent
 		)
 	to
 		t : FHIR!Organization (
@@ -261,7 +261,7 @@ rule Organization {
 rule Practitioner {
 	from
 		s : KMEHR!HcpartyType (
-			s.isPractitioner
+			s.isPractitioner and not s.isHeaderContent
 		)
 	to
 		t : FHIR!Practitioner (
