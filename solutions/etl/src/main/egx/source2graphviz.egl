@@ -1,0 +1,23 @@
+[% import 'utils.eol'; %]
+digraph G {
+  object[[%=source.style()%]];
+
+[%
+for (tx in source.transformations) {
+  var txId = loopCount;
+  if (not isLayerActive("lazy") and tx.rule.lazy) {
+    continue;
+  }
+%]
+  object -> tx[%=txId%]
+  tx[%=txId%][[%=tx.rule.style()%]]
+  [% for (tgt in tx.targets) { var tgtId = loopCount; -%]
+    tx[%=txId%] -> tgt[%=txId%]_[%=tgtId%]
+    tgt[%=txId%]_[%=tgtId%][[%=tgt.style()%]]
+  [% } %]
+
+[%
+}
+%]
+
+}

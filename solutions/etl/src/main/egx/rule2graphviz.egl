@@ -1,0 +1,17 @@
+[% import 'utils.eol'; %]
+digraph G {
+  rule[[%=rule.style()%]];
+
+[% for (tx in rule.transformations) { %]
+  rule -> tx[%=loopCount%];
+
+[% var txNumber = loopCount;
+   for (tgt in tx.targets) { %]
+  tx[%=txNumber%] -> tgt[%=txNumber%]_[%=loopCount%];
+  tgt[%=txNumber%]_[%=loopCount%][[%=tgt.style()%]];
+[%   } %]
+  tx[%=loopCount%][[%=tx.eContainer.style()%]];
+
+[% } %]
+
+}

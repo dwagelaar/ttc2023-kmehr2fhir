@@ -5,7 +5,7 @@
       "sumehr_example100.kmehr",
       "sumehr_example1000.kmehr"
   ],
-  "Tools": ["reference"],
+  "Tools": ["reference", "etl"],
   "Runs": 3,
   "Timeout": 600
 }

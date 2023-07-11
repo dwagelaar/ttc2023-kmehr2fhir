@@ -1,0 +1,102 @@
+operation TransformationRule style() {
+  var label = (self.lazy ? 'Lazy ' : '') + 'Rule<br/>' + self.name;
+  if (focus != self) {
+    label = self.path().asShowViewLink() + label + '</td></tr></table>';
+  }
+
+  return 'label=<' + label + '>, '
+    + 'shape=box, fillcolor="aquamarine", style="filled", '
+    + 'tooltip="Location: ' + self.location + '"';  
+}
+
+operation SourceObject style() {
+  var label = 'Source<BR/>' + self.eClassName;
+  if (focus != self) {
+    label = self.path().asShowViewLink() + label + '</td></tr></table>';
+  }
+
+  return 'label=<' + label + '>, '
+    + 'tooltip="Location: ' + self.uriFragment + '\\nModel: ' + trace.sourceModelUri + '", '
+    + 'shape=parallelogram, fillcolor="darkgoldenrod1", style="filled"';
+}
+
+operation TargetObject style() {
+  var label = 'Target<BR/>' + self.eClassName;
+  if (focus != self) {
+    label = self.path().asShowViewLink() + label + '</td></tr></table>';
+  }
+
+  return 'label=<' + label + '>, '
+    + 'tooltip="Location: ' + self.uriFragment + '\\nModel: ' + trace.targetModelUri + '", '
+    + 'fillcolor="bisque", style="filled"';
+}
+
+operation TransformationRule path() {
+  return Sequence { "Trace", "Rules", self.name };
+}
+
+@cached
+operation SourceObject path() {
+  return self.computePath('Sources');
+}
+
+@cached
+operation TargetObject path() {
+  return self.computePath('Targets');
+}
+
+operation ModelObject computePath(folder: String) {
+  var path;
+
+  if (self.eContainer.isKindOf(ModelObject)) {
+    path = self.eContainer.path().clone();
+  } else {
+    path = Sequence { "Trace", folder };
+  }
+
+  var i = 1;
+  for (sibling in self.siblings().select(e|e.eClassName.equals(self.eClassName))) {
+    if (sibling == self) {
+      break;
+    } else {
+      i++;
+    }
+  }
+
+  var selfLabel = self.eClassName;
+  if (i > 1) {
+    selfLabel = selfLabel + ' ' + i;
+  }
+
+  return path.including(selfLabel);
+}
+
+operation SourceObject asShowElementLink() {
+  return self.asShowElementLinkInModel(trace.sourceModelUri);
+}
+
+operation TargetObject asShowElementLink() {
+  return self.asShowElementLinkInModel(trace.targetModelUri);
+}
+
+operation ModelObject asShowElementLinkInModel(modelUri: String) {
+  return '<table border="0"><tr><td href="javascript:top.showElement(\'' + self.uriFragment + '\', \'' + modelUri + '\')">';
+}
+
+operation EObject siblings() {
+  return self.eContainer.eGet(self.eContainingFeature);
+} 
+
+operation Sequence asShowViewLink() {
+  return '<table border="0"><tr><td href="javascript:top.showView([' + self.collect(e | "'" + e + "'").concat(', ') + '])">';
+}
+
+operation isLayerActive(id : String) {
+	var layer = layers.selectOne(l|l.id = id);
+	if (layer.isDefined()) {
+		return layer.active;
+	}
+	else {
+		return true;
+	}
+}

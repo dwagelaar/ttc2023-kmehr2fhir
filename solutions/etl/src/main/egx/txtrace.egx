@@ -1,0 +1,48 @@
+import 'utils.eol';
+
+rule TransformationRule2Graphviz
+  transform r: TransformationRule
+{
+  template : "rule2graphviz.egl"
+
+  parameters : Map {
+    "path" = r.path(),
+    "icon" = "diagram-ffffff",
+    "format" = "graphviz-circo",
+    "focus" = r,
+    "rule" = r,
+    "trace" = r.eContainer
+  }
+}
+
+rule SourceObject2Graphviz
+  transform sob: SourceObject
+{
+  template : "source2graphviz.egl"
+  parameters : Map {
+    "path" = sob.path(),
+    "icon"  = sob.transformations.isEmpty() ? "document" : "tree_left",
+    "format" = "graphviz-circo",
+    "layers" = Sequence {
+       Map { "id"="lazy", "title"="Show lazy rules", "active"=true }
+    },
+    "focus" = sob,
+    "source" = sob,
+    "trace" = trace::Trace.all.first
+  }
+}
+
+rule TargetObject2Graphviz
+  transform tob: TargetObject
+{
+  template : "target2graphviz.egl"
+
+  parameters : Map {
+    "path" = tob.path(),
+    "icon" = tob.transformation.isDefined() ? "tree_right" : "document",
+    "format" = "graphviz-circo",
+    "focus" = tob,
+    "target" = tob,
+    "trace" = trace::Trace.all.first
+  }
+}
