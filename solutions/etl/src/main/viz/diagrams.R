@@ -30,29 +30,28 @@ memory_usages <- (
   %>% summarise(average_mbs=mean(MetricValue)/2**20)
 )
 
+firstPhase <- TRUE
 for (phase in phases) {
   run_times <- execution_times %>% filter(PhaseName==phase)
   mem_usage <- memory_usages %>% filter(PhaseName==phase)
 
-  (ggplot(data=run_times, aes(x=ModelSize, y=average_seconds, color=Tool))
-    + geom_line() + geom_label(aes(label=format(average_seconds, digits=2)), fill='white')
+  (ggplot(data=run_times, aes(x=ModelSize, y=average_seconds, color=Tool, linetype=Tool))
+    + geom_line() + geom_label(aes(label=format(average_seconds, digits=2)), fill='white', key_glyph='path')
     + labs(x="Model size", y='Time (s)')
     + scale_x_log10(expand=c(0.1, 0.1))
     + scale_y_log10()
-    + labs(title=paste('Average', phase, 'times per tool and model size'))
-    + theme(legend.position='top', plot.title=element_text(hjust=0.5))
-    + guides(color = guide_legend(override.aes = list(linetype = 0, size=5, fill=NULL)))
+    + theme(legend.position=ifelse(firstPhase, 'top', 'none'))
   )
-  ggsave(paste0(basedir, '/runtime-', phase, '.pdf'))
+  ggsave(paste0(basedir, '/runtime-', phase, '.pdf'), width=4, height=4)
   
-  (ggplot(data=mem_usage, aes(x=ModelSize, y=average_mbs, color=Tool))
-    + geom_line() + geom_label(aes(label=format(average_mbs, digits=4)), fill='white')
+  (ggplot(data=mem_usage, aes(x=ModelSize, y=average_mbs, color=Tool, linetype=Tool))
+    + geom_line() + geom_label(aes(label=format(average_mbs, digits=4)), fill='white', key_glyph='path')
     + labs(x="Model size", y='Memory usage (MiB)')
     + scale_x_log10(expand=c(0.1, 0.1))
     + scale_y_log10()
-    + labs(title=paste('Average', phase, 'memory usage per tool and model size'))
-    + theme(legend.position='top', plot.title=element_text(hjust=0.5))
-    + guides(color = guide_legend(override.aes = list(linetype = 0, size=5, fill=NULL)))
+    + theme(legend.position=ifelse(firstPhase, 'top', 'none'))
   )
-  ggsave(paste0(basedir, '/memory-', phase, '.pdf'))
+  ggsave(paste0(basedir, '/memory-', phase, '.pdf'), width=4, height=4)
+
+  firstPhase <- FALSE
 }
