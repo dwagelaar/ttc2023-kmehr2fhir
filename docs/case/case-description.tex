@@ -1,21 +1,24 @@
-\documentclass[a4paper]{scrartcl}
+\documentclass[
+twocolumn,
+% hf,
+]{ceurart}
 
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{rotating}
+%%
+%% One can fix some overfulls
+\sloppy
 
-\title{The TTC 2023 KMEHR to FHIR Case}
-\author{
-  Dennis Wagelaar\\
-  Corilus nv\\
-  Gaston Crommenlaan 4, 9050 Gent\\
-  dennis.wagelaar@corilus.be
-}
+%%
+%% Minted listings support 
+%% Need pygment <http://pygments.org/> <http://pypi.python.org/pypi/Pygments>
+\usepackage{minted}
+%% auto break lines
+\setminted{breaklines=true}
+
+%% strikethrough
+\usepackage[normalem]{ulem}
 
 \usepackage{tikz}
 \usepackage{graphicx}
-
-\usepackage[pdftex,colorlinks=true]{hyperref}
 
 \usepackage{listings}
 \lstset{columns=flexible}
@@ -35,6 +38,28 @@
 \lstset{basicstyle=\ttfamily\small,keywordstyle=\sffamily\small\textbf}
 
 \begin{document}
+
+%%
+%% Rights management information.
+%% CC-BY is default license.
+\copyrightyear{2023}
+\copyrightclause{Copyright for this paper by its authors.
+  Use permitted under Creative Commons License Attribution 4.0
+  International (CC BY 4.0).}
+
+%%
+%% This command is for the conference information
+\conference{TTC'23: 15th Transformation Tool Contest, 
+  Part of the Software Technologies: Applications and Foundations (STAF) federated conferences,
+  Eds. A. Boronat, A. Garc\'{i}a-Dom\'{i}nguez, and G. Hinkel,
+  20 July 2023, Leicester, UK.}
+
+\title{The TTC 2023 KMEHR to FHIR Case}
+\author[1]{Dennis Wagelaar}[%
+email=dennis.wagelaar@corilus.be
+]
+\address[1]{  Corilus nv,
+  Gaston Crommenlaan 4, 9050 Gent}
 
 \maketitle
 
@@ -123,7 +148,7 @@ elements. Only the \texttt{f} input element needs to be found by iterating over
 the entire input model.
 
 \begin{lstlisting}[
-  float,frame=tb,numbers=left,
+  float,frame=tb,
   breaklines,language=atl,mathescape,
   caption=Posology rule,label={lst:posologyRule}
 ]
@@ -264,7 +289,7 @@ standard output a line with the following fields, separated by semicolons
 \end{itemize}
 
 \lstinputlisting[
-  float,frame=tb,numbers=left,
+  float,frame=tb,breaklines,
   caption={\file{solution.ini} file for the reference ATL solution},
   label=lst:ini-atl,
   basicstyle=\ttfamily\small

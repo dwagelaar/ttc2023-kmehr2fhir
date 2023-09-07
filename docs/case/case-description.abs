@@ -1,0 +1,16 @@
+The history of medical information systems has seen many twists and turns, and
+while there has long been a global standardization body in the form of HL7, it
+only recently gained a lot of traction with the FHIR standard. As a result, a
+number of countries have developed their own medical data interchange formats
+over the years, which now need to be realigned with the global FHIR medical
+data interchange format. One such example is the Belgian KMEHR format.
+For this TTC case, we will focus on a specific kind of medical data
+interchange, namely the Patient Summarized Medical Record. In KMEHR, this is
+called the Summarized Electronic Health Record (SumEHR). In FHIR, this is
+called the International Patient Summary (IPS). The primary purpose of such a
+record is to provide an emergency ``cheat sheet'' to healthcare providers who
+don't normally see the patient in question, e.g. a hospital's emergency
+department. Especially when a patient is abroad, the capability to exchange
+such data is important, as it will often be the only source of medical
+background data. This TTC case will require you to translate between the
+Belgian SumEHR format and the international FHIR IPS format.
