@@ -2,18 +2,18 @@ pre {
   var xmlTypeFactory = Native('org.eclipse.emf.ecore.xml.type.impl.XMLTypeFactoryImpl').init();
 
   var genderMap = Map {
-    KMEHR!CDSEXvalues#changed = FHIR!AdministrativeGenderEnum#other,
-    KMEHR!CDSEXvalues#female = FHIR!AdministrativeGenderEnum#female,
-    KMEHR!CDSEXvalues#male = FHIR!AdministrativeGenderEnum#male,
+    KMEHR!#changed = FHIR!AdministrativeGenderEnum#other,
+    KMEHR!#female = FHIR!#female,
+    KMEHR!#male = FHIR!#male,
     KMEHR!CDSEXvalues#unknown = FHIR!AdministrativeGenderEnum#unknown,
     KMEHR!CDSEXvalues#undefined = FHIR!AdministrativeGenderEnum#other
   };
 
   var systemMap = Map {
-    "phone" = FHIR!ContactPointSystemEnum#phone,
-    "mobile" = FHIR!ContactPointSystemEnum#phone,
-    "fax" = FHIR!ContactPointSystemEnum#fax,
-    "email" = FHIR!ContactPointSystemEnum#email
+    "phone" = FHIR!#phone,
+    "mobile" = FHIR!#phone,
+    "fax" = FHIR!#fax,
+    "email" = FHIR!#email
   };
 
   var relationshipMap = Map {
@@ -44,86 +44,86 @@ pre {
   };
 
   var dayPeriodMap = Map {
-		KMEHR!CDDAYPERIODvalues#afterbreakfast = FHIR!EventTimingEnum#PCM,
-		KMEHR!CDDAYPERIODvalues#afterdinner = FHIR!EventTimingEnum#PCV,
-		KMEHR!CDDAYPERIODvalues#afterlunch = FHIR!EventTimingEnum#PCD,
-		KMEHR!CDDAYPERIODvalues#aftermeal = FHIR!EventTimingEnum#PC,
-		KMEHR!CDDAYPERIODvalues#afternoon = FHIR!EventTimingEnum#AFT,
-		KMEHR!CDDAYPERIODvalues#beforebreakfast = FHIR!EventTimingEnum#ACM,
-		KMEHR!CDDAYPERIODvalues#beforedinner = FHIR!EventTimingEnum#ACV,
-		KMEHR!CDDAYPERIODvalues#beforelunch = FHIR!EventTimingEnum#ACD,
-		KMEHR!CDDAYPERIODvalues#betweenbreakfastandlunch = FHIR!EventTimingEnum#PCM,
-		KMEHR!CDDAYPERIODvalues#betweendinnerandsleep = FHIR!EventTimingEnum#PCV,
-		KMEHR!CDDAYPERIODvalues#betweenlunchanddinner = FHIR!EventTimingEnum#PCD,
-		KMEHR!CDDAYPERIODvalues#betweenmeals = FHIR!EventTimingEnum#PC,
-		KMEHR!CDDAYPERIODvalues#evening = FHIR!EventTimingEnum#EVE,
-		KMEHR!CDDAYPERIODvalues#morning = FHIR!EventTimingEnum#MORN,
-		KMEHR!CDDAYPERIODvalues#night = FHIR!EventTimingEnum#NIGHT,
-		KMEHR!CDDAYPERIODvalues#thehourofsleep = FHIR!EventTimingEnum#HS,
-		KMEHR!CDDAYPERIODvalues#duringbreakfast = FHIR!EventTimingEnum#CM,
-		KMEHR!CDDAYPERIODvalues#duringlunch = FHIR!EventTimingEnum#CD,
-		KMEHR!CDDAYPERIODvalues#duringdinner = FHIR!EventTimingEnum#CV
+		#afterbreakfast = #PCM,
+		#afterdinner = #PCV,
+		#afterlunch = #PCD,
+		#aftermeal = #PC,
+		#afternoon = #AFT,
+		#beforebreakfast = #ACM,
+		#beforedinner = #ACV,
+		#beforelunch = #ACD,
+		#betweenbreakfastandlunch = #PCM,
+		#betweendinnerandsleep = #PCV,
+		#betweenlunchanddinner = #PCD,
+		#betweenmeals = #PC,
+		#evening = #EVE,
+		#morning = #MORN,
+		#night = #NIGHT,
+		#thehourofsleep = #HS,
+		#duringbreakfast = #CM,
+		#duringlunch = #CD,
+		#duringdinner = #CV
   };
 
   var unitsOfMeasureMap = Map {
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00001` = '5 ml',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00002` = 'amp.',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00003` = 'applic.',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00004` = 'caps.',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00005` = 'compr.',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00006` = 'dosis',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00007` = 'drops',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00008` = 'flac.',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00009` = 'implant',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00010` = 'perfusion',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00011` = 'inhal.',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00012` = 'insert',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00013` = 'chewing gum',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00014` = 'Compress(es)',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00015` = 'lav.',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00016` = 'ml',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00017` = 'ov.',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00018` = 'pearl(s)',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00019` = 'pastille',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00020` = 'patch',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00021` = 'cart.',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00022` = 'pen',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00023` = 'puff(s)',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00024` = 'sponge',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00025` = 'stylo',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00026` = 'suppo',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00027` = 'tube',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00028` = 'wick',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00029` = 'bag',
-		KMEHR!CDADMINISTRATIONUNITvalues#`_00030` = 'bag(s)',
+		#`_00001` = '5 ml',
+		#`_00002` = 'amp.',
+		#`_00003` = 'applic.',
+		#`_00004` = 'caps.',
+		#`_00005` = 'compr.',
+		#`_00006` = 'dosis',
+		#`_00007` = 'drops',
+		#`_00008` = 'flac.',
+		#`_00009` = 'implant',
+		#`_00010` = 'perfusion',
+		#`_00011` = 'inhal.',
+		#`_00012` = 'insert',
+		#`_00013` = 'chewing gum',
+		#`_00014` = 'Compress(es)',
+		#`_00015` = 'lav.',
+		#`_00016` = 'ml',
+		#`_00017` = 'ov.',
+		#`_00018` = 'pearl(s)',
+		#`_00019` = 'pastille',
+		#`_00020` = 'patch',
+		#`_00021` = 'cart.',
+		#`_00022` = 'pen',
+		#`_00023` = 'puff(s)',
+		#`_00024` = 'sponge',
+		#`_00025` = 'stylo',
+		#`_00026` = 'suppo',
+		#`_00027` = 'tube',
+		#`_00028` = 'wick',
+		#`_00029` = 'bag',
+		#`_00030` = 'bag(s)',
 		KMEHR!CDADMINISTRATIONUNITvalues#cm = 'cm',
-		KMEHR!CDADMINISTRATIONUNITvalues#dropsperminute = 'drp/min',
+		#dropsperminute = 'drp/min',
 		KMEHR!CDADMINISTRATIONUNITvalues#gm = 'g',
-		KMEHR!CDADMINISTRATIONUNITvalues#internationalunits = 'international units',
-		KMEHR!CDADMINISTRATIONUNITvalues#`mckH` = 'mg/h',
-		KMEHR!CDADMINISTRATIONUNITvalues#`mckKgMinute` = 'mg/kg/min',
-		KMEHR!CDADMINISTRATIONUNITvalues#measure = 'measure',
-		KMEHR!CDADMINISTRATIONUNITvalues#`mgH` = 'mg/h',
-		KMEHR!CDADMINISTRATIONUNITvalues#`mlH` = 'ml/h',
+		#internationalunits = 'international units',
+		#`mckH` = 'mg/h',
+		#`mckKgMinute` = 'mg/kg/min',
+		#measure = 'measure',
+		#`mgH` = 'mg/h',
+		#`mlH` = 'ml/h',
 		KMEHR!CDADMINISTRATIONUNITvalues#tbl = 'tablespoon',
 		KMEHR!CDADMINISTRATIONUNITvalues#tsp = 'teaspoon',
-		KMEHR!CDADMINISTRATIONUNITvalues#`untH` = 'units/h',
+		#`untH` = 'units/h',
 		KMEHR!CDADMINISTRATIONUNITvalues#mg = 'mg',
 		KMEHR!CDADMINISTRATIONUNITvalues#`mgMl` = 'mg/ml',
 		KMEHR!CDADMINISTRATIONUNITvalues#meq = 'milli-equivalent',
-		KMEHR!CDADMINISTRATIONUNITvalues#miu = 'miu',
-		KMEHR!CDADMINISTRATIONUNITvalues#iu = 'iu',
-		KMEHR!CDADMINISTRATIONUNITvalues#mmol = 'mmol',
-		KMEHR!CDADMINISTRATIONUNITvalues#`effervescentTablet` = 'effervescent tablet',
-		KMEHR!CDADMINISTRATIONUNITvalues#micrograms = 'micrograms',
-		KMEHR!CDADMINISTRATIONUNITvalues#bandage = 'bandage',
-		KMEHR!CDADMINISTRATIONUNITvalues#piece = 'piece',
+		#miu = 'miu',
+		#iu = 'iu',
+		#mmol = 'mmol',
+		#`effervescentTablet` = 'effervescent tablet',
+		#micrograms = 'micrograms',
+		#bandage = 'bandage',
+		#piece = 'piece',
 		KMEHR!CDADMINISTRATIONUNITvalues#box = 'box',
-		KMEHR!CDADMINISTRATIONUNITvalues#liter = 'l',
-		KMEHR!CDADMINISTRATIONUNITvalues#syringe = 'syringe',
-		KMEHR!CDADMINISTRATIONUNITvalues#ampoule = 'ampoule',
-		KMEHR!CDADMINISTRATIONUNITvalues#bottle = 'bottle',
-		KMEHR!CDADMINISTRATIONUNITvalues#`syringeAmpoule` = 'syringe ampoule'
+		#liter = 'l',
+		#syringe = 'syringe',
+		#ampoule = 'ampoule',
+		#bottle = 'bottle',
+		#`syringeAmpoule` = 'syringe ampoule'
   };
 
 }
@@ -143,7 +143,7 @@ rule Folder
 {
   guard: s.patient.isDefined()
 
-  bt.value = FHIR!BundleTypeEnum#document;
+  bt.value = #document;
   t.type = bt;
 
   var inputElements = Sequence { s.`transaction`, s.patient };
@@ -408,7 +408,7 @@ rule Posology
   msid.value = s.uuid();
   medCodRef.reference = medRef;
   medRef.reference = FhirString('Medication/' + i.uuid());
-  msstatus.value = FHIR!MedicationStatementStatusCodesEnum#recorded;
+  msstatus.value = FHIR!#recorded;
   subRef.reference = FhirString('Patient/' + f.patient.uuid());
 
   effectivePeriod.start = i.beginmoment.equivalent('FhirDateTime');
@@ -618,7 +618,7 @@ operation KMEHR!CDHCPARTY isPractitioner() : Boolean {
 }
 
 operation KMEHR!CDITEM isCDItemWithValue(expectedValue: String): Boolean {
-  return self.s = KMEHR!CDITEMschemes#CDITEM and self.value = expectedValue;
+  return self.s = #CDITEM and self.value = expectedValue;
 }
 
 @cached
@@ -652,7 +652,7 @@ operation KMEHR!ItemType codedContent() {
 }
 
 operation KMEHR!ItemType vaccineIndication() {
-  return self.content.collect(c | c.cd.select(cd | cd.s = KMEHR!CDCONTENTschemes#CDVACCINEINDICATION)).flatten();
+  return self.content.collect(c | c.cd.select(cd | cd.s = #CDVACCINEINDICATION)).flatten();
 }
 
 @cached
@@ -733,22 +733,22 @@ operation KMEHR!ItemType hcpartyContent() : KMEHR!HcpartyType {
 
 @cached
 operation KMEHR!TelecomType system() {
-  var systemStr = self.cd.select(cd | cd.s = KMEHR!CDTELECOMschemes#CDTELECOM)
+  var systemStr = self.cd.select(cd | cd.s = #CDTELECOM)
     .collect(cd | cd.value).selectFirst(v | v.isDefined());
 
-  return systemMap.get(systemStr) ?: FHIR!ContactPointSystemEnum#other;
+  return systemMap.get(systemStr) ?: #other;
 }
 
 @cached
 operation KMEHR!TelecomType contactPointUse() {
-  if (self.cd.exists(cd | cd.s = KMEHR!CDTELECOMschemes#CDTELECOM and cd.value = 'phone')) {
+  if (self.cd.exists(cd | cd.s = #CDTELECOM and cd.value = 'phone')) {
     if (self.eContainer.isKindOf(KMEHR!PersonType)) {
       return FHIR!ContactPointUseEnum#home;
     } else {
       return FHIR!ContactPointUseEnum#work;
     }
-  } else if (self.cd.exists(cd | cd.s = KMEHR!CDTELECOMschemes#CDTELECOM and cd.value = 'mobile')) {
-    return FHIR!ContactPointUseEnum#mobile; 
+  } else if (self.cd.exists(cd | cd.s = #CDTELECOM and cd.value = 'mobile')) {
+    return FHIR!ContactPointUseEnum#mobile;
   }
 
   return null;
