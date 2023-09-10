@@ -11,15 +11,22 @@ import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.epsilon.common.module.ModuleElement;
 import org.eclipse.epsilon.emc.emf.EmfModel;
 import org.eclipse.epsilon.emc.emf.InMemoryEmfModel;
 import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
 import org.eclipse.epsilon.etl.EtlModule;
 import org.eclipse.epsilon.etl.trace.TransformationTrace;
+import org.eclipse.epsilon.profiling.Profiler;
+import org.eclipse.epsilon.profiling.ProfilerTarget;
+import org.eclipse.epsilon.profiling.ProfilingExecutionListener;
 import org.hl7.emf.fhir.FhirPackage;
 
 import be.fgov.ehealth.standards.kmehr.schema.kmehr.KmehrPackage;
 import be.fgov.ehealth.standards.kmehr.schema.kmehr.util.KmehrResourceFactoryImpl;
+import ttc2023.kmehr2fhir.executionProfile.ExecutionProfileFactory;
+import ttc2023.kmehr2fhir.executionProfile.Profile;
+import ttc2023.kmehr2fhir.executionProfile.Target;
 import ttc2023.kmehr2fhir.trace.ModelObject;
 import ttc2023.kmehr2fhir.trace.SourceObject;
 import ttc2023.kmehr2fhir.trace.TargetObject;
@@ -31,7 +38,7 @@ public class Transformation {
 
 	private final File inputFile;
 	private final Resource outputResource;
-	private Resource traceResource;
+	private Resource traceResource, profileResource;
 
 	public Transformation(File inputFile, Resource outputResource) {
 		this.inputFile = inputFile;
@@ -44,6 +51,14 @@ public class Transformation {
 
 	public void setTraceResource(Resource traceResource) {
 		this.traceResource = traceResource;
+	}
+
+	public Resource getProfileResource() {
+		return profileResource;
+	}
+
+	public void setProfileResource(Resource profileResource) {
+		this.profileResource = profileResource;
 	}
 
 	public void run() throws Exception {
@@ -71,6 +86,12 @@ public class Transformation {
 
 				etl.getContext().getModelRepository().addModel(inputModel);
 				etl.getContext().getModelRepository().addModel(outputModel);
+
+				if (profileResource != null) {
+					Profiler.INSTANCE.reset();
+					Profiler.INSTANCE.start("Program");
+					etl.getContext().getExecutorFactory().addExecutionListener(new ProfilingExecutionListener());
+				}
 				etl.execute();
 
 				if (traceResource != null) {
@@ -80,10 +101,39 @@ public class Transformation {
 				ex.printStackTrace();
 				throw ex;
 			} finally {
+				if (profileResource != null) {
+					Profiler.INSTANCE.stop();
+					generateProfile(Profiler.INSTANCE.getRoot());
+				}
 				etl.getContext().getModelRepository().dispose();
 				etl.getContext().dispose();
 			}
 		}
+	}
+
+	private void generateProfile(ProfilerTarget root) {
+		Profile profile = ExecutionProfileFactory.eINSTANCE.createProfile();
+		profileResource.getContents().add(profile);
+
+		final Target convertedRoot = convertTarget(root);
+		profile.setRoot(convertedRoot);
+	}
+
+	private Target convertTarget(ProfilerTarget root) {
+		Target target = ExecutionProfileFactory.eINSTANCE.createTarget();
+		target.setName(root.getName());
+		target.setSelfMillis(root.getWorked(false));
+		target.setAggregateMillis(root.getWorked(true));
+
+		final ModuleElement element = root.getModuleElement();
+		if (element != null) {
+			target.setModuleElement(String.format("%s @ %s", element.getModule(), element.getRegion()));
+		}
+
+		for (ProfilerTarget child : root.getChildren()) {
+			target.getChildren().add(convertTarget(child));
+		}
+		return target;
 	}
 
 	private void generateTrace(Resource rInput, TransformationTrace transformationTrace, Resource rOutput) {
