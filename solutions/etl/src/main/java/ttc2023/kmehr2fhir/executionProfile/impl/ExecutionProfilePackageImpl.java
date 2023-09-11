@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import ttc2023.kmehr2fhir.executionProfile.ExecutionProfileFactory;
 import ttc2023.kmehr2fhir.executionProfile.ExecutionProfilePackage;
 import ttc2023.kmehr2fhir.executionProfile.Profile;
+import ttc2023.kmehr2fhir.executionProfile.Rule;
 import ttc2023.kmehr2fhir.executionProfile.Target;
 
 /**
@@ -34,6 +35,13 @@ public class ExecutionProfilePackageImpl extends EPackageImpl implements Executi
 	 * @generated
 	 */
 	private EClass targetEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass ruleEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -121,6 +129,16 @@ public class ExecutionProfilePackageImpl extends EPackageImpl implements Executi
 	 * @generated
 	 */
 	@Override
+	public EReference getProfile_Rules() {
+		return (EReference)profileEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getTarget() {
 		return targetEClass;
 	}
@@ -181,6 +199,36 @@ public class ExecutionProfilePackageImpl extends EPackageImpl implements Executi
 	 * @generated
 	 */
 	@Override
+	public EClass getRule() {
+		return ruleEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getRule_Name() {
+		return (EAttribute)ruleEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getRule_Millis() {
+		return (EAttribute)ruleEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public ExecutionProfileFactory getExecutionProfileFactory() {
 		return (ExecutionProfileFactory)getEFactoryInstance();
 	}
@@ -206,6 +254,7 @@ public class ExecutionProfilePackageImpl extends EPackageImpl implements Executi
 		// Create classes and their features
 		profileEClass = createEClass(PROFILE);
 		createEReference(profileEClass, PROFILE__ROOT);
+		createEReference(profileEClass, PROFILE__RULES);
 
 		targetEClass = createEClass(TARGET);
 		createEReference(targetEClass, TARGET__CHILDREN);
@@ -213,6 +262,10 @@ public class ExecutionProfilePackageImpl extends EPackageImpl implements Executi
 		createEAttribute(targetEClass, TARGET__MODULE_ELEMENT);
 		createEAttribute(targetEClass, TARGET__SELF_MILLIS);
 		createEAttribute(targetEClass, TARGET__AGGREGATE_MILLIS);
+
+		ruleEClass = createEClass(RULE);
+		createEAttribute(ruleEClass, RULE__NAME);
+		createEAttribute(ruleEClass, RULE__MILLIS);
 	}
 
 	/**
@@ -247,6 +300,7 @@ public class ExecutionProfilePackageImpl extends EPackageImpl implements Executi
 		// Initialize classes, features, and operations; add parameters
 		initEClass(profileEClass, Profile.class, "Profile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getProfile_Root(), this.getTarget(), null, "root", null, 0, 1, Profile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProfile_Rules(), this.getRule(), null, "rules", null, 0, -1, Profile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(targetEClass, Target.class, "Target", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTarget_Children(), this.getTarget(), null, "children", null, 0, -1, Target.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -254,6 +308,10 @@ public class ExecutionProfilePackageImpl extends EPackageImpl implements Executi
 		initEAttribute(getTarget_ModuleElement(), ecorePackage.getEString(), "moduleElement", null, 0, 1, Target.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTarget_SelfMillis(), ecorePackage.getELong(), "selfMillis", null, 0, 1, Target.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTarget_AggregateMillis(), ecorePackage.getELong(), "aggregateMillis", null, 0, 1, Target.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(ruleEClass, Rule.class, "Rule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getRule_Name(), ecorePackage.getEString(), "name", null, 0, 1, Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRule_Millis(), ecorePackage.getELong(), "millis", null, 0, 1, Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

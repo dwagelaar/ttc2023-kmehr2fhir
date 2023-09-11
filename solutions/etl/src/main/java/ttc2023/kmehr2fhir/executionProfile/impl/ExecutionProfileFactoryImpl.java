@@ -58,6 +58,7 @@ public class ExecutionProfileFactoryImpl extends EFactoryImpl implements Executi
 		switch (eClass.getClassifierID()) {
 			case ExecutionProfilePackage.PROFILE: return createProfile();
 			case ExecutionProfilePackage.TARGET: return createTarget();
+			case ExecutionProfilePackage.RULE: return createRule();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -83,6 +84,17 @@ public class ExecutionProfileFactoryImpl extends EFactoryImpl implements Executi
 	public Target createTarget() {
 		TargetImpl target = new TargetImpl();
 		return target;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Rule createRule() {
+		RuleImpl rule = new RuleImpl();
+		return rule;
 	}
 
 	/**

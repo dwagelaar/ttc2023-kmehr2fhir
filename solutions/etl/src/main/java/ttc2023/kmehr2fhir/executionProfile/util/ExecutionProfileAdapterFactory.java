@@ -76,6 +76,10 @@ public class ExecutionProfileAdapterFactory extends AdapterFactoryImpl {
 				return createTargetAdapter();
 			}
 			@Override
+			public Adapter caseRule(Rule object) {
+				return createRuleAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -120,6 +124,20 @@ public class ExecutionProfileAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTargetAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link ttc2023.kmehr2fhir.executionProfile.Rule <em>Rule</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see ttc2023.kmehr2fhir.executionProfile.Rule
+	 * @generated
+	 */
+	public Adapter createRuleAdapter() {
 		return null;
 	}
 

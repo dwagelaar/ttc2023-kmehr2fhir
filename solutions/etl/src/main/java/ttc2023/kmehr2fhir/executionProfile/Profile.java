@@ -2,6 +2,7 @@
  */
 package ttc2023.kmehr2fhir.executionProfile;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -14,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link ttc2023.kmehr2fhir.executionProfile.Profile#getRoot <em>Root</em>}</li>
+ *   <li>{@link ttc2023.kmehr2fhir.executionProfile.Profile#getRules <em>Rules</em>}</li>
  * </ul>
  *
  * @see ttc2023.kmehr2fhir.executionProfile.ExecutionProfilePackage#getProfile()
@@ -42,5 +44,17 @@ public interface Profile extends EObject {
 	 * @generated
 	 */
 	void setRoot(Target value);
+
+	/**
+	 * Returns the value of the '<em><b>Rules</b></em>' containment reference list.
+	 * The list contents are of type {@link ttc2023.kmehr2fhir.executionProfile.Rule}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Rules</em>' containment reference list.
+	 * @see ttc2023.kmehr2fhir.executionProfile.ExecutionProfilePackage#getProfile_Rules()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Rule> getRules();
 
 } // Profile

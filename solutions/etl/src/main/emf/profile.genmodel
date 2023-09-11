@@ -8,6 +8,7 @@
       ecorePackage="profile.ecore#/">
     <genClasses ecoreClass="profile.ecore#//Profile">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference profile.ecore#//Profile/root"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference profile.ecore#//Profile/rules"/>
     </genClasses>
     <genClasses ecoreClass="profile.ecore#//Target">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference profile.ecore#//Target/children"/>
@@ -15,6 +16,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute profile.ecore#//Target/moduleElement"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute profile.ecore#//Target/selfMillis"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute profile.ecore#//Target/aggregateMillis"/>
+    </genClasses>
+    <genClasses ecoreClass="profile.ecore#//Rule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute profile.ecore#//Rule/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute profile.ecore#//Rule/millis"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

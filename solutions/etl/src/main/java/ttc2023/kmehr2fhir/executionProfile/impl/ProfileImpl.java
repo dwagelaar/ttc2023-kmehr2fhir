@@ -2,17 +2,22 @@
  */
 package ttc2023.kmehr2fhir.executionProfile.impl;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import ttc2023.kmehr2fhir.executionProfile.ExecutionProfilePackage;
 import ttc2023.kmehr2fhir.executionProfile.Profile;
+import ttc2023.kmehr2fhir.executionProfile.Rule;
 import ttc2023.kmehr2fhir.executionProfile.Target;
 
 /**
@@ -24,6 +29,7 @@ import ttc2023.kmehr2fhir.executionProfile.Target;
  * </p>
  * <ul>
  *   <li>{@link ttc2023.kmehr2fhir.executionProfile.impl.ProfileImpl#getRoot <em>Root</em>}</li>
+ *   <li>{@link ttc2023.kmehr2fhir.executionProfile.impl.ProfileImpl#getRules <em>Rules</em>}</li>
  * </ul>
  *
  * @generated
@@ -38,6 +44,16 @@ public class ProfileImpl extends MinimalEObjectImpl.Container implements Profile
 	 * @ordered
 	 */
 	protected Target root;
+
+	/**
+	 * The cached value of the '{@link #getRules() <em>Rules</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRules()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Rule> rules;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -109,10 +125,25 @@ public class ProfileImpl extends MinimalEObjectImpl.Container implements Profile
 	 * @generated
 	 */
 	@Override
+	public EList<Rule> getRules() {
+		if (rules == null) {
+			rules = new EObjectContainmentEList<Rule>(Rule.class, this, ExecutionProfilePackage.PROFILE__RULES);
+		}
+		return rules;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case ExecutionProfilePackage.PROFILE__ROOT:
 				return basicSetRoot(null, msgs);
+			case ExecutionProfilePackage.PROFILE__RULES:
+				return ((InternalEList<?>)getRules()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -127,6 +158,8 @@ public class ProfileImpl extends MinimalEObjectImpl.Container implements Profile
 		switch (featureID) {
 			case ExecutionProfilePackage.PROFILE__ROOT:
 				return getRoot();
+			case ExecutionProfilePackage.PROFILE__RULES:
+				return getRules();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -136,11 +169,16 @@ public class ProfileImpl extends MinimalEObjectImpl.Container implements Profile
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ExecutionProfilePackage.PROFILE__ROOT:
 				setRoot((Target)newValue);
+				return;
+			case ExecutionProfilePackage.PROFILE__RULES:
+				getRules().clear();
+				getRules().addAll((Collection<? extends Rule>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -157,6 +195,9 @@ public class ProfileImpl extends MinimalEObjectImpl.Container implements Profile
 			case ExecutionProfilePackage.PROFILE__ROOT:
 				setRoot((Target)null);
 				return;
+			case ExecutionProfilePackage.PROFILE__RULES:
+				getRules().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -171,6 +212,8 @@ public class ProfileImpl extends MinimalEObjectImpl.Container implements Profile
 		switch (featureID) {
 			case ExecutionProfilePackage.PROFILE__ROOT:
 				return root != null;
+			case ExecutionProfilePackage.PROFILE__RULES:
+				return rules != null && !rules.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
