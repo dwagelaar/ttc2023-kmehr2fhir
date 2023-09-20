@@ -87,11 +87,17 @@ public class TransformationTest {
 		final File fTrace = new File(fFhir.getName() + ".trace");
 		Resource rTrace = rsTrace.createResource(URI.createFileURI(fTrace.getCanonicalPath()));
 
+		final ResourceSet rsProfile = new ResourceSetImpl();
+		final File fProfile = new File(fFhir.getName() + ".profile");
+		Resource rProfile = rsProfile.createResource(URI.createFileURI(fProfile.getCanonicalPath()));
+
 		final Transformation transformation = new Transformation(fKmehr, rFhir);
 		transformation.setTraceResource(rTrace);
+		transformation.setProfileResource(rProfile);
 		transformation.run();
 		rFhir.save(null);
 		rTrace.save(null);
+		rProfile.save(null);
 
 		final File fExpectedFhir = new File(fKmehr.getPath().replace(".kmehr", ".fhir"));
 		assertEquivalentFhirModels(fExpectedFhir, fFhir);

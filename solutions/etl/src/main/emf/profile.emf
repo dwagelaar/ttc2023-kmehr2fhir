@@ -1,0 +1,20 @@
+@namespace(uri="http://github.com/agarciadom/ttc2023-kmehr-to-fhir/profile", prefix="prof")
+package executionProfile;
+
+class Profile {
+	val Target root;
+	val Rule[*] rules;
+}
+
+class Target {
+	val Target[*] children;
+	attr String name;
+	attr String moduleElement;
+	attr long selfMillis;
+	attr long aggregateMillis;
+}
+
+class Rule {
+    attr String name;
+	attr long millis;
+}
