@@ -21,7 +21,7 @@ twocolumn,
 \usepackage{graphicx}
 
 \usepackage{listings}
-\lstset{columns=flexible}
+\lstset{columns=flexible,tabsize=2}
 
 \newcommand*{\class}[1]{\textsc{#1}}
 \newcommand*{\feature}[1]{\emph{#1}}
@@ -29,8 +29,9 @@ twocolumn,
 
 %ATL language highlighting
 \lstdefinelanguage{atl}
-  {morekeywords={module, create, from, to, using, mapsTo, rule, helper, refining,
-                 context, def, if, then, else, endif, library, and, or, not, query, do},
+  {morekeywords={module, create, from, to, using, mapsTo, rule, helper, refining, lazy,
+                 context, def, if, then, else, endif, library, and, or, not, query, do,
+                 unique, extends},
    sensitive=false,
    morecomment=[l]{--}}
 
@@ -125,12 +126,55 @@ document structures and medical code systems. The metamodels for
 KMEHR and FHIR have been automatically generated from their published XML 
 schemas\footnote{FHIR canonically uses JSON
 representation, but the standard also provides an XML representation.}
-using the EMF XSD generator\footnote{\url{https://help.eclipse.org/latest/index.jsp?topic=\%2Forg.eclipse.emf.doc\%2Ftutorials\%2Fxlibmod\%2Fxlibmod.html}}. The
-resulting metamodels are too large to include in this paper, but they can
-be viewed online at the
+using the EMF XSD generator\footnote{\url{https://help.eclipse.org/latest/index.jsp?topic=\%2Forg.eclipse.emf.doc\%2Ftutorials\%2Fxlibmod\%2Fxlibmod.html}}.
+The resulting metamodels are too large to include in this paper, but they
+can be viewed online at the
 ``kmehr-emf''\footnote{\url{https://github.com/dwagelaar/kmehr-emf}} and
 ``fhir-xml-emf''\footnote{\url{https://github.com/dwagelaar/fhir-xml-emf}}
-Github projects.
+Github projects. The metamodels consist of 297 and 1110 metaclasses,
+respectively. Please note that the original XSD files are also included
+in these GitHub repositories.
+
+These metamodels aren't only large because they cover many concepts, but also
+due to accidental complexity that is caused mostly by the process of a large
+standardization body, and to a lesser extent by EMF's representation in Ecore
+of XML schemas. It is necessary for an industrial transformation tool to be
+able to process the technical space~\cite{conf/gttse/Bezivin2005} that is
+used, and not require the end user to manually translate from the provided
+technical format to the modeling technology of choice.
+Having to bridge technical spaces is common for industrial data format standards,
+which often don't target modeling technology. It is also apparent that the
+level of accidental complexity is proportial to the size of the standardization
+body, as can be seen in the size difference between the KMEHR and FHIR
+metamodels. FHIR simply has a much larger scope, and must be general enough
+to apply worldwide. It therefore also covers many more corner cases than
+KMEHR.
+
+Fig.~\ref{fig:fhirextract} shows
+a small part of the FHIR metamodel that shows how primitive types, such as
+strings, integers, and booleans, are wrapped inside a container object.
+The KMEHR metamodel does not do this, and an additional translation step
+is necessary to bridge this -- purely technical -- gap. In this case,
+the Composition metaclass, which represents the body of the medical record
+summary, typically has a custodian. The custodian is the medical party that
+is responsible for keeping the medical record summary up to date, and is
+typically your general practitioner in Belgium. The custodian property is
+represented as a reference string in FHIR, which resolves to the type and
+identifier of a Resource (document attachment) inside the same FHIR
+Bundle (document).
+
+\begin{figure}[ht]
+\centerline{
+\includegraphics[width=7.5cm]{figures/fhirextract}}
+\caption{Extract of the FHIR metamodel}
+\label{fig:fhirextract}
+\end{figure}
+
+A transformation tool's ability to deal with this accidental complexity is an
+important factor for industrial acceptance. Not only should the transformation
+tool be able to process the accidental complexity, but it should also allow
+the user to hide away or otherwise modularize the part of the transformation
+code/specification that deals with this accidental complexity.
 
 The reference transformation is written in ATL/EMFTVM~\cite{conf/models/Wagelaar2011}
 and comprises approximately 1300 lines of code, divided over the main \texttt{KMEHRtoFHIR.atl}
@@ -138,14 +182,19 @@ transformation module and the \texttt{libKMEHRtoFHIR.atl} helper library. Both
 of these files can be found in the aforementioned case Github repository. It uses
 advanced features of the EMFTVM runtime, such as multiple rule inheritance and
 invocation of native Java code. It also relies on the local search compiler
-included with the upcoming 4.8.0 release of ATL, which allows for efficient
+included with the 4.8.0 release of ATL, which allows for efficient
 execution of matched rules with many input element. For example, the Posology
-rule shown in~\ref{lst:posologyRule} uses four input elements, which would
+rule shown in listing~\ref{lst:posologyRule} uses four input elements, which would
 require iterating four times through the entire input model before ATL 4.8.0.
 As of ATL 4.8.0, the filter expressions on lines 7--9 are translated by the compiler
 into local search expressions for the \texttt{tx}, \texttt{i}, and \texttt{s} input
 elements. Only the \texttt{f} input element needs to be found by iterating over
-the entire input model.
+the entire input model. An additional \textbf{mapsTo} keyword is required to
+indicate that the output element \texttt{t} does not map to the entire collection
+of input elements, as is the default, but rather directly maps to the input
+element \texttt{s}. That way, whenever another transformed model element is
+assigned a reference to KMEHR!PosologyType \texttt{s}, ATL's implicit tracing
+mechanism will translate it to FHIR!MedicationStatement \texttt{t}.
 
 \begin{lstlisting}[
   float,frame=tb,
@@ -196,34 +245,130 @@ rule Posology {
 }
 \end{lstlisting}
 
+The Posology rule is responsible for translating the statement of how and when
+medication must be administered -- e.g. ''once daily, after dinner''
+-- from a KMEHR!PosologyType to a FHIR!MedicationStatement, as well as during
+which time period it is applicable (the \texttt{effectivePeriod}). Another
+transformation rule PosologyWithUnitAndTakes exists, which extends the Posology
+rule by adding a unit and dosage, e.g. ''1 caps.''. This rule is shown in
+listing~\ref{lst:posologyWithUnitAndTakesRule}.
+
+\begin{lstlisting}[
+  float,frame=tb,
+  breaklines,language=atl,mathescape,
+  caption=Posology rule,label={lst:posologyWithUnitAndTakesRule}
+]
+rule PosologyWithUnitAndTakes extends Posology {
+	from
+		f : KMEHR!FolderType,
+		tx : KMEHR!TransactionType,
+		i : KMEHR!ItemType,
+		s : KMEHR!PosologyType (
+			not s.unit.oclIsUndefined() and
+			not s.takes.oclIsUndefined()
+		)
+	to
+		t : FHIR!MedicationStatement mapsTo s,
+		doseAndRate : FHIR!DosageDoseAndRate (
+			type <- thisModule.CodeableConcept(thisModule.CodingWithDisplay(
+				'http://terminology.hl7.org/CodeSystem/dose-rate-type',
+				'ordered',
+				'Ordered'
+			)),
+			doseQuantity <- doseQuantity
+		),
+		dosage : FHIR!Dosage (
+			doseAndRate <- Sequence{doseAndRate}
+		),
+		doseQuantity : FHIR!Quantity (
+			system <- qSys,
+			code <- qCode,
+			unit <- thisModule.FhirString(s.unit.cd.toUnitsOfMeasureValue),
+			value <- thisModule.FhirDecimal(s.takes.high)
+		),
+		qSys : FHIR!Uri (
+			value <- 'http://unitsofmeasure.org'
+		),
+		qCode : FHIR!Code (
+			value <- '1'
+		)
+}
+\end{lstlisting}
+
+Note how ATL modularizes the accidental complexity of wrapped primitive types
+in FHIR by delegating the creation of the wrapper objects to lazy rules, such
+as the FhirString rule shown in listing~\ref{lst:fhirStringRule}. The Posology rule
+can now simply wrap the medication reference string inside a FHIR String by
+invoking the lazy rule. Note that the remaining medication reference wrapper
+objects, CodeableReference and Reference, could also have been modularized
+in a lazy rule, further increasing the clarity of the Posology rule. This
+has not been done here, because those wrapper objects are only used once
+in the entire transformation code. Instead, only the wrapper objects that
+must be created several times are extracted into lazy rules.
+
+\begin{lstlisting}[
+  float,frame=tb,
+  breaklines,language=atl,mathescape,
+  caption=Posology rule,label={lst:fhirStringRule}
+]
+lazy rule FhirString {
+	from
+		s : String
+	to
+		t : FHIR!"fhir::String" (
+			value <- s
+		)
+}
+\end{lstlisting}
+
 The transformation translates a SumEHR document, which is effectively a KMEHR
-document with a header and a folder that contains a administrative patient
+document with a header and a folder that contains administrative patient
 data and a ``sumehr'' type transaction. The sumehr transaction contains a
 number of items of the following types:
 
 \begin{itemize}
 \item \textbf{gmdmanager}: the doctor that is responsible for keeping the
-  patient's main medical record up-to-date.
+  patient's main medical record up-to-date. It is translated to a custodian
+  Practitioner element in FHIR.
 \item \textbf{contactperson}: a key contact person of the patient, such
-  as a family member or employer.
+  as a family member or employer. It is translated to a list of contact
+  CodeableConcepts in FHIR, embedded within the Patient element.
 \item \textbf{socialrisk}: a health-related risk originating from the
-  patient's social context.
+  patient's social context. It is not included in a FHIR IPS document.
 \item \textbf{risk}: a health-related general risk for the patient.
+   It is not included in a FHIR IPS document.
 \item \textbf{problem}: an ongoing condition the patient suffers from,
-  or -- if inactive -- a historic condition.
+  or -- if inactive -- a historic condition. It is translated to a
+  Condition element in FHIR.
 \item \textbf{medication}: currently prescribed medication for the patient.
+  It is translated to a Medication element in FHIR, with the embedded
+  KMEHR Posology being translated to a MedicationStatement element in
+  FHIR.
 \item \textbf{vaccine}: a vaccine/immunization the patient has received
-  in the past.
+  in the past. It is translated to an Immunization element in FHIR.
 \item \textbf{adr}: an adverse drug reaction that the patient suffers from.
+  It is translated to an AllergyIntolerance element of type ''intolerance''
+  in FHIR.
 \item \textbf{allergy}: an allergy the patient suffers from.
+  It is translated to an AllergyIntolerance element of type ''allergy''
+  in FHIR.
 \end{itemize}
 
 More types of information could be included in both SumEHR and FHIR IPS, but
-for the purpose of the TTC case, the types are limited to the ones listed. In
-addition, the reference model transformation does not (fully) translate between
-the medical coding systems used in KMEHR and FHIR for the sake of simplicity,
-and simply embeds the KMEHR medical codes within the FHIR document.
+for the purpose of the TTC case, the types are limited to the ones listed.
+
+In addition, the reference model transformation does not (fully) translate
+between the medical coding systems used in KMEHR and FHIR for the sake of
+simplicity, and simply embeds the KMEHR medical codes within the FHIR document.
 Submissions to this case should follow the same strategy.
+
+That said, a full translation would have to map additional medical
+coding systems in order to be complete, notably units of
+measure\footnote{\url{http://unitsofmeasure.org}} and vaccine indication
+codes\footnote{\url{https://www.ehealth.fgov.be/standards/fhir/vaccination/ValueSet-be-vs-vaccine-code.html}}.
+Finally, a translation of the Belgian CNK codes for medication to the
+international ATC standard would be very useful, but that would require
+incorporating a database in the transformation, such as SAM\footnote{\url{https://www.samportal.be/}}.
 
 \section{Task Description}
 \label{sec:task-description}
