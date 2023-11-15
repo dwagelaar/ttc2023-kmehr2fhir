@@ -150,7 +150,7 @@ metamodels. FHIR simply has a much larger scope, and must be general enough
 to apply worldwide. It therefore also covers many more corner cases than
 KMEHR.
 
-Fig.~\ref{fig:fhirextract} shows
+Figure~\ref{fig:fhirextract} shows
 a small part of the FHIR metamodel that shows how primitive types, such as
 strings, integers, and booleans, are wrapped inside a container object.
 The KMEHR metamodel does not do this, and an additional translation step
@@ -184,7 +184,7 @@ advanced features of the EMFTVM runtime, such as multiple rule inheritance and
 invocation of native Java code. It also relies on the local search compiler
 included with the 4.8.0 release of ATL, which allows for efficient
 execution of matched rules with many input element. For example, the Posology
-rule shown in listing~\ref{lst:posologyRule} uses four input elements, which would
+rule shown in Listing~\ref{lst:posologyRule} uses four input elements, which would
 require iterating four times through the entire input model before ATL 4.8.0.
 As of ATL 4.8.0, the filter expressions on lines 7--9 are translated by the compiler
 into local search expressions for the \texttt{tx}, \texttt{i}, and \texttt{s} input
@@ -251,7 +251,7 @@ medication must be administered -- e.g. ''once daily, after dinner''
 which time period it is applicable (the \texttt{effectivePeriod}). Another
 transformation rule PosologyWithUnitAndTakes exists, which extends the Posology
 rule by adding a unit and dosage, e.g. ''1 caps.''. This rule is shown in
-listing~\ref{lst:posologyWithUnitAndTakesRule}.
+Listing~\ref{lst:posologyWithUnitAndTakesRule}.
 
 \begin{lstlisting}[
   float,frame=tb,
@@ -297,7 +297,7 @@ rule PosologyWithUnitAndTakes extends Posology {
 
 Note how ATL modularizes the accidental complexity of wrapped primitive types
 in FHIR by delegating the creation of the wrapper objects to lazy rules, such
-as the FhirString rule shown in listing~\ref{lst:fhirStringRule}. The Posology rule
+as the FhirString rule shown in Listing~\ref{lst:fhirStringRule}. The Posology rule
 can now simply wrap the medication reference string inside a FHIR String by
 invoking the lazy rule. Note that the remaining medication reference wrapper
 objects, CodeableReference and Reference, could also have been modularized
